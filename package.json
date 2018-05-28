@@ -1,0 +1,23 @@
+{
+  "name": "koa-learning",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "db": "net start koa-learning"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.5.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-cors": "0.0.16",
+    "koa-jwt": "^3.3.2",
+    "koa-router": "^7.4.0",
+    "log4js": "^2.6.1",
+    "mongoose": "^5.1.1"
+  },
+  "devDependencies": {}
+}
