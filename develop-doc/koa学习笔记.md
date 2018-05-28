@@ -1400,7 +1400,99 @@ module.exports = router;
 
 既然token验证已经加入项目中，我们在调用接口时就需要验证用户登录的token信息，下面来添加用户登录接口，当用户登录之后，后台记录token信息，并且返回给前端token。
 
-> 待补充
+首先，我们安装 jsonwebtoken 来实现jwt：
+
+```shell
+npm install jsonwebtoken
+```
+
+接着为user的model增加一个查询单个用户的方法。
+
+models/user.js 
+
+```js
+……
+// 查询单个用户
+  findOne(dataArr) {
+    return new Promise((resolve, reject) => {
+      this.users.findOne(dataArr, (err, docs) => { // 查询
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(docs);
+        }
+      })
+    })
+  }
+……
+```
+
+修改了model之后，我们在controllers中添加对应的注册逻辑
+
+controllers\user.js
+
+```js
+……
+const jwt = require('jsonwebtoken');
+
+class UserController {
+  constructor() {}
+  ……
+
+  // 注册
+  async signin(reqBody) {
+    let dataArr = {
+      ...reqBody
+    }
+    try {
+      let result = await user.findOne(dataArr); // 查询该用户
+      let respon = {};
+
+      let userToken = {
+        email: result.email
+      }
+      const token = jwt.sign(userToken, config.JWT_SECRET, {expiresIn: '3h'}) //token签名 有效期为3小时
+      const res = {
+        result: '登录成功！',
+        token: token
+      }
+      respon = response({data: res});
+
+      return respon;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
+    }
+  }
+}
+
+const userController = new UserController();
+
+module.exports = userController;
+
+```
+
+然后在上面提到的routes/public.js中添加登录接口。
+
+```js
+// 用户登录接口
+router.post('/signin', async (ctx, next) => {
+  let reqBody = ctx.request.body;
+  ctx.body = await user.signin(reqBody);
+});
+```
+
+启动服务，我们调用登录接口，这是就能看到返回的数据里面生成了token。
+
+![25](koa/25.jpg)
+
+### 数据验证
+
+> 待整理
+
+
 
 ## 文件上传
 

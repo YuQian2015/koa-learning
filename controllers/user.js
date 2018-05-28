@@ -1,5 +1,6 @@
 let {user} = require('../models');
 const response = require('../utils/response');
+const jwt = require('jsonwebtoken');
 
 class UserController {
   constructor() {}
@@ -25,29 +26,35 @@ class UserController {
       return err;
     }
   }
+
+  // 注册
+  async signin(reqBody) {
+    let dataArr = {
+      ...reqBody
+    }
+    try {
+      let result = await user.findOne(dataArr); // 查询该用户
+      let respon = {};
+
+      let userToken = {
+        email: result.email
+      }
+      const token = jwt.sign(userToken, config.JWT_SECRET, {expiresIn: '3h'}) //token签名 有效期为3小时
+      const res = {
+        result: '登录成功！',
+        token: token
+      }
+      respon = response({data: res});
+
+      return respon;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
+    }
+  }
 }
 
 const userController = new UserController();
 
 module.exports = userController;
-
-//
-// User.find({email: req.body.email}).lean().exec(function(error, userData) {
-//   if (error) {
-//     return res.json(response({"errorCode": "000"}));
-//   }
-//   if (userData.length) {
-//     return res.json(response({"errorCode": "003"}));
-//   }
-//   let user = new User({email: req.body.email, password: req.body.password, name: req.body.name, createDate: new Date()});
-//   user.save(function(err, data) {
-//     if (err) {
-//       return res.json(response({"errorCode": "000"}));
-//     }
-//     res.json(response({
-//       "data": {
-//         result: "注册成功"
-//       }
-//     }));
-//   })
-// })

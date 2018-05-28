@@ -37,6 +37,20 @@ class User {
     })
   }
 
+  // 查询单个用户
+  findOne(dataArr) {
+    return new Promise((resolve, reject) => {
+      this.users.findOne(dataArr, (err, docs) => { // 查询
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(docs);
+        }
+      })
+    })
+  }
+
   // 创建用户
   create(dataArr) {
     return new Promise((resolve, reject) => {
