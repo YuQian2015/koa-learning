@@ -402,7 +402,7 @@ app.use(routes.routes()).use(routes.allowedMethods());
 
 都设置好了之后，执行npm start，当启动成功之后，我们看到log目录里面多了两个文件，分别是报错日志和响应日志。在浏览器中访问http://localhost:3000/v1。可以看到响应日志里面添加了刚刚的访问记录。
 
-![16](D:\Dropbox\公用\学习\koa\16.jpg)
+![16](koa/16.jpg)
 
 
 
@@ -416,7 +416,7 @@ app.use(routes.routes()).use(routes.allowedMethods());
 mongod
 ```
 
-![02](D:\Dropbox\公用\学习\koa\02.jpg)
+![02](koa/02.jpg)
 
 证明我们的环境变量添加成功，在系统磁盘新建数据库存放目录，以本机为例：G:\MongoDB，G:\MongoDB\db  ，G:\MongoDB\log，以管理员身份在命令行执行：
 
@@ -454,7 +454,7 @@ Error parsing YAML config file: YAML-cpp: error at line 2, column 13 : illegal m
 
 执行成功之后，我们可以看到log目录下面生成了一个log文件
 
-![05](D:\Dropbox\公用\学习\koa\05.jpg)
+![05](koa/05.jpg)
 
 打开这个log文件看到如下内容
 
@@ -470,11 +470,11 @@ Error parsing YAML config file: YAML-cpp: error at line 2, column 13 : illegal m
 net start koa-learning
 ```
 
-![06](D:\Dropbox\公用\学习\koa\06.jpg)
+![06](koa/06.jpg)
 
 出现如图的结果，表示数据库已经启动，我们看到G:\MongoDB\db目录下多了一些文件，这些文件就是我们的数据库生成的了。
 
-![07](D:\Dropbox\公用\学习\koa\07.jpg)
+![07](koa/07.jpg)
 
 将net start koa-learning添加到package.json中，以后执行npm run db 即可启动服务器：
 
@@ -495,7 +495,7 @@ mongo mongodb://127.0.0.1:3001
 mongo -port 3001
 ```
 
-![08](D:\Dropbox\公用\学习\koa\08.jpg)
+![08](koa/08.jpg)
 
 我们看到数据库是没有访问控制的，数据库的读写权限不受控制的。关于MongoDB访问权限的设置这里有 [`详细介绍`](https://docs.mongodb.com/master/tutorial/enable-authentication/) 。
 
@@ -574,7 +574,7 @@ mongo -port 3001
 > db.healthyDiet.insert({name:'Yuu'})
 ```
 
-![13](D:\Dropbox\公用\学习\koa\13.jpg)
+![13](koa/13.jpg)
 
 我们看到“not authorized on healthyDiet to execute command” ，这就是说, 我们没有权限操作。
 
@@ -637,7 +637,7 @@ Successfully added user: {
 mongo --port 3001 -u Yuu -p 123456 --authenticationDatabase healthyDiet
 ```
 
-![09](D:\Dropbox\公用\学习\koa\09.jpg)
+![09](koa/09.jpg)
 
 既然已经验证成功，我们就可以尝试着来写入数据了。
 
@@ -723,19 +723,19 @@ true
 
 打开Robo之后，新增一个连接，
 
-![10](D:\Dropbox\公用\学习\koa\10.jpg)
+![10](koa/10.jpg)
 
 输入连接名称，地址和端口，
 
-![11](D:\Dropbox\公用\学习\koa\11.jpg)
+![11](koa/11.jpg)
 
 并且切换到用户验证栏输入验证信息，点击保存，
 
-![12](D:\Dropbox\公用\学习\koa\12.jpg)
+![12](koa/12.jpg)
 
 然后连接，我们就可以看到healthyDiet数据库了。
 
-![15](D:\Dropbox\公用\学习\koa\15.jpg)
+![15](koa/15.jpg)
 
 
 
@@ -969,9 +969,9 @@ module.exports = router;
 
 重启服务访问http://localhost:3000/v1/material即可看到新增的数据了，并且数据库添加了新的数据。
 
-![17](D:\Dropbox\公用\学习\koa\17.jpg)
+![17](koa/17.jpg)
 
-![18](D:\Dropbox\公用\学习\koa\18.jpg)
+![18](koa/18.jpg)
 
 
 
@@ -1184,7 +1184,7 @@ module.exports = router;
 
 打开postman，新增配置一个接口调用，如下图：
 
-![19](D:\Dropbox\公用\学习\koa\19.jpg)
+![19](koa/19.jpg)
 
 点击send，我们就可以发送一个post请求了，我们采用JSON格式传递数据。
 
@@ -1192,7 +1192,7 @@ module.exports = router;
 
 通过上面的操作我们看到postman里面有产生响应数据，但是并没有我没新建的用户信息，我们再查看数据库，看到集合里面多了一个文档，但是缺少了用户信息。
 
-![20](D:\Dropbox\公用\学习\koa\20.jpg)
+![20](koa/20.jpg)
 
 造成这个结果的原因是，我们采用JSON类型来传递请求数据，context里面获取的请求body为undefined。为了让koa能够支持json类型的body数据，我们 [koa-bodyparser](https://github.com/koajs/bodyparser) 来处理,，koa-bodyparser 支持 `json`, `form` and `text` 类型的body.
 
@@ -1221,7 +1221,7 @@ app.use(routes.routes()).use(routes.allowedMethods());
 
 重启服务之后，我们再次点击发送。
 
-![21](D:\Dropbox\公用\学习\koa\21.jpg)
+![21](koa/21.jpg)
 
 ### 跨域访问
 
@@ -1235,7 +1235,7 @@ Failed to load http://localhost:3000/v1/users/register: Response to preflight re
 
 这正是因为我们的接口没有允许跨域访问请求导致的。
 
-![22](D:\Dropbox\公用\学习\koa\22.jpg)
+![22](koa/22.jpg)
 
 为了解决这个问题，我们使用 [koa-cors](https://www.npmjs.com/package/koa-cors) 中间件来处理跨域。
 
@@ -1259,7 +1259,7 @@ app.use(bodyParser());
 
 重启服务之后我们再次点击注册。
 
-![23](D:\Dropbox\公用\学习\koa\23.jpg)
+![23](koa/23.jpg)
 
 成功，我们已经能在前端项目调用注册接口来注册用户了。
 
@@ -1324,7 +1324,7 @@ module.exports = router;
 
 启动服务之后，我们继续来访问注册接口，会得到以下提示：
 
-![24](D:\Dropbox\公用\学习\koa\24.jpg)
+![24](koa/24.jpg)
 
 表示我们的注册接口已经收到了jwt的验证。
 
@@ -1709,7 +1709,7 @@ exports.getUserList = async (ctx, next) => {
 
 中间件的执行很像一个洋葱，但并不是一层一层的执行，而是以next为分界，先执行本层中next以前的部分，当下一层中间件执行完后，再执行本层next以后的部分。
 
-![koa-middleware](D:\Dropbox\公用\学习\koa\koa-middleware.png)
+![koa-middleware](koa/koa-middleware.png)
 
 ```js
 let koa = require('koa');
