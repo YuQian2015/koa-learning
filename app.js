@@ -1,9 +1,11 @@
+require('dotenv-safe').load();
 const Koa = require('koa');
 const app = new Koa();
-
-global.config = require('./config/config');
-global.process.env.PORT = config.PORT || 3000;
-global.process.env.IP = config.SERVER || "127.0.0.1";
+const config = require('config');
+const appConfig = config.get('App');
+const dbConfig = config.get('Database');
+console.log(dbConfig); 
+console.log(appConfig);
 
 const routes = require('./routes');
 const db = require('./config/dbConfig');
@@ -17,6 +19,6 @@ app.use(cors());
 app.use(bodyParser());
 app.use(routes.routes()).use(routes.allowedMethods());
 
-app.listen(process.env.PORT, process.env.IP, () => {
+app.listen(appConfig.port, appConfig.ip, () => {
   console.log('Server running');
 });

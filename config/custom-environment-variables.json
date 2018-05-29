@@ -1,0 +1,8 @@
+{
+  "Database": {
+    "password": "DB_PASSWORD"
+  },
+  "Token": {
+    "jwtSecret": "JWT_SECRET"
+  }
+}

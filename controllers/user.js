@@ -1,6 +1,8 @@
 let {user} = require('../models');
 const response = require('../utils/response');
 const jwt = require('jsonwebtoken');
+const config = require('config');
+const jwtSecret = config.get('Token.jwtSecret');
 
 class UserController {
   constructor() {}
@@ -39,7 +41,7 @@ class UserController {
       let userToken = {
         email: result.email
       }
-      const token = jwt.sign(userToken, config.JWT_SECRET, {expiresIn: '3h'}) //token签名 有效期为3小时
+      const token = jwt.sign(userToken, jwtSecret, {expiresIn: '3h'}) //token签名 有效期为3小时
       const res = {
         result: '登录成功！',
         token: token

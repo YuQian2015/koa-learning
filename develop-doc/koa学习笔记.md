@@ -11,13 +11,13 @@ node -v
 v8.9.1
 ```
 
-新建一个文件夹koa-learning，在命令行进入该文件夹，执行新建一个项目:
+新建一个文件夹 koa-learning ，在命令行进入该文件夹，执行新建一个项目:
 
 ```shell
 npm init -y
 ```
 
-当然，我们还得安装Koa：
+当然，我们还得安装 Koa：
 
 ```shell
 npm install koa
@@ -27,21 +27,23 @@ npm install koa
 
 ## 项目入口
 
-我们在 koa-learning 目录下新建一个app.js文件，用来架设一个HTTP服务，实现Hello World：
+我们在 koa-learning 目录下新建一个 app.js 文件，用来架设一个 HTTP 服务，实现 Hello World：
 
 ```js
 const Koa = require('koa');
 const app = new Koa();
- 
+
 // response
 app.use(ctx => {
   ctx.response.body = 'Hello World';
 });
- 
+
 app.listen(3000);
 ```
 
-在上面的代码中，app.use()指定了一个中间件方法，这个中间件接收Koa创建的上下文(Context)，并且修改了response.body表示发送给用户的内容。Koa 上下文 将 node 的 `request` 和 `response` 对象封装到单个对象中，为编写 Web 应用程序和 API 提供了许多有用的方法。 
+在上面的代码中，`app.use()` 指定了一个中间件方法，这个中间件接收 Koa 创建的上下文(Context)，并且修改了 `response.body` 表示发送给用户的内容。
+
+Koa 上下文 将 node 的 `request` 和 `response` 对象封装到单个对象中，为编写 Web 应用程序和 API 提供了许多有用的方法。
 
 接下来就是启动服务，执行：
 
@@ -49,20 +51,20 @@ app.listen(3000);
 node app.js
 ```
 
-浏览器访问http://localhost:3000/，我们可以看到显示"Hello World"，证明我们服务已经搭建好。
+浏览器访问 http://localhost:3000/ , 我们可以看到显示 "Hello World"，证明我们服务已经搭建好。
 
-为了方便，我们将这个命令配置在package.js中，下次只要在命令行执行 node start 即可启动服务：
+为了方便，我们将这个命令配置在 `package.js` 中，下次只要在命令行执行 `npm start` 即可启动服务：
 
-```json
+```js
 {
-  
-  …
+
+  // 省略
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
 	"start": "node app.js"
   },
-  …
+  // 省略
 }
 
 ```
@@ -72,14 +74,15 @@ node app.js
 ## koa-router - 添加路由
 
 ### 安装和引入
+> 待补充
 
-我们使用 [koa-router](https://github.com/alexmingoia/koa-router) 中间件来为项目添加路由，执行以下命令安装koa-router：
+我们使用 [koa-router](https://github.com/alexmingoia/koa-router) 中间件来为项目添加路由，执行以下命令安装 koa-router：
 
 ```shell
 npm install koa-router
 ```
 
-修改app.js 的代码为：
+修改 app.js 的代码为：
 
 ```js
 const Koa = require('koa');
@@ -107,13 +110,11 @@ app
 app.listen(3000);
 ```
 
-在以上代码中，我们使用ctx.response.type来设置响应的类型，响应内容为HTML标签，执行 npm start，在浏览其中访问http://localhost:3000/ 我们看到显示了"Hello World"，修改地址到http://localhost:3000/me 则页面显示一个跳转链接。
+在以上代码中，我们使用 `ctx.response.type` 来设置响应的类型，响应内容为 HTML 标签，执行 `npm start`，在浏览其中访问 http://localhost:3000/ 我们看到显示了"Hello World"，修改地址到 http://localhost:3000/me 则页面显示一个跳转链接。
 
 ### 单独管理路由
 
-考虑到以后项目会更加复杂，我们把路由独立出来，新增 /routes 目录，在这个目录下面创建index.js：
-
-新增一个目录/routes，并在这个目录下面创建index.js，将上面的代码放入routes/index.js。
+考虑到以后项目会复杂很多，我们把路由独立出来，新增 /routes 目录，在这个目录下面创建 index.js，将 app.js 中的路由代码放入 routes/index.js。
 
 routes/index.js
 
@@ -136,6 +137,8 @@ router.get('/me', me);
 module.exports = router;
 ```
 
+为了使新增的路由生效，我们还需要在 app.js 中引入刚刚新增的文件：
+
 app.js
 
 ```js
@@ -146,17 +149,15 @@ app
   .use(routes.allowedMethods());
 ```
 
-我们可以重新启动服务，访问http://localhost:3000/me看看是否生效。
+我们可以重新启动服务，访问 http://localhost:3000/me 看看是否生效。
 
 
 
 ### 路由模块化 模块+方法
 
-为了细化路由，将根据业务分开管理路由，在 routes/ 目录新增users.js：
+为了细化路由，根据业务分开管理路由，在 routes/ 目录新增 users.js：
 
 routes/users.js
-
-在routes/目录新增一个users.js
 
 ```js
 const router = require('koa-router')();
@@ -185,12 +186,13 @@ router.use('/users', users.routes(), users.allowedMethods()); // 设置users的�
 
 module.exports = router;
 ```
+> 代码描述 补充
 
-重启服务，访问http://localhost:3000 和 http://localhost:3000/users 即可看到新配置的路由。
+重启服务，访问 http://localhost:3000 和 http://localhost:3000/users 即可看到新配置的路由。
 
 ### 路由前缀
 
-在根目录新增文件夹config，在该文件夹下新增文件config.js
+在根目录新增文件夹config，在该文件夹下新增文件 config.js
 
 config/config.js：
 
@@ -202,7 +204,7 @@ const CONFIG = {
 module.exports = CONFIG;
 ```
 
-在app.js中引入并设置前缀
+在 app.js 中引入并设置前缀
 
 ```js
 global.config = require('./config/config');
@@ -228,9 +230,11 @@ router.use('/users', users.routes(), users.allowedMethods());
 module.exports = router;
 ```
 
-重新启动服务，访问http://localhost:3000/v1 和 http://localhost:3000/v1/users 即可看到新配置的路由。
+重新启动服务，访问 http://localhost:3000/v1 和  http://localhost:3000/v1/users 即可看到新配置的路由。
 
 ## Logs 日志
+
+> 待补充
 
 我们使用 [log4js-node](https://github.com/log4js-node/log4js-node) 。
 
@@ -242,7 +246,7 @@ npm install log4js
 
 ### 日志设置和格式化
 
-新增一个logs目录用来存放日志，然后在config目录新增一个logConfig.js
+新增一个 logs 目录用来存放日志，然后在 config 目录新增一个 logConfig.js
 
 config/logConfig.js
 
@@ -284,7 +288,7 @@ module.exports = CONFIG;
 
 ```
 
-新建一个utils目录并添加一个log.js
+新建一个 utils 目录并添加一个 log.js
 
 utils/log.js
 
@@ -357,7 +361,7 @@ module.exports = log;
 
 ### 添加log中间件
 
-新建一个目录middleware，并且新建一个文件logger.js
+新建一个目录 middleware ，并且新建一个文件 logger.js
 
 middleware/logger.js
 
@@ -385,7 +389,7 @@ module.exports = logger;
 
 
 
-在app.js引入刚刚添加的log处理逻辑。
+在 app.js 引入刚刚添加的 log 处理逻辑。
 
 app.js
 
@@ -400,7 +404,7 @@ app.use(logger()); // 处理log的中间件
 app.use(routes.routes()).use(routes.allowedMethods());
 ```
 
-都设置好了之后，执行npm start，当启动成功之后，我们看到log目录里面多了两个文件，分别是报错日志和响应日志。在浏览器中访问http://localhost:3000/v1。可以看到响应日志里面添加了刚刚的访问记录。
+都设置好了之后，执行 `npm start` ，当启动成功之后，我们看到 log 目录里面多了两个文件，分别是报错日志和响应日志。在浏览器中访问 http://localhost:3000/v1 。可以看到响应日志里面添加了刚刚的访问记录。
 
 ![16](koa/16.jpg)
 
@@ -410,7 +414,7 @@ app.use(routes.routes()).use(routes.allowedMethods());
 
 ### 安装MongoDB
 
-下载MongoDB安装文件：mongodb-win32-x86_64-2008plus-ssl-3.4.5-signed.msi，双击执行安装。安装完成之后可以在安装目录找到，我的安装目录“C:\Program Files\MongoDB\Server\3.4\bin”，为了方便我们在命令行执行 `mongod` 、`mongo` , 讲这个路径添加到系统环境变量。接下来可以在命令行执行：
+下载MongoDB安装文件：mongodb-win32-x86_64-2008plus-ssl-3.4.5-signed.msi，双击执行安装。安装完成之后可以在安装目录找到，我的安装目录“C:\Program Files\MongoDB\Server\3.4\bin”，为了方便在命令行执行 `mongod` 、`mongo` , 将这个路径添加到系统环境变量。接下来可以在命令行执行：
 
 ```shell
 mongod
@@ -424,6 +428,8 @@ mongod
 mongod --bind_ip 127.0.0.1 --logpath "G:\MongoDB\log\mongod.log" --logappend --dbpath "G:\MongoDB\db" --port 3001 --serviceName "koa-learning" --serviceDisplayName "koa-learning" --install
 ```
 
+> 以上命令的描述 补充
+
 或者，我们新建一个 G:\MongoDB\mongod.cfg 文件，内容为：
 
 ```
@@ -431,7 +437,7 @@ systemLog:
  destination: file
  path: "G:\\MongoDB\\log\\mongod.log"
  logAppend: true
-net: 
+net:
  bindIp: 127.0.0.1
  port: 3001
 storage:
@@ -448,7 +454,7 @@ mongod --config "G:\MongoDB\mongod.cfg" --serviceName "koa-learning" --serviceDi
 Error parsing YAML config file: YAML-cpp: error at line 2, column 13 : illegal map value
 ```
 
-所以使用空格代替tab，在“:”之后也使用一个空格
+使用空格代替tab，在“:”之后也使用一个空格
 
 > YAML doesn't really satisfy with tabs, then, use space instead before destination and storage. Don't forget to add a space after every ":" even in the lines systemLog and storage Finally, use quotes to enclose your pathes and double backslashes in these pathes.
 
@@ -472,11 +478,11 @@ net start koa-learning
 
 ![06](koa/06.jpg)
 
-出现如图的结果，表示数据库已经启动，我们看到G:\MongoDB\db目录下多了一些文件，这些文件就是我们的数据库生成的了。
+出现如图的结果，表示数据库已经启动，我们看到 G:\MongoDB\db 目录下多了一些文件，这些文件就是我们的数据库生成的。
 
 ![07](koa/07.jpg)
 
-将net start koa-learning添加到package.json中，以后执行npm run db 即可启动服务器：
+将 net start koa-learning 添加到 package.json 中，以后执行 `npm run db` 即可启动服务器：
 
 ```json
 ……
@@ -497,7 +503,7 @@ mongo -port 3001
 
 ![08](koa/08.jpg)
 
-我们看到数据库是没有访问控制的，数据库的读写权限不受控制的。关于MongoDB访问权限的设置这里有 [`详细介绍`](https://docs.mongodb.com/master/tutorial/enable-authentication/) 。
+我们看到数据库是没有访问控制的，数据库的读写权限不受控制的。关于 MongoDB 访问权限的设置这里有 [`详细介绍`](https://docs.mongodb.com/master/tutorial/enable-authentication/) 。
 
 
 
@@ -505,7 +511,9 @@ mongo -port 3001
 
 从上面的提示结果看到我们的数据库是没有访问控制的，因此这里我们来创建权限和用户。
 
-> Enabling access control on a MongoDB deployment enforces authentication, requiring users to identify themselves. When accessing a MongoDB deployment that has access control enabled, users can only perform actions as determined by their roles. 
+> Enabling access control on a MongoDB deployment enforces authentication, requiring users to identify themselves. When accessing a MongoDB deployment that has access control enabled, users can only perform actions as determined by their roles.
+
+> 关于 admin 数据库 补充
 
 要使用访问控制，我们先确保有一个超级用户，这个用户在`admin` 数据库且拥有 [`userAdmin`](https://docs.mongodb.com/master/reference/built-in-roles/#userAdmin) 或者[`userAdminAnyDatabase`](https://docs.mongodb.com/master/reference/built-in-roles/#userAdminAnyDatabase) 的权限，超级用户可以创建用户、授权或者删除用户权限、自定义的权限。
 
@@ -513,14 +521,14 @@ mongo -port 3001
 
 
 
-我们已经通过非授权的方式启动并且已经连接到数据库。
-
-创建超级用户:
+前面我们已经通过非授权的方式启动并且已经连接到数据库, 接下来就是创建超级用户:
 
 ```shell
 > use admin
 switched to db admin
 ```
+
+> 命令的描述 补充
 
 ```shell
 > db.createUser(
@@ -541,9 +549,11 @@ Successfully added user: {
 }
 ```
 
-超级用户可以访问所有数据库，这个用户是被创建在admin管理数据库，db指定数据库。
+> 命令的描述 补充
 
-我们删掉之前安装的Windows service, 以管理员身份执行 `sc delete koa-learning` ：
+超级用户可以访问所有数据库，这个用户是被创建在 admin 管理数据库，db 指定数据库。
+
+我们删掉之前安装的 Windows service , 以管理员身份执行 `sc delete koa-learning` ：
 
 ```shell
 $ sc delete koa-learning
@@ -589,9 +599,9 @@ admin
 1 // 返回1 授权成功, 否则返回0, 并提示失败
 ```
 
-使用 [`db.createUser()`](https://docs.mongodb.com/master/reference/method/db.createUser/#db.createUser) 添加用户，以及用的 [内置权限](https://docs.mongodb.com/master/core/security-built-in-roles/) 或 [用户定义权限](https://docs.mongodb.com/master/core/security-user-defined-roles/) 。
+使用 [`db.createUser()`](https://docs.mongodb.com/master/reference/method/db.createUser/#db.createUser) 添加用户，以及用户的 [内置权限](https://docs.mongodb.com/master/core/security-built-in-roles/) 或 [用户定义权限](https://docs.mongodb.com/master/core/security-user-defined-roles/) 。
 
-我们上面创建的 `admin` 用户只能 [管理用户和权限](https://docs.mongodb.com/master/tutorial/manage-users-and-roles/)，如果要执行其它操作，如从数据库中查询数据，MongoDB会返回错误。
+我们上面创建的 `admin` 用户只能 [管理用户和权限](https://docs.mongodb.com/master/tutorial/manage-users-and-roles/)，如果要执行其它操作，如从数据库中查询数据，MongoDB 会返回错误。
 
 下面我们来为 `healthyDiet ` 创建一个有 [读写权限](https://docs.mongodb.com/master/reference/built-in-roles/#readWrite) 的用户：
 
@@ -622,7 +632,7 @@ Successfully added user: {
 }
 ```
 
-切换到healthyDiet上创建用户， 因为只有在这里创建的用户才是这个数据库的用户， 才能在这里完成授权，但是创建用户的信息存放在admin库中。接着换到admin库，看一下我们创建的用户：
+上面的示例中，我们切换到 healthyDiet 上创建用户， 因为只有在这里创建的用户才是这个数据库的用户， 才能在这里完成授权，但是创建用户的信息存放在 admin 库中。接着换到 admin 库，看一下我们创建的用户：
 
 ```js
 > db.system.users.find({user:'Yuu'})
@@ -747,44 +757,255 @@ https://docs.mongodb.com/master/tutorial/enable-authentication/
 
 ## Config-项目设置
 
-以本项目为例，配置如下:
 
-```js
-const CONFIG = {
-    "API_VERSION": "/v1",
-    // "SERVER":"127.0.0.1", // 服务启动的地址
-    "SERVER": "0.0.0.0", // 所有ip可以访问
-    "PORT": 3000, // 端口
 
-    "DB_USER": "Yuu", // MongoDB用户名
-    "DB_PWD": "123456", // MongoDB密码
-    "DB_IP": "127.0.0.1",
-    "DB_NAME": "healthyDiet", // MongoDB数据库名
-    "DB_PORT": 3001,
-}
+在项目开发中，我们希望有多个环境配置，如开发环境、生产环境、测试环境等。不同的环境可能需要不同的配置，如数据库、日志甚至端口等。此外，不同的开发者也有不同的设置。我们将使用一下两个包来解决这个问题。
 
-module.exports = CONFIG;
+- [config ](https://www.npmjs.com/package/config)  - 用来管理不同的运行环境
+- [dotenv-safe](https://www.npmjs.com/package/dotenv-safe) - 用来定义一些需要保密的环境变量。
+
+首先，我们来安装这两个包：
+
+```shell
+npm i config dotenv-safe
 ```
 
-然后在app.js里面引入，并且将config赋值给global.config：
+`config` 会默认去查看项目根目录的 config 文件夹，所以我们需要创建一个 config  目录，这个在之前已经做了。
+
+然后来创建一个默认的配置文件 default.json ，其中包含了我们的数据库设置。以本项目为例，配置如下:
+
+config/default.json
 
 ```js
-……
-global.config = require('./config/config');
-global.process.env.PORT = config.PORT || 3000;
-global.process.env.IP = config.SERVER || "127.0.0.1";
+{
+  "App": {
+    "apiVersion": "/v1",
+    "server": "0.0.0.0", // 所有ip可以访问
+    "port": 3000 // 端口
+  },
+  "Database": {
+    "user": "Yuu", // MongoDB用户名
+    "password": "123456", // MongoDB密码
+    "host": "127.0.0.1",
+    "dbName": "healthyDiet", // MongoDB数据库名
+    "port": 3001
+  }
+}
+```
 
-……
-app.listen(process.env.PORT, process.env.IP, function() {
+在上面的代码中，我们配置了应用的设置 `App` 以及数据库连接配置 `Database` 然后，在项目的任何地方需要使用这些配置时，我们只需要引用 config 就可以了:
+
+app.js
+
+```js
+const Koa = require('koa');
+const app = new Koa();
+const appConfig = config.get('App');
+console.log(appConfig);
+
+// 省略
+
+app.listen(appConfig.port, appConfig.ip, () => {
+  console.log('Server running');
+});
+
+```
+
+启动服务之后，我们就能看到命令行能够打印出config.json里面的App配置信息。
+
+```shell
+{ apiVersion: '/v1', server: '0.0.0.0', port: 3000 }
+Server running
+```
+
+### 配置多个环境
+
+上面的介绍，我们已经通过config来配置运行环境了，但是仅仅是这样，我们并不能实现多个环境的配置，因此，现在我们需要来一个新的环境。
+
+配置一个生产环境 *production*  ，为了配置生产环境，我们需要在 config   目录新建一个 production.json
+
+config/production.json
+
+```js
+{
+  "App": {
+    "port": 8000
+  }
+}
+```
+
+我们并没有配置所有的变量，我们希望一些变量保持和默认配置一样，如服务启动的地址、服务器名称等等，
+
+为了验证配置是否生效，我们来切换到production环境：
+
+```shell
+'export NODE_ENV=production'  // Linux
+'set NODE_ENV=production'. // Windows
+
+```
+
+接下来我们启动服务就能够看到输出的环境配置已经改变，端口变成了8000。我们来访问 http://localhost:8000/v1 ，浏览器显示了 “Hello World” 。
+
+```shell
+Administrator@DESKTOP-0E9E0N3 G:\koa-learning
+> set NODE_ENV=production
+
+Administrator@DESKTOP-0E9E0N3 G:\koa-learning
+> npm start
+
+> koa-learning@1.0.0 start G:\koa-learning
+> node app.js
+
+{ apiVersion: '/v1', server: '0.0.0.0', port: 8000 }
+Server running
+```
+
+事实上，当我们调用 `config.get('App') ` 时，会从对应环境的json文件去取值替换 default.json 对应的值。需要支持更多的运行环境，我们只需要新增其它的文件就行，如 staging.json 、 qa.json  等。
+
+
+
+### 配置环境变量
+
+上面的配置中，我们的数据库密码是卸载 config 里面的，我们不希望如此，为了安全起见，我们希望把密码配置在本地而不是提交到代码库或者仓库。因此，我们需要用到 dotenv-safe 。
+
+
+
+dotenv-safe  让我们可以定义私有的变量，这是node进程运行的变量而不是上面配置的环境变量。dotenv-safe 默认会从项目根目录的 *.env* 文件中加载配置。我们新建一个  .env  文件：
+
+ .env 
+
+```js
+DB_PASSWORD=123456
+```
+
+我们把数据库密码拿了出来，并且我们会在 *.gitignore*  忽略掉这个文件，这样就不会提交了，接下来我们新建一个
+
+.env.example 文件用来提交到代码库，这个文件会没有对变量进行复制，但是能够表明项目使用的配置。并且，如果这个文件里面定义了 .env  没有的值，程序将停止执行。
+
+.env.example
+
+```js
+DB_PASSWORD=
+```
+
+然后我们在app.js里面优先引入：
+
+```js
+require('dotenv-safe').load(); // 只需要引入一次
+const Koa = require('koa');
+const app = new Koa();
+const appConfig = config.get('App');
+console.log(process.env.DB_PASSWORD); // 123456
+console.log(appConfig);
+
+// 省略
+
+app.listen(appConfig.port, appConfig.ip, () => {
+  console.log('Server running');
+});
+
+```
+
+启动服务查看：
+
+```
+> npm start
+
+> koa-learning@1.0.0 start G:\koa-learning
+> node app.js
+
+123456
+{ apiVersion: '/v1', server: '0.0.0.0', port: 8000 }
+Server running
+```
+
+### 使用环境变量
+
+接下来，我们将使用定义好的变量来替换 config 里面的配置。我们在 config 目录新增一个文件 custom-environment-variables.json
+
+```js
+{
+  "Database": {
+    "password": "DB_PASSWORD"
+  }
+}
+```
+
+这个 json 文件里面我们队数据库的密码进行了定义，当我们执行调用 `config.get('Database.password')`, `config` 将去查询一个叫 “DB_PASSWORD” 的环境变量。如果查询不到就会使用匹配当前环境的 json 文件的只来带起，如果当前环境的值任然没有，就会去查询 default.json 。
+
+我们再看修改app.js 验证是否有效：
+
+```js
+require('dotenv-safe').load(); // 只需要引入一次
+const Koa = require('koa');
+const app = new Koa();
+const appConfig = config.get('App');
+const dbConfig = config.get('Database');
+console.log(dbConfig);
+console.log(appConfig);
+
+// 省略
+
+app.listen(appConfig.port, appConfig.ip, () => {
   console.log('Server running');
 });
 ```
 
+我们修改 .env 里面的值来启动服务查看是否生效
+
+```
+DB_PASSWORD=12345678
+```
+
+结果：
+
+```shell
+Administrator@DESKTOP-0E9E0N3 G:\koa-learning
+> npm start
+
+> koa-learning@1.0.0 start G:\koa-learning
+> node app.js
+
+{ user: 'Yuu',
+  password: '12345678',
+  host: '127.0.0.1',
+  dbName: 'healthyDiet',
+  port: 3001 }
+{ apiVersion: '/v1', server: '0.0.0.0', port: 8000 }
+Server running
+```
+
+### 修改之前的代码
+
+路由前缀
+
+```js
+
+const config = require('config');
+const apiVersion = config.get('App.apiVersion');
+
+// 省略
+const Router = require('koa-router');
+const router = new Router();
+router.prefix(apiVersion); // 设置路由前缀
+// 省略
+
+module.exports = router;
+
+```
+
+移除 app.js 中引入的旧的config
+
+移除config里面的密码设置
+
+
+
+参考资料：[Maintain Multiple Environment Configurations and Secrets in Node.js Apps](https://blog.stvmlbrn.com/2018/01/13/maintain-multiple-configurations-and-secrets-in-node-apps.html)
 
 
 ## mongoose-管理数据库
 
-[mongoose文档](http://www.nodeclass.com/api/mongoose.html) 
+[mongoose文档](http://www.nodeclass.com/api/mongoose.html)
 
 ### 安装
 
@@ -800,46 +1021,35 @@ npm install mongoose
 
 ```js
 let mongoose = require('mongoose');
+const config = require('config');
+const dbConfig = config.get('Database');
 
 exports.connect = (request, response) => {
-  mongoose.connect(`mongodb://${config.DB_USER}:${config.DB_PWD}@${config.DB_IP}:${config.DB_PORT}/${config.DB_NAME}?authSource=${config.DB_NAME}`);
+  mongoose.connect(`mongodb://${dbConfig.user}:${dbConfig.password}@${dbConfig.host}:${dbConfig.port}/${dbConfig.dbName}?authSource=${dbConfig.dbName}`);
   let db = mongoose.connection;
   db.on('error', () => {
     console.log('Mongoose连接错误: ' + err);
   });
   db.once('open', callback => {
-    console.log(`Mongoose连接到${config.DB_NAME}`);
+    console.log(`Mongoose连接到${dbConfig.dbName}`);
   });
 }
 ```
 
-然后在
-
-/index.js引入config\dbConfig.js：
+然后在 /index.js 引入 config/dbConfig.js：
 
 ```js
 const db = require('./config/dbConfig');
 db.connect();
 ```
 
-注意：由于node.js的模块引入采用的同步的方式引入，要确保 `const db = require('./config/dbConfig');` 在
-
-一下设置之后引入：
-
-```js
-global.config = require('./config/config');
-global.process.env.PORT = config.PORT || 3000;
-global.process.env.IP = config.SERVER || "127.0.0.1";
-
-// 这里引入
-const db = require('./config/dbConfig');
-```
-
 我们启动服务 `npm start` 即可看到数据库连接成功。
 
 ### model
 
-在mongoose中，所有的东西都从[Schema](http://www.nodeclass.com/api/mongoose.html#guide) 中衍生出来，先新建一个文件夹叫models，并在这个文件夹下新建一个index.js，再在该目录下新建material.js
+在 mongoose 中，所有的东西都从 [Schema](http://www.nodeclass.com/api/mongoose.html#guide) 中衍生出来，先新建一个文件夹叫  models ，并在这个文件夹下新建一个 index.js ，再在该目录下新建 material.js
+
+> 目的 描述
 
 models/material.js
 
@@ -891,7 +1101,7 @@ module.exports = material;
 
 ```
 
-以上的代码创建了一个叫Material的model。
+以上的代码创建了一个叫 Material 的 model。
 
 models/index.js
 
@@ -902,6 +1112,8 @@ module.exports = {
   material
 };
 ```
+
+> 描述
 
 新增数据：
 
@@ -939,7 +1151,7 @@ module.exports = router;
 
 ```
 
-我们修改routes/index.js的路由设置。
+我们修改 routes/index.js 的路由设置。
 
 ```js
 ……
@@ -967,7 +1179,7 @@ for (item in routeConfig) {
 module.exports = router;
 ```
 
-重启服务访问http://localhost:3000/v1/material即可看到新增的数据了，并且数据库添加了新的数据。
+重启服务访问 http://localhost:3000/v1/material 即可看到新增的数据了，并且数据库添加了新的数据。
 
 ![17](koa/17.jpg)
 
@@ -979,7 +1191,9 @@ module.exports = router;
 
 ### 响应
 
-在utils目录新建response.js，在config目录新建errorCode.json。
+> 目的 描述
+
+在 utils 目录新建 response.js ，在 config 目录新建 errorCode.json。
 
 utils/response.js
 
@@ -1014,19 +1228,19 @@ module.exports = (response) => {
 
 config/errorCode.json
 
-```json
+```js
 {
     "000":"系统错误，请联系管理员。",
     "001":"请先登录账户登录。",
     "002":"该邮箱已经注册过，请更换邮箱。",
     "003":"用户登录验证失败，请尝试重新登录。",
-    ……
+    // 省略
 }
 ```
 
 ### 注册接口
 
-为了实现用户注册，我们需要新增一个用户model，在models目录下新增一个user.js，并且在model的index.js引入。
+为了实现用户注册，我们需要新增一个用户 model ，在 models 目录下新增一个 user.js ，并且在 model 的index.js 引入。
 
 models/user.js
 
@@ -1104,7 +1318,7 @@ module.exports = {
 };
 ```
 
-为了便于逻辑控制，我们将注册用户的操作放到单独的文件中进行，新增目录controllers，并在其中新增index.js文件和user.js文件。
+为了便于逻辑控制，我们将注册用户的操作放到单独的文件中进行，新增目录 controllers ，并在其中新增 index.js 文件和 user.js 文件。
 
 controllers/user.js
 
@@ -1143,7 +1357,7 @@ const userController = new UserController();
 module.exports = userController;
 ```
 
-我们也新建一个controllers/index.js来引入要用的controller：
+我们也新建一个 controllers/index.js 来引入要用的 controller：
 
 ```js
 const user = require('./user');
@@ -1154,7 +1368,7 @@ module.exports = {
 
 ```
 
-接下来需要在路由定义一个请求接口了，我们将之前的routes\users.js进行以下修改：
+接下来需要在路由定义一个请求接口了，我们将之前的 routes\users.js 进行以下修改：
 
 ```js
 const router = require('koa-router')();
@@ -1176,25 +1390,23 @@ module.exports = router;
 
 ```
 
-这样就定义了一个RESTful API了，为了验证能够调用成功，我们使用postman来进行调试。
+这样就定义了一个 RESTful API 了，为了验证能够调用成功，我们使用 postman 来进行调试。
 
 ### postman-调用接口
 
-安装postman，打开并进行注册，这里不进行描述。
-
-打开postman，新增配置一个接口调用，如下图：
+安装postman，打开并进行注册，这里不进行描述。打开postman，新增配置一个接口调用，如下图：
 
 ![19](koa/19.jpg)
 
-点击send，我们就可以发送一个post请求了，我们采用JSON格式传递数据。
-
-
-
-通过上面的操作我们看到postman里面有产生响应数据，但是并没有我没新建的用户信息，我们再查看数据库，看到集合里面多了一个文档，但是缺少了用户信息。
+点击send，我们就可以发送一个post请求了，我们采用JSON格式传递数据。通过上面的操作我们看到 postman 里面产生响应数据，但是并没有我没新建的用户信息，我们再查看数据库集合里面多了一个文档，但是缺少了用户信息。
 
 ![20](koa/20.jpg)
 
-造成这个结果的原因是，我们采用JSON类型来传递请求数据，context里面获取的请求body为undefined。为了让koa能够支持json类型的body数据，我们 [koa-bodyparser](https://github.com/koajs/bodyparser) 来处理,，koa-bodyparser 支持 `json`, `form` and `text` 类型的body.
+
+
+> 描述 补充
+
+造成这个结果的原因是我们采用 JSON 类型来传递请求数据，context 里面获取的请求 body 为 undefined。为了让 koa 能够支持 JSON 类型的 body 数据，我们 [koa-bodyparser](https://github.com/koajs/bodyparser) 来处理,，koa-bodyparser 支持 `json`, `form` and `text` 类型的 body 。
 
 安装：
 
@@ -1202,7 +1414,7 @@ module.exports = router;
 npm install koa-bodyparser
 ```
 
-在app.js使用这个中间件：
+在 app.js 使用这个中间件：
 
 ```js
 const Koa = require('koa');
@@ -1225,22 +1437,22 @@ app.use(routes.routes()).use(routes.allowedMethods());
 
 ### 跨域访问
 
-通过上面的实例，我们已经能够经过postman请求接口并存入数据了。为了验证接口是否能够在前端项目里面调用，我们将在前端页面中去请求这个接口。前端项目地址：待补充
+通过上面的实例，我们已经能够经过 postman 请求接口并存入数据了。为了验证接口是否能够在前端项目里面调用，我们将在前端页面中去请求这个接口。前端项目地址：待补充
 
-在启动页面之后我们输入对应的数据，点击注册。我们发现浏览器的console里面报了一个错误。
+在启动页面之后我们输入对应的数据，点击注册。我们发现浏览器的 console 里面报了一个错误。
 
 Failed to load http://localhost:3000/v1/users/register: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://localhost:8080' is therefore not allowed access.
-
-
 
 这正是因为我们的接口没有允许跨域访问请求导致的。
 
 ![22](koa/22.jpg)
 
-为了解决这个问题，我们使用 [koa-cors](https://www.npmjs.com/package/koa-cors) 中间件来处理跨域。
+> 描述 补充
+
+为了解决这个问题，我们使用 [koa-cors](https://www.npmjs.com/package/koa-cors) 中间件来处理跨域请求。
 
 ```shell
-npm install koa-cors 
+npm install koa-cors
 ```
 
 app.js
@@ -1248,7 +1460,7 @@ app.js
 ```js
 ……
 const cors = require('koa-cors');
- 
+
 ……
 app.use(logger());
 app.use(cors());
@@ -1269,6 +1481,10 @@ app.use(bodyParser());
 
 JWT（JSON Web Tokens） 是一个方便的一种实现服务器与客服端安全通讯的一种规范。
 
+### JWT
+
+> 补充
+
 ### 安装和使用
 
  为了能够对用户登录进行验证，我们使用 JWT 来做校验，首先需要安装 [koa-jwt](https://github.com/koajs/jwt) 中间件。
@@ -1277,18 +1493,56 @@ JWT（JSON Web Tokens） 是一个方便的一种实现服务器与客服端安�
 npm install koa-jwt
 ```
 
-在config.js中添加jwt的加密混淆字符串：
+在 .env 中添加 jwt 的加密混淆字符串，记得同时配置 .env.example ：
 
 ```json
-const CONFIG = {
-  ……
-
-  "JWT_SECRET":"healthy-diet" // jwt 混淆
-}
-module.exports = CONFIG;
+DB_PASSWORD=123456
+JWT_SECRET=healthy-diet
 ```
 
-我们接下来就在路由开始的地方使用jwt中间件。
+在config添加 JWT_SECRET  配置
+
+
+
+config\custom-environment-variables.json
+
+```json
+{
+  "Database": {
+    "password": "DB_PASSWORD"
+  },
+  "Token": {
+    "jwtSecret": "JWT_SECRET"
+  }
+}
+```
+
+注意：下面的设置保留了数据库密码和jwtSecret方便查看本项目，实际上需要移除
+
+```js
+{
+  "App": {
+    "apiVersion": "/v1",
+    "server": "0.0.0.0",
+    "port": 3000
+  },
+  "Database": {
+    "user": "Yuu",
+    "password": "123456",
+    "host": "127.0.0.1",
+    "dbName": "healthyDiet",
+    "port": 3001
+  },
+  "Token": {
+    "jwtSecret": "healthy-diet"
+  }
+}
+
+```
+
+
+
+我们接下来就在路由开始的地方使用 jwt 中间件。
 
 routes/index.js：
 
@@ -1296,6 +1550,8 @@ routes/index.js：
 ……
 const response = require('../utils/response');
 const jwt = require('koa-jwt');
+const config = require('config');
+const jwtSecret = config.get('Token.jwtSecret');
 
 ……
 // 处理token验证出错，返回401
@@ -1313,7 +1569,7 @@ router.use( (ctx, next) => {
 });
 
 // 只有token验证通过了之后才执行这一行以后的中间件
-router.use(jwt({ secret: config.JWT_SECRET }));
+router.use(jwt({ secret: jwtSecret }));
 
 for (item in routeConfig) {
   router.use(routeConfig[item].path, routeConfig[item].route.routes(), routeConfig[item].route.allowedMethods());
@@ -1322,17 +1578,19 @@ for (item in routeConfig) {
 module.exports = router;
 ```
 
+> 代码描述
+
 启动服务之后，我们继续来访问注册接口，会得到以下提示：
 
 ![24](koa/24.jpg)
 
-表示我们的注册接口已经收到了jwt的验证。
+表示我们的注册接口已经收到了 jwt 的验证。
 
-### 公共路由
+### 公用路由
 
-为了使我没点注册接口不需要token验证，我们单独配置一个公用的路由，在routes目录下新增一个public.js，
+为了使注册接口不需要 token 验证，我们单独配置一个公用的路由，在 routes 目录下新增一个public.js，
 
-讲用户注册的路由移到这里。
+将用户注册的路由移到这里。
 
 routes/public.js
 
@@ -1355,14 +1613,10 @@ module.exports = router;
 
 ```
 
-然后在routes目录的index.js引入刚才新建的public路由，并且对路由进行设置，添加到中间件。
+然后在 routes 目录的 index.js 引入刚才新建的 public 路由，并且对路由进行设置，添加到中间件。
 
 ```js
-const jwt = require('koa-jwt');
-const response = require('../utils/response');
-const users = require('./users');
-const material = require('./material');
-const public = require('./public');
+// 省略
 const routeConfig = [
   {
     path: '/users',
@@ -1378,13 +1632,13 @@ const publicRouteConfig = [
     route: public
   }
 ]
-……
+// 省略
 
 for (item in publicRouteConfig) {
   router.use(publicRouteConfig[item].path, publicRouteConfig[item].route.routes(), publicRouteConfig[item].route.allowedMethods());
 }
 // 只有token验证通过了之后才执行这一行以后的中间件
-router.use(jwt({ secret: config.JWT_SECRET }));
+router.use(jwt({ secret: jwtSecret }));
 
 for (item in routeConfig) {
   router.use(routeConfig[item].path, routeConfig[item].route.routes(), routeConfig[item].route.allowedMethods());
@@ -1394,21 +1648,21 @@ module.exports = router;
 
 ```
 
-启动服务，我们把前端的注册接口改为调用http://localhost:3000/v1/public/register，请求有响应，证明路由设置成功。
+启动服务，我们把前端的注册接口改为调用 http://localhost:3000/v1/public/register ，请求有响应，证明路由设置成功。
 
 ### 用户登录接口
 
-既然token验证已经加入项目中，我们在调用接口时就需要验证用户登录的token信息，下面来添加用户登录接口，当用户登录之后，后台记录token信息，并且返回给前端token。
+既然 token 验证已经加入项目中，我们在调用接口时就需要验证用户登录的 token 信息，下面来添加用户登录接口，当用户登录之后，后台记录 token 信息，并且返回给前端 token。
 
-首先，我们安装 jsonwebtoken 来实现jwt：
+首先，我们安装 jsonwebtoken 来实现 jwt：
 
 ```shell
 npm install jsonwebtoken
 ```
 
-接着为user的model增加一个查询单个用户的方法。
+接着为 user 的 model 增加一个查询单个用户的方法。
 
-models/user.js 
+models/user.js
 
 ```js
 ……
@@ -1428,13 +1682,15 @@ models/user.js
 ……
 ```
 
-修改了model之后，我们在controllers中添加对应的注册逻辑
+修改了 model 之后，我们在 controllers 中添加对应的注册逻辑
 
 controllers\user.js
 
 ```js
 ……
 const jwt = require('jsonwebtoken');
+const config = require('config');
+const jwtSecret = config.get('Token.jwtSecret');
 
 class UserController {
   constructor() {}
@@ -1452,7 +1708,7 @@ class UserController {
       let userToken = {
         email: result.email
       }
-      const token = jwt.sign(userToken, config.JWT_SECRET, {expiresIn: '3h'}) //token签名 有效期为3小时
+      const token = jwt.sign(userToken, jwtSecret, {expiresIn: '3h'}) //token签名 有效期为3小时
       const res = {
         result: '登录成功！',
         token: token
@@ -1474,7 +1730,7 @@ module.exports = userController;
 
 ```
 
-然后在上面提到的routes/public.js中添加登录接口。
+然后在上面提到的 routes/public.js 中添加登录接口。
 
 ```js
 // 用户登录接口
@@ -1498,7 +1754,7 @@ router.post('/signin', async (ctx, next) => {
 
 > 待整理
 
-# koa学习笔记——**application.js** 
+# koa学习笔记——**application.js**
 
 ## 创建服务
 
@@ -1513,7 +1769,7 @@ app.listen(3000);
 ```js
   listen(...args) {
 	debug('listen');
-	const server = http.createServer(this.callback()); 
+	const server = http.createServer(this.callback());
 	return server.listen(...args);
   }
 ```
@@ -1719,7 +1975,7 @@ function * legacyMiddleware (next) {
   yield next
   // after
 }
- 
+
 function modernMiddleware (ctx, next) {
   // before
   return next().then(() => {
@@ -1737,7 +1993,7 @@ koa2用采用了es6，7的新特性，因为后端的很多操作方法，比如
 以前采用callback：
 
 ```js
-exports.getUserList = function() { 
+exports.getUserList = function() {
 	user.find({
 	 _id: id,
 	}, arr, function(e, numberAffected, raw) {
@@ -1834,7 +2090,7 @@ app.listen(3000);
 
 ## Response处理
 
-在前面的介绍之后可以看到，在请求经过中间件的处理完成之后，就会调用 callback 函数里面的 `handleResponse ` 来处理响应，`handleResponse ` 调了应用本身的 `respond` 
+在前面的介绍之后可以看到，在请求经过中间件的处理完成之后，就会调用 callback 函数里面的 `handleResponse ` 来处理响应，`handleResponse ` 调了应用本身的 `respond`
 
 
 
