@@ -33,7 +33,7 @@ const index = (ctx, next) => {
 
 router.get('/', index);
 
-// 处理token验证出错，返回401
+// 处理token验证出错，返回401,处理其它错误
 router.use( (ctx, next) => {
   return next().catch((err) => {
     if (401 == err.status) {
@@ -42,6 +42,11 @@ router.use( (ctx, next) => {
         errorCode: '003'
       })
     } else {
+      ctx.status = err.status || err.code;
+      ctx.body = response({
+        errorCode: ctx.status,
+        msg: err.message
+      });
       throw err;
     }
   });

@@ -19,6 +19,7 @@
     "koa-cors": "0.0.16",
     "koa-jwt": "^3.3.2",
     "koa-router": "^7.4.0",
+    "koa2-validation": "^0.1.0",
     "log4js": "^2.6.1",
     "mongoose": "^5.1.1"
   },
