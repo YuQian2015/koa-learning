@@ -1,28 +1,33 @@
-const {material} = require('../models');
+const validate = require('koa2-validation');
+const Joi = require('joi');
+const {material} = require('../controllers');
 const router = require('koa-router')();
 
-router.get('/', async (ctx, next) => {
-
-  try {
-    ctx.response.body = await material.create({
-      code: 'ZB-M-00001', // 食材编号
-      purchasingDate: new Date(), // 采购日期
-      name: '土豆', // 名称
-      manufactureDate: new Date(), //生成日期
-      qualityPeriod: new Date(), // 保质期
-      quantity: 1, // 数量
-      unit: '个', // 单位
-      price: 10, // 单价
-      totalPrice: 10, // 金额
-      purchaserName: 'Yuu', // 采购人
-      inspectorName: 'Yuu', // 收验货人
-      supplierName: 'Z', // 供货人
-      sign: '123456789.png', // 签字
-    });
-  } catch (err) {
-    console.log(err)
-    throw new Error(err);
+const addMaterial = {
+  body: {
+    code: Joi.string().required(), // 食材编号
+    name: Joi.string().required(), // 名称
+    unit: Joi.string().required(), // 单位
+    price: Joi.number(), // 单价
+    type: Joi.number(), // 类型
+    createDate: Joi.date() // 创建时间
   }
+}
+
+const getMaterial = {
+  params: {
+    code: Joi.string().required(), // 食材编号
+  }
+}
+
+router.post('/add', validate(addMaterial), async (ctx, next) => {
+  let reqBody = ctx.request.body;
+  ctx.body = await material.addMaterial(reqBody);
+});
+
+router.get('/:code', validate(getMaterial), async (ctx, next) => {
+  let reqParams = ctx.params;
+  ctx.body = await material.getMaterial(reqParams);
 });
 
 module.exports = router;

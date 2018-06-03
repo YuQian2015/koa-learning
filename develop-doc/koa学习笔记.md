@@ -1969,6 +1969,206 @@ When validating a schema:
 
 
 
+## 数据新增和查询
+
+在前面的介绍中，我们已经通过koa2-validation验证请求参数，现在讲开始进行数据插入和查询。下面的介绍将以 material 为例，我们讲在 material 集合里面插入文档，并且通过请求查询文档。
+
+为了实现新增和查询，我们先来改造 material model，和之前的user创建一样，我们增加查询和单个查询：
+
+models/material.js
+
+```js
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+let materialModel = mongoose.model('Material', new Schema({
+  code: String, // 食材编号
+  name: String, // 名称
+  unit: String, // 单位
+  price: Number, // 单价
+  type: Number, // 类型
+  createDate: Date // 创建时间
+}));
+
+class Material {
+  constructor() {
+    this.material = materialModel;
+    this.create = this.create.bind(this);
+  }
+  create(dataArr) {
+    return new Promise((resolve, reject) => {
+      let material = new this.material(dataArr);
+      material.save((err, data) => {
+
+        if (err) {
+          console.log(err)
+          reject(err);
+          return
+        }
+        console.log('添加成功');
+        resolve(data)
+      });
+    })
+  }
+
+  // 查询材料
+  find(dataArr = {}) {
+    return new Promise((resolve, reject) => {
+
+      this.material.find(dataArr, (err, docs) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(docs);
+        }
+      })
+    })
+  }
+
+  // 查询一种材料
+  findOne(reqParams) {
+    return new Promise((resolve, reject) => {
+      this.material.findOne(reqParams, (err, docs) => { // 查询
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(docs);
+        }
+      })
+    })
+  }
+}
+
+const material = new Material()
+
+module.exports = material;
+
+```
+
+同样的，为了操作新增和查询，我们也需要一个controller，所以我们在 controllers 目录新建  material.js：
+
+controllers/material.js
+
+```js
+let {material} = require('../models');
+const response = require('../utils/response');
+
+class MaterialController {
+  constructor() {}
+  // 接收请求传过来的body
+  async addMaterial(reqBody) {
+    let dataArr = { // 添加创建时间
+      ...reqBody,
+      createDate: new Date()
+    }
+    try {
+      console.log("添加材料");
+      let list = await material.find({name: dataArr.name});   // 先通过材料名验证材料是否存在
+      let respon = {};
+      if (list && list.length > 0) {
+        respon = response({errorCode: '010'}); // 已经存在的材料提示错误
+      } else {
+        let newMaterial = await material.create(dataArr);
+        respon = response({data: newMaterial});
+      }
+      return respon;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
+    }
+  }
+
+  // 获取材料
+  async getMaterial(reqParams) {
+    try {
+      let respon = {};
+      let result = await material.findOne(reqParams);
+      respon = response({data: result});
+      return respon;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
+    }
+
+  }
+}
+
+const materialController = new MaterialController();
+
+module.exports = materialController;
+
+```
+
+当然也不要忘记引入新增的controller，在 controllers/index.js 中引入：
+
+```js
+const user = require('./user');
+const material = require('./material');
+
+module.exports = {
+  user, material
+};
+```
+
+最后就是要在路由配置请求了，在 routes/material.js 中，我们将对添加材料和查询材料的接口进行定义，我们用GET请求来查询材料信息，并且对请求的参数 params 进行了校验：
+
+```js
+const validate = require('koa2-validation');
+const Joi = require('joi');
+const {material} = require('../controllers');
+const router = require('koa-router')();
+
+const addMaterial = {
+  body: {
+    code: Joi.string().required(), // 食材编号
+    name: Joi.string().required(), // 名称
+    unit: Joi.string().required(), // 单位
+    price: Joi.number(), // 单价
+    type: Joi.number(), // 类型
+    createDate: Joi.date() // 创建时间
+  }
+}
+
+const getMaterial = {
+  params: { // 需要注意这里的校验改为了 params
+    code: Joi.string().required(), 
+  }
+}
+
+router.post('/add', validate(addMaterial), async (ctx, next) => {
+  let reqBody = ctx.request.body;
+  ctx.body = await material.addMaterial(reqBody);
+});
+
+router.get('/:code', validate(getMaterial), async (ctx, next) => {
+  let reqParams = ctx.params;
+  ctx.body = await material.getMaterial(reqParams);
+});
+
+module.exports = router;
+
+```
+
+重新启动服务，在postman里面进行验证，这里提一下，由于我们的接口都需要token验证，因此需要先调用登录接口获得token，在postman中添加headers  `Authorization : Bearer token信息`  ，先来新增一个材料试试：
+
+首先是设置headers验证
+
+![27](koa/27.jpg)
+
+然后传入参数点击发送：
+
+![28](koa/28.jpg)
+
+我们可以尝试重复发送请求，看是否会提示添加的材料重复，同样的，我们来看看查询是否有结果：
+
+![29](koa/29.jpg)
+
+至此，我们已经能够通过请求来做新增和查询了。
+
 
 
 ## 文件上传
