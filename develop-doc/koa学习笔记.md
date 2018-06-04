@@ -1969,9 +1969,11 @@ When validating a schema:
 
 
 
-## 数据新增和查询
+## 数据操作
 
-在前面的介绍中，我们已经通过koa2-validation验证请求参数，现在讲开始进行数据插入和查询。下面的介绍将以 material 为例，我们讲在 material 集合里面插入文档，并且通过请求查询文档。
+### 新增和查询
+
+在前面的介绍中，我们已经通过koa2-validation验证请求参数，现在讲开始进行数据插入和查询。下面的介绍将以 material 为例，我们将在 material 集合里面插入文档，并且通过请求查询文档。
 
 为了实现新增和查询，我们先来改造 material model，和之前的user创建一样，我们增加查询和单个查询：
 
@@ -1994,6 +1996,8 @@ class Material {
   constructor() {
     this.material = materialModel;
     this.create = this.create.bind(this);
+    this.find = this.find.bind(this);
+    this.findOne = this.findOne.bind(this);
   }
   create(dataArr) {
     return new Promise((resolve, reject) => {
@@ -2126,7 +2130,7 @@ const addMaterial = {
   body: {
     code: Joi.string().required(), // 食材编号
     name: Joi.string().required(), // 名称
-    unit: Joi.string().required(), // 单位
+    unit: Joi.string(), // 单位
     price: Joi.number(), // 单价
     type: Joi.number(), // 类型
     createDate: Joi.date() // 创建时间
@@ -2168,6 +2172,152 @@ module.exports = router;
 ![29](koa/29.jpg)
 
 至此，我们已经能够通过请求来做新增和查询了。
+
+### 使用继承
+
+通过上面的实战，我们发现，在新增用户查询用户，新增材料查询材料的时候，我们都会去新增model来做查询和创建数据，细心观察我们发现这些model做的工作实际是一样的，无非就是增删查改，为了减少重复，我们决定把model单独抽取出来作为一个类，然后通过继承这个类来实现增删查改。
+
+二话不说，先在models目录新建一个model.js，把对数据做的操作写进来，根据前面的介绍，我们只做了查询和新增，下面先写到 model.js ，在接下来的实战中，我们还会增加更多的处理：
+
+models/model.js
+
+```js
+// 新增一个Model class
+class Model {
+  constructor(model) {
+    this.model = model;
+    this.find = this.find.bind(this); // 绑定上下文
+    this.create = this.create.bind(this);
+    this.findOne = this.findOne.bind(this);
+  }
+
+  // 查询
+  find(dataArr = {}) {
+    return new Promise((resolve, reject) => {
+      // 上面绑定了上下文，这里使用this.model
+      this.model.find(dataArr, (err, docs) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(docs);
+        }
+      })
+    })
+  }
+
+  // 查询单个
+  findOne(dataArr) {
+    return new Promise((resolve, reject) => {
+      this.model.findOne(dataArr, (err, docs) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(docs);
+        }
+      })
+    })
+  }
+
+  // 创建
+  create(dataArr) {
+    return new Promise((resolve, reject) => {
+      let model = new this.model(dataArr);
+      model.save((err, data) => {
+        if (err) {
+          console.log(err)
+          reject(err);
+          return
+        }
+        console.log('创建成功');
+        resolve(data)
+      });
+    })
+  }
+}
+
+module.exports = Model;
+
+```
+
+接下来的事情就变得更简单了，我们来改造原来的models/material.js 和 models/user.js ：
+
+models/material.js
+
+```js
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const Model = require('./model');
+
+let materialModel = mongoose.model('Material', new Schema({
+  code: String, // 食材编号
+  name: String, // 名称
+  unit: String, // 单位
+  price: Number, // 单价
+  type: Number, // 类型
+  createDate: Date // 创建时间
+}));
+
+class Material extends Model {
+  constructor() {
+    super(materialModel); // 调用父级class的构造函数，并且把自己的model传递过去
+  }
+}
+
+const material = new Material()
+
+module.exports = material;
+
+```
+
+models/user.js
+
+```js
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const Model = require('./model');
+
+// 创建一个User model，包含用户新增的字段定义
+let userModel = mongoose.model('User', new Schema({
+  userNo: String,
+  email: String,
+  password: String,
+  name: String,
+  sex: Number,
+  userType: String,
+  avatar: String,
+  createDate: Date
+}));
+
+class User extends Model {
+  constructor() {
+    super(userModel); 
+  }
+}
+const user = new User()
+
+module.exports = user;
+
+```
+
+重新启动服务，我们就可以再次调用接口验证了。
+
+### 修改和删除
+
+### 自增ID
+
+
+
+### ES6中的CLASS继承
+
+> 待补充
+
+constructor
+
+super 
+
+extends
 
 
 

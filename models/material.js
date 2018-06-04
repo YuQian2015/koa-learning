@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Model = require('./model');
 
 let materialModel = mongoose.model('Material', new Schema({
   code: String, // 食材编号
@@ -19,54 +20,9 @@ let materialModel = mongoose.model('Material', new Schema({
   // sign: String,  签字
 }));
 
-class Material {
+class Material extends Model {
   constructor() {
-    this.material = materialModel;
-    this.create = this.create.bind(this);
-  }
-  create(dataArr) {
-    return new Promise((resolve, reject) => {
-      let material = new this.material(dataArr);
-      material.save((err, data) => {
-
-        if (err) {
-          console.log(err)
-          reject(err);
-          return
-        }
-        console.log('添加成功');
-        resolve(data)
-      });
-    })
-  }
-
-  // 查询材料
-  find(dataArr = {}) {
-    return new Promise((resolve, reject) => {
-
-      this.material.find(dataArr, (err, docs) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          resolve(docs);
-        }
-      })
-    })
-  }
-
-  // 查询一种材料
-  findOne(reqParams) {
-    return new Promise((resolve, reject) => {
-      this.material.findOne(reqParams, (err, docs) => { // 查询
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          resolve(docs);
-        }
-      })
-    })
+    super(materialModel); // 调用父级class的构造，并且把自己的model传递过去
   }
 }
 

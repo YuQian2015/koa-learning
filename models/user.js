@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Model = require('./model');
 
 // 创建一个User model，包含用户新增的字段定义
 let userModel = mongoose.model('User', new Schema({
@@ -13,58 +14,9 @@ let userModel = mongoose.model('User', new Schema({
   createDate: Date
 }));
 
-// 新增一个用户class
-class User {
+class User extends Model {
   constructor() {
-    this.users = userModel;
-    this.find = this.find.bind(this); // 绑定上下文
-    this.create = this.create.bind(this);
-  }
-
-  // 查询用户
-  find(dataArr = {}) {
-    return new Promise((resolve, reject) => {
-
-      // 上面绑定了上下文，这里使用this.users
-      this.users.find(dataArr, (err, docs) => { // 查询
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          resolve(docs);
-        }
-      })
-    })
-  }
-
-  // 查询单个用户
-  findOne(dataArr) {
-    return new Promise((resolve, reject) => {
-      this.users.findOne(dataArr, (err, docs) => { // 查询
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          resolve(docs);
-        }
-      })
-    })
-  }
-
-  // 创建用户
-  create(dataArr) {
-    return new Promise((resolve, reject) => {
-      let users = new this.users(dataArr);
-      users.save((err, data) => {
-        if (err) {
-          console.log(err)
-          reject(err);
-          return
-        }
-        console.log('创建用户成功');
-        resolve(data)
-      });
-    })
+    super(userModel); // 调用父级class的构造，并且把自己的model传递过去
   }
 }
 const user = new User()
