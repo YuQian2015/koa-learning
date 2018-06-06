@@ -1,0 +1,35 @@
+.RegisterPage {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background: @color-white;
+  background: url("@{images}/register/login.jpg") no-repeat center center/auto 100%;
+
+  .main {
+    width: 100%;
+    word-break: break-all;
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 2rem;
+    .mixin-center;
+
+    .validate-image {
+      margin-right: 1rem;
+      height: 4.4rem;
+      width: 10rem;
+      border-radius: 0.5rem;
+    }
+  }
+
+  .go-login {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin: 2rem auto;
+
+    a {}
+    font-size: @font-normal;
+    color: @color-white;
+  }
+}

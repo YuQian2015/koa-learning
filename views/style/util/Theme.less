@@ -1,0 +1,21 @@
+.theme-input {
+  .mixin-input;
+  border: none;
+  border-bottom: 1px solid @color-gray;
+  color: @color-darkest;
+  &:focus {
+      border-bottom: 1px solid @color-normal;
+  }
+}
+
+.theme-button {
+  .mixin-btn;
+  .mixin-btn-active(#ff6c03);
+  &.block {
+    display:  block;
+    width: 100%;
+  }
+  border: none;
+  background: @color-normal;
+  color: @color-white;
+}

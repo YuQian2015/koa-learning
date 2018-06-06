@@ -1,0 +1,14 @@
+.PageContainer{
+  height: 100%;
+  max-width: 480px;
+  position: relative;
+  margin: 0 auto;
+  .content{
+    overflow-x: hidden;
+    height: 100%;
+    background: @color-white;
+  }
+  .content.has-footer {
+    height: calc(~"100% - 49px");
+  }
+}

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <!--width - 可视区域的宽度，值可为数字或关键词device-width -->
+    <!--height - viewport的高度-->
+    <!--initial-scale - 初始的缩放比例-->
+    <!--minimum-scale - 允许用户缩放到的最小比例-->
+    <!--maximum-scale - 允许用户缩放到的最大比例-->
+    <!--user-scalable - 用户是否可以手动缩放-->
+    <meta name = "viewport" content = "width = device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable = 0" />
+    <!--content="telephone=yes" 在iPhone 手机上默认值是（电话号码显示为拨号的超链接）：-->
+    <!--可将telephone=no，则手机号码不被显示为拨号链接-->
+    <!--使设备浏览网页时对数字不启用电话功能（不同设备解释不同，itouch点击数字为存入联系人，iphone为拨打电话），忽略将页面中的数字识别为电话号码。-->
+    <meta name="format-detection" content="telephone=no" />
+    <!--忽略识别邮箱-->
+    <meta name="format-detection" content="email=no" />
+    <!--网站开启对 web app 程序的支持-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <!--在 web app 应用下状态条（屏幕顶部条）的颜色；(改变顶部状态条的颜色)-->
+    <!--默认值为 default（白色），可以定为 black（黑色）和 black-translucent（灰色半透明）；-->
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <!--http-equiv="Content-Type" 表示描述文档类型-->
+    <!--HTTP-EQUIV类似于HTTP的头部协议，它回应给浏览器一些有用的信息，以帮助正确和精确地显示网页内容-->
+    <meta http-equiv="Content-Type" content="text/html">
+    <!-- UC默认竖屏 ，UC强制全屏 -->
+    <meta name="full-screen" content="yes">
+    <!--使用了application这种应用模式后，页面讲默认全屏，禁止长按菜单，禁止收拾，标准排版，以及强制图片显示。-->
+    <!--应用模式-->
+    <meta name="browsermode" content="application">
+    <!-- QQ强制竖屏 QQ强制全屏 -->
+    <!--设置屏幕方向-->
+    <meta name="x5-orientation" content="portrait">
+    <!--设置全屏-->
+    <meta name="x5-fullscreen" content="true">
+    <!--设置屏幕模式-->
+    <meta name="x5-page-mode" content="app">
+    <!-- windows phone 点击无高光 -->
+    <meta name="msapplication-tap-highlight" content="no">
+  </head>
+  <body>
+    <div id="app"></div>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <!-- <script src="http://localhost:8080/webpack-dev-server.js"></script> -->
+    <!-- <script src="bundle.js"></script> -->
+  </body>
+</html>

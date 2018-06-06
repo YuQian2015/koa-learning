@@ -1,0 +1,27 @@
+@import "Variable.less";
+
+.UI {
+  .input-box {
+    .mixin-flex;
+    .mixin-flex-center;
+    background: @color-white;
+    border-bottom: solid 1px @color-gray;
+    input[type='text'], input[type='tel'], input[type='password'] {
+      border-bottom: none;
+    }
+    i {
+      margin: 0 .8rem;
+      font-size: 2.4rem;
+      color: @color-darker;
+    }
+    margin-bottom: 1rem;
+  }
+  input[type='text'], input[type='tel'], input[type='password'] {
+    .theme-input;
+    .mixin-flex-1;
+  }
+
+  .button, button, input[type='button'], input[type='submit']{
+    .theme-button;
+  }
+}

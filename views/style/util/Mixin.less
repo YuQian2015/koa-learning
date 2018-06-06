@@ -1,0 +1,57 @@
+.mixin-item {
+  height: 4.4rem;
+  line-height: 4.4rem;
+  box-sizing: border-box;
+  padding: 0 1rem;
+  font-size: @font-normal;
+  position: relative;
+}
+
+.mixin-input {
+  .mixin-item;
+}
+
+.mixin-btn {
+  .mixin-item;
+}
+
+.mixin-center {
+  position: absolute;
+  top: 50%;
+  transform: translate3d(0,-50%,0);
+  -webkit-transform: translate3d(0,-50%,0);
+}
+
+.mixin-flex {
+  display: -webkit-flex;
+  display: flex;
+}
+
+.mixin-flex-center {
+  align-items: center;
+  -webkit-align-items: center;
+}
+
+.mixin-flex-1 {
+  display: block;
+  -webkit-flex: 1;
+  flex: 1;
+}
+
+.mixin-btn-active(@color: #000000) {
+  &:active {
+    -webkit-filter: brightness(110%);
+    filter: brightness(110%);
+  }
+  // &:active::after {
+  //   content: "";
+  //   display: block;
+  //   border-radius: 5px;
+  //   border: 1px solid #ff6c03;
+  //   width: 101%;
+  //   height: 101%;
+  //   top: 0;
+  //   left: 0;
+  //   position: absolute;
+  // }
+}

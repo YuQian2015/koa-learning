@@ -1,0 +1,102 @@
+.HomePage {
+  .todo {
+    height: 44px;
+    border-bottom: solid 1px @color-gray;
+    .mixin-flex;
+
+    .todo-title {
+      border-right: solid 1px @color-gray;
+      padding: 0 10px;
+      color: @color-darker;
+      line-height: 44px;
+
+      i {
+        font-size: 3.2rem;
+      }
+    }
+
+    .todo-content {
+      color: @color-darkest;
+      .mixin-flex-1;
+      line-height: 44px;
+      padding: 0 10px;
+      font-size: @font-normal;
+      white-space: nowrap;
+    }
+  }
+
+  .menu {
+    .mixin-flex;
+    border-bottom: solid 1px @color-gray;
+
+    .menu-item {
+      .mixin-flex-1;
+      text-align: center;
+      line-height: 4.4rem;
+    }
+  }
+
+  .today-menu {
+    p {
+      line-height: 3rem;
+      background: @color-light;
+      color: @color-darker;
+      font-size: @font-smaller;
+      padding: 0 1rem;
+    }
+
+    .new-diet {
+      margin: 1rem;
+      background: @color-normal;
+      color: @color-white;
+      line-height: 10rem;
+      text-align: center;
+      border-radius: 0.8rem;
+      font-size: @font-large;
+    }
+  }
+
+  .news {
+    > p {
+      line-height: 3rem;
+      background: @color-light;
+      color: @color-darker;
+      font-size: @font-smaller;
+      padding: 0 1rem;
+    }
+
+    .news-box {
+      padding-left: 1rem;
+
+      .news-item {
+        .mixin-flex;
+        .mixin-flex-center;
+        border-bottom: solid 1px @color-gray;
+        .icon {
+          font-size: 3.2rem;
+        }
+        p {
+          line-height: 6rem;
+          color: @color-darker;
+          font-size: @font-normal;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          height: 6rem;
+          .mixin-flex-1;
+        }
+        span {
+          padding: 1rem;
+        }
+      }
+    }
+
+    .news-box:last-child {
+      padding-left: 0;
+
+      .news-item {
+        padding-left: 1rem;
+      }
+    }
+  }
+}
