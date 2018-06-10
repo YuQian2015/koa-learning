@@ -2329,9 +2329,150 @@ module.exports = user;
 
 重新启动服务，我们就可以再次调用接口验证了。
 
+### 自增代码
+
+关于前面写好的材料新增接口，由于前端调用时需要传递code，code表示材料的代码，并且接口只判断了材料名是否重复，并没有判断code，因此，我们打算做一个自增的code，由后台管理，并且前端并不需要传递code。
+
+MongoDB默认使用12-byte ObjectId  的 _id 字段来作为文档的唯一标识，然而有时候我们需要修改这个字段，或者修改别的字段，使它的值能够自增，因此我们需要新增一个MongoDB文档推荐的 counters 集合，以本实战为例，我们接下来为 material 新增的文档的code字段做自增。
+
+首先，这个集合包含两个字段 `_id` 和 `sequenceValue` , sequenceValue 就是用来记录最新的数值，而 _id 将用来标识当前的值是属于哪一种类型的自增。
+
+我们在 models 目录新建一个 counters.js，然后创建需要的 model ，在这个 model 中，我们定义了能够用来自增的方法 `findByIdAndUpdate` 并且对 sequenceValue 的值进行了加1，需要注意的是，如果一开始没有这个文档，我们需要 `{ new: true,  upsert: true}` 选项来创建默认的文档。
+
+models/counters.js
+
+```js
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const Model = require('./model');
+
+let countersModel = mongoose.model('Counters', new Schema({
+  "_id": {
+    type: String,
+    required: true
+  },
+  "sequenceValue": {
+    type: Number,
+    default: 1
+  }
+}));
+
+class Counters extends Model {
+  constructor() {
+    super(countersModel);
+    this.findByIdAndUpdate = this.findByIdAndUpdate.bind(this);
+  }
+
+  findByIdAndUpdate(id) {
+
+    return new Promise((resolve, reject) => {
+      // 如果有计数，则对序列值进行自增,如果没有则创建
+      this.model.findByIdAndUpdate({
+        _id: id
+      }, {
+        $inc: {
+          sequenceValue: 1
+        }
+      }, {
+        new: true,
+        upsert: true
+      }, (err, docs) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(docs);
+        }
+      })
+    })
+  }
+}
+
+const counters = new Counters()
+
+module.exports = counters;
+
+```
+
+准备好 counters 之后，我们就需要对之前的 models/material.js 进行修改，首先我们把材料的code设置为 Number 类型并且默认值为1，然后使用mongoose的pre钩子在储存之前对model进行操作。我们可以通过下面的代码看到，在更新counters成功之后，我们会设置 material 的 code 和创建时间，并且调用了钩子的 next 进入下一个处理。
+
+```js
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const Model = require('./model');
+const Counters = require('./Counters');
+const materialSchema = new Schema({
+  code: {
+    type: Number,
+    default: 1
+  }, // 食材编号
+	// 省略
+})
+
+materialSchema.pre('save', async function(next) {
+  try {
+    let countenr = await Counters.findByIdAndUpdate('materialId');
+    if (!this.createDate) {
+      this.createDate = new Date();
+    }
+    this.code = countenr.sequenceValue;
+    next()
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+});
+
+let materialModel = mongoose.model('Material', materialSchema);
+
+// 省略
+
+```
+
+然后剩的就是处理controllers和 router了，我们在 controllers/material.js 里把添加材料接收参数去掉日期的创建，并且在 routes/material.js 里面去掉code必填的校验。
+
+ controllers/material.js 
+
+```js
+
+// 省略
+
+class MaterialController {
+  constructor() {}
+  // 接收请求传过来的body
+  async addMaterial(reqBody) {
+    let dataArr = { // 添加创建时间
+      ...reqBody
+    }
+// 省略
+
+```
+
+ routes/material.js
+
+```js
+// 省略
+const addMaterial = {
+  body: {
+    // code: Joi.string().required(), // 把这里的校验去掉
+    name: Joi.string().required(), 
+    unit: Joi.string(), 
+    price: Joi.number(),
+    type: Joi.number(), 
+    createDate: Joi.date() 
+  }
+}
+// 省略
+```
+
+然后我们启动服务，就可以调用接口进行测试了，新增材料可以不传递code，完全有后台自动增加code的值。
+
+![30](koa/30.jpg)
+
+
+
 ### 修改和删除
 
-### 自增ID
+### 
 
 
 

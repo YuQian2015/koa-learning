@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Model = require('./model');
-
-let materialModel = mongoose.model('Material', new Schema({
-  code: String, // 食材编号
+const Counters = require('./Counters');
+const materialSchema = new Schema({
+  code: {
+    type: Number,
+    default: 1
+  }, // 食材编号
   // purchasingDate: Date,  采购日期
   name: String, // 名称
   // manufactureDate: Date, 生成日期
@@ -18,7 +21,23 @@ let materialModel = mongoose.model('Material', new Schema({
   // inspectorName: String,  收验货人
   // supplierName: String,  供货人
   // sign: String,  签字
-}));
+})
+
+materialSchema.pre('save', async function(next) {
+  try {
+    let countenr = await Counters.findByIdAndUpdate('materialId');
+    if (!this.createDate) {
+      this.createDate = new Date();
+    }
+    this.code = countenr.sequenceValue;
+    next()
+  } catch (err) {
+    console.log(err);
+    return next(err);
+  }
+});
+
+let materialModel = mongoose.model('Material', materialSchema);
 
 class Material extends Model {
   constructor() {

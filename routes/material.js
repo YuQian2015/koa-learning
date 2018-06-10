@@ -5,7 +5,7 @@ const router = require('koa-router')();
 
 const addMaterial = {
   body: {
-    code: Joi.string().required(), // 食材编号
+    // code: Joi.string().required(), // 食材编号
     name: Joi.string().required(), // 名称
     unit: Joi.string(), // 单位
     price: Joi.number(), // 单价

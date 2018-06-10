@@ -6,8 +6,7 @@ class MaterialController {
   // 接收请求传过来的body
   async addMaterial(reqBody) {
     let dataArr = { // 添加创建时间
-      ...reqBody,
-      createDate: new Date()
+      ...reqBody
     }
     try {
       console.log("添加材料");
