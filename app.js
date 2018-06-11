@@ -4,7 +4,8 @@ const app = new Koa();
 const config = require('config');
 const appConfig = config.get('App');
 const dbConfig = config.get('Database');
-console.log(dbConfig); 
+// const fs = require('fs'); 
+console.log(dbConfig);
 console.log(appConfig);
 
 const routes = require('./routes');
@@ -17,6 +18,25 @@ db.connect();
 app.use(logger());
 app.use(cors());
 app.use(bodyParser());
+// without koa-router
+// function readPage( page ) {
+//   return new Promise(( resolve, reject ) => {
+//     let viewUrl = `./pages${page}.html`
+//     fs.readFile(viewUrl, "binary", ( err, data ) => {
+//       if ( err ) {
+//         reject( err )
+//       } else {
+//         resolve( data )
+//       }
+//     })
+//   })
+// }
+// app.use( async (ctx, next) => {
+//   let url = ctx.request.url
+//   ctx.response.type = 'html';
+//   ctx.body = await readPage(url);
+// });
+
 app.use(routes.routes()).use(routes.allowedMethods());
 
 app.listen(appConfig.port, appConfig.ip, () => {

@@ -84,15 +84,63 @@ app.use( ( ctx ) => {
 
 启动服务之后我们在浏览器访问 http://localhost:3000 下的任何一个url即可在页面中看到返回的 路由信息。
 
+### 使用内容协商
+
+> 补充
+
 ### 设置不同路由
 
 接下来我们通过对路由地址进行判断，从对应的地址取到html页面并返回到浏览器显示。
 
-首先，要取到html的内容，我们需要读取HTML文件，
+首先，要取到html的内容，我们需要读取HTML文件，假设我们的HTML文件都在 pages 目录：
 
-> 待整理
+pages/index.html
+
+```html
+<h1>Index Page</h1>
+<a href="index">index</a>
+<a href="me">me</a>
+```
+
+pages/me.html
+
+```html
+<h1>Me Page</h1>
+<a href="index">index</a>
+<a href="me">me</a>
+```
+
+我们需要从这个目录下读取页面，并且返回到浏览器显示。
+
+app.js
+
+```js
+// 省略
+const fs = require('fs'); // 引入fs
+
+// 从pages目录读取HTML文件
+function readPage( page ) {
+  return new Promise(( resolve, reject ) => {
+    let viewUrl = `./pages${page}.html`
+    fs.readFile(viewUrl, "binary", ( err, data ) => {
+      if ( err ) {
+        reject( err )
+      } else {
+        resolve( data )
+      }
+    })
+  })
+}
+app.use( async (ctx, next) => {
+  let url = ctx.request.url
+  ctx.response.type = 'html';
+  ctx.body = await readPage(url);
+});
 
 
+```
+
+然后我们启动服务，在浏览器访问 http://localhost:3000/index ，我们可以看到页面已经显示出来，点击里面的连接，就能够切换不同的页面。
 
 
 
@@ -102,7 +150,7 @@ app.use( ( ctx ) => {
 
 > 待补充
 
-我们使用 [koa-router](https://github.com/alexmingoia/koa-router) 中间件来为项目添加路由，执行以下命令安装 koa-router：
+考虑到使用原生路由处理请求会很繁琐，我们使用 [koa-router](https://github.com/alexmingoia/koa-router) 中间件来为项目添加路由，执行以下命令安装 koa-router：
 
 ```shell
 npm install koa-router
@@ -2494,43 +2542,98 @@ extends
 
 # koa学习笔记——**application.js**
 
-## 创建服务
-
+## 创建服务 - app
+使用 koa 创建服务非常简单，只需要简单几行代码就可以了：
 ```js
-const Koa = require('koa');
-const app = new Koa();
-app.listen(3000);
+const Koa = require('koa'); // 引入koa
+const app = new Koa(); // 创建app应用
+app.listen(3000); // 监听3000端口
 ```
 
-在上面的例子中，使用 `app.listen(3000)`  来创建一个服务， `app.listen(…)` 实际上是`http.createServer(app.callback()).listen(…)`  方法的语法糖:
+在上面的代码中，使用 `app.listen(3000)`  来创建一个服务， `app.listen(…)` 实际上是`http.createServer(app.callback()).listen(…)`  方法的语法糖:
 
 ```js
   listen(...args) {
 	debug('listen');
-	const server = http.createServer(this.callback());
+	const server = http.createServer(this.callback()); // 这里传入了koa的 callback()
 	return server.listen(...args);
   }
 ```
 
 ## 处理请求 - callback
 
-`this.callback()` 首先是使用 `koa-compose` 将应用的中间件进行了合并，返回了一个方法 `handleRequest`  来处理node的http请求。在`handleRequest`  中不仅创建了 context 上下文，还调用了应用本身的 `handleRequest` 函数来处理请求。
+### callback
+
+从上面的代码中，我们看到在创建服务是，koa使用了`this.callback()` ，这个 callback 具体做了什么呢？我们先来看源码：
 
 ```js
-  callback() {
+  
+const compose = require('koa-compose');
+// 省略部分源码
+callback() {
     const fn = compose(this.middleware); // 合并中间件
 
     if (!this.listenerCount('error')) this.on('error', this.onerror);
 
-    const handleRequest = (req, res) => {
+    const handleRequest = (req, res) => { // 这里接收了node.js的原生请求和响应
       const ctx = this.createContext(req, res); // 在这里创建了上下文
-      return this.handleRequest(ctx, fn);
+      return this.handleRequest(ctx, fn); // 把上下文交由 handleRequest 处理
     };
 
     return handleRequest;
   }
 ```
-下面是应用的 `handleRequest` 函数，它接收 `callback` 方法中传递的上下文 `ctx` 和中间件`fnMiddleware` ，然后把 `ctx` 作为`fnMiddleware`的参数传递。当中间件执行完毕之后，会调用应用的 `respond()` 接收 `ctx` ，然后对响应进行处理。
+首先是使用 `compose` 将应用的中间件进行了合并，然后返回一个方法 `handleRequest`  来处理node的http请求。在 `handleRequest`  中接收请求时，不仅创建了上下文 `ctx` ，而且还调用了应用本身的 `handleRequest` 函数来处理请求。这其中有几个我们需要关心的东西：
+
+- `compose` ——  `koa-compose` 中间件，用来对中间件进行合并
+- `createContext` —— 用来创建上下文
+- `handleRequest`——用来处理请求
+
+接下来会一一对其进行介绍。
+
+### createContext
+
+这里简要分析 `createContext` 创建上下文，后面对koa context.js 源码进行分析的的时候会详细介绍 context。
+
+先上源码：
+
+```js
+  /**
+   * Initialize a new context.
+   *
+   * @api private
+   */
+
+  createContext(req, res) {
+      // 首先分别创建了 context request response三个对象
+    const context = Object.create(this.context); 
+    const request = context.request = Object.create(this.request);
+    const response = context.response = Object.create(this.response);
+      // 然后对三个对象进行了相互的赋值
+    context.app = request.app = response.app = this;
+    context.req = request.req = response.req = req; // 从参数接收到node.js原生请求
+    context.res = request.res = response.res = res; // 从参数接收到node.js原生响应
+    request.ctx = response.ctx = context;
+    request.response = response;
+    response.request = request;
+    context.originalUrl = request.originalUrl = req.url;
+    context.cookies = new Cookies(req, res, {
+      keys: this.keys,
+      secure: request.secure
+    }); // 为context 创建cookie处理
+    request.ip = request.ips[0] || req.socket.remoteAddress || '';
+    context.accept = request.accept = accepts(req); // 把请求接收类型也赋值给了context，accept被用来处理HTTP内容协商
+    context.state = {};
+    return context; // 最后返回 context
+  }
+```
+
+我们从前面介绍的 callback 中知道，`createContext` 是在 `handleRequest` 中被调用的，而  `handleRequest` 讲接收的请求和响应传递给了 `createContext` ，因此我们知道在context中， `context.req` 和 `context.res` 就是node.js 的请求和响应。而上面的源码中对context、request、response的属性相互赋值，也使得我们能够在其中任意一个对象访问到其它对象，`createContext`  对上下文、请求、响应进行处理之后，返回了创建好的 context 。
+
+### handleRequest
+
+下面是应用的 `handleRequest` 函数，它在 `callback` 方法中被调用，接收了由 `createContext` 创建的上下文 `ctx` 和 `compose` 压缩的中间件`fnMiddleware` ，然后把 `ctx` 作为`fnMiddleware` 的参数传递并调用`fnMiddleware` 。当中间件执行完毕之后，会调用应用的 `respond()` 接收 `ctx` ，然后对响应进行处理。
+
 ```js
 
   /**
@@ -2542,16 +2645,32 @@ app.listen(3000);
   handleRequest(ctx, fnMiddleware) {
     const res = ctx.res;
     res.statusCode = 404;
-    const onerror = err => ctx.onerror(err);
+    const onerror = err => ctx.onerror(err); // 这里调用了context的错误处理
     const handleResponse = () => respond(ctx);
-    onFinished(res, onerror);
-    return fnMiddleware(ctx).then(handleResponse).catch(onerror); // 将创建的上下文传递给中间件，最终返回响应
+    onFinished(res, onerror); // 当请求被关闭、完成、出错是会调用onerror
+    return fnMiddleware(ctx).then(handleResponse).catch(onerror); // 将创建的上下文传递给中间件，最终返回响应，如果出错，也会调用onerror
   }
 ```
 
+> 分析
+
+
+
 ## 上下文 - context
 
-> 待补充
+从上面的介绍可知
+
+> Koa Context 将 node 的 `request` 和 `response` 对象封装到单个对象中，为编写 Web 应用程序和 API 提供了许多有用的方法。 这些操作在 HTTP 服务器开发中频繁使用，它们被添加到此级别而不是更高级别的框架，这将强制中间件重新实现此通用功能。每个请求都将创建一个 `Context`，并在中间件中作为接收器引用，或者 `ctx` 标识符。
+
+```js
+app.use(async ctx => {
+  ctx; // 这是 Context
+  ctx.request; // 这是 koa Request
+  ctx.response; // 这是 koa Response
+});
+```
+
+> 详细介绍
 
 
 
@@ -2559,11 +2678,7 @@ app.listen(3000);
 
 ### 使用 - app.use(function)
 
-将给定的中间件方法添加到此应用程序。
-
-```js
-app.use(fn);
-```
+`app.use(fn)` 将给定的中间件方法添加到此应用程序的 `middleware` 数组。
 
 当我们执行` use()` 时，会先判断传递的中间件是否是一个函数，如果不是就报出错误，再判断中间件是否是旧版的生成器 `generator` ，如果是，就使用 `koa-convert ` 来转换成新的中间件，最后将中间件push到 `middleware` 数组里面。
 
@@ -2587,7 +2702,7 @@ app.use(fn);
       fn = convert(fn);
     }
     debug('use %s', fn._name || fn.name || '-');
-    this.middleware.push(fn);
+    this.middleware.push(fn); // 中间件添加到数组
     return this;
   }
 ```
@@ -2596,7 +2711,7 @@ app.use(fn);
 
 ### 中间件合并 - koa-compose
 
-前面的介绍我们已经知道，在调用use方法时，我们会吧所有的中间件都放到应用的一个数组里面，最终在执行callback时被调用。而在callback中，中间件被 `koa-compose` 进行了压缩。我们来看  `koa-compose` 到底做了什么。
+前面的介绍我们已经知道，在调用 `use` 方法时，我们会吧所有的中间件都放到应用的一个数组里面，最终在执行 callback 时被调用。而在 callback 中，中间件被 `koa-compose` 进行了压缩。我们来看  `koa-compose` 到底做了什么。
 
 源码：
 
