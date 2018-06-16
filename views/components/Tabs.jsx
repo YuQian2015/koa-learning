@@ -1,17 +1,53 @@
 import React from 'react';
 
-import { Link } from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 
 export default class Tabs extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tabs: [
+        {
+          tabName: "配餐",
+          linkUrl: "/home",
+          normalIcon: "hd-diet",
+          activeIcon: "hd-diet-fill"
+        }, {
+          tabName: "采购单",
+          linkUrl: "/purchase",
+          normalIcon: "hd-bill",
+          activeIcon: "hd-bill-fill"
+        }, {
+          tabName: "入库",
+          linkUrl: "/storage",
+          normalIcon: "hd-food",
+          activeIcon: "hd-food-fill"
+        }, {
+          tabName: "月结算",
+          linkUrl: "/monthly",
+          normalIcon: "hd-calculat",
+          activeIcon: "hd-calculat-fill"
+        }, {
+          tabName: "设置",
+          linkUrl: "/setting",
+          normalIcon: "hd-setting",
+          activeIcon: "hd-setting-fill"
+        }
+      ]
+    }
+  }
   render() {
-    return (
-      <ul className="Tabs">
-        <li className="tab"><Link className="hd-diet" to="/home" replace ></Link><p>配餐</p></li>
-        <li className="tab"><Link className="hd-bill" to="/purchase" replace ></Link><p>采购单</p></li>
-        <li className="tab"><Link className="hd-food" to="/storage" replace ></Link><p>入库</p></li>
-        <li className="tab"><Link className="hd-calculat" to="/monthly" replace ></Link><p>月结算</p></li>
-        <li className="tab"><Link className="hd-food" to="/setting" replace ></Link><p>设置</p></li>
-      </ul>
-    )
+    let {tabs} = this.state;
+    return (<ul className="Tabs">
+      {
+        tabs.map((item, i) => (<li className="tab" key={i}>
+          <NavLink to={item.linkUrl} activeClassName="active" replace={true}>
+            <i className={item.normalIcon}></i>
+            <i className={item.activeIcon + ' active'}></i>
+            <p>{item.tabName}</p>
+          </NavLink>
+        </li>))
+      }
+    </ul>)
   }
 }

@@ -11,17 +11,27 @@ class MainTab extends React.Component {
   }
   componentWillMount() {
     const user = userCollection.query({});
-    if (user.length == 0) {
-      this.props.history.replace("/register");
-      console.log('登录失效，退回登录页面');
-    }
+    // if (user.length == 0) {
+    //   this.props.history.replace("/register");
+    //   console.log('登录失效，退回登录页面');
+    // }
   }
   render() {
-    let {body, footer} = this.props;
-    return <div className="PageContainer UI">
-      <div className={footer
-          ? 'content has-footer'
-          : 'content'}>
+    let {body, footer, header} = this.props;
+    let contentClass = ['content'];
+    if (footer) {
+      contentClass.push('has-footer');
+    }
+    if (header) {
+      contentClass.push('has-header');
+    }
+    return (<div className="PageContainer UI">
+      {
+        header
+          ? header
+          : null
+      }
+      <div className={contentClass.join(" ")}>
         {
           body
             ? body
@@ -33,7 +43,7 @@ class MainTab extends React.Component {
           ? footer
           : null
       }
-    </div>;
+    </div>);
   }
 }
 

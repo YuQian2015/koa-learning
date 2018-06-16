@@ -16,9 +16,39 @@
 
     a {
       display: inline-block;
-      height: 30px;
-      width: 30px;
-      font-size: 30px;
+      color: @color-darker;
+
+      i {
+        height: 32px;
+        width: 32px;
+        font-size: 26px;
+        line-height: 32px;
+        text-align: center;
+      }
+
+      i.active {
+        display: none;
+      }
+
+      i:not(.active) {
+        display: block;
+      }
+
+      &.active {
+        color: @color-common;
+
+        i.active {
+          display: block;
+        }
+
+        i:not(.active) {
+          display: none;
+        }
+      }
+
+      p {
+        font-size: @font-mini;
+      }
     }
   }
 }

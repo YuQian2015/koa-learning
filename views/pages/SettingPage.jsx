@@ -2,6 +2,7 @@ import React from 'react';
 
 import PageContainer from '../container/PageContainer.jsx';
 import Tabs from '../components/Tabs.jsx';
+import Header from '../components/Header.jsx';
 import {Fade} from '../components/CSSTransition.jsx';
 
 class FadeInAndOut extends React.Component {
@@ -10,7 +11,6 @@ class FadeInAndOut extends React.Component {
     console.log(...args);
     this.state = { show: false }
     this.changeDisplay = this.changeDisplay.bind(this);
-
   }
   changeDisplay() {
       this.setState({ show: !this.state.show })
@@ -47,6 +47,7 @@ export default class SettingPage extends React.Component {
 
     </div>;
     let footer = <Tabs />;
-    return <PageContainer body = {body} footer={footer} />
+    let header = <Header title="设置" />
+    return <PageContainer body = {body} footer={footer} header={header}/>
   }
 }

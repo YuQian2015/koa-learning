@@ -1,0 +1,40 @@
+.Header {
+  height: 44px;
+  background: @color-title-bg;
+  color: @color-title-text;
+  text-align: center;
+  .mixin-flex;
+  .mixin-flex-center;
+
+  .back {
+    position: absolute;
+    font-size: @font-big;
+    min-width: 6rem;
+    text-align: left;
+
+    i {
+      vertical-align: sub;
+      font-size: 28px;
+    }
+  }
+
+  .title {
+    padding: 10px;
+    font-size: @font-bigger;
+    text-align: center;
+    .mixin-flex-1;
+  }
+
+  .tools {
+    position: absolute;
+    font-size: @font-big;
+    min-width: 6rem;
+    text-align: right;
+    right: 1rem;
+
+    i {
+      vertical-align: sub;
+      font-size: 28px;
+    }
+  }
+}

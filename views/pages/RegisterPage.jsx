@@ -33,7 +33,7 @@ class RegisterPage extends React.Component {
     this.changeRegister = this.changeRegister.bind(this);
     this.validate = this.validate.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.duSubmit = this.duSubmit.bind(this);
+    this.doSubmit = this.doSubmit.bind(this);
     this.showAlert = this.showAlert.bind(this);
   }
   componentWillMount() {}
@@ -64,7 +64,7 @@ class RegisterPage extends React.Component {
     });
   }
 
-  duSubmit() {
+  doSubmit() {
     let {regForm, isSignIn} = this.state;
     if (regForm.email.trim() === "" || !form.isEmail(regForm.email.trim())) {
       this.showAlert("请输入正确的邮箱");
@@ -124,14 +124,14 @@ class RegisterPage extends React.Component {
 
       <div className="main">
         <div className="input-box">
-          <i className="healthyDiet hd-mail-fill"></i>
+          <i className="hd-mail-fill"></i>
           <input type="text" onChange={() => this.handleChange("email")} ref="email" placeholder="邮箱"/>
         </div>
         {
           isSignIn
             ? null
             : <div className="input-box">
-                <i className="healthyDiet hd-people-fill"></i>
+                <i className="hd-people-fill"></i>
                 <input type="text" onChange={() => this.handleChange("name")} ref="name" placeholder="用户名"/>
               </div>
         }
@@ -142,10 +142,10 @@ class RegisterPage extends React.Component {
         }
 
         <div className="input-box">
-          <i className="healthyDiet hd-lock-fill"></i>
+          <i className="hd-lock-fill"></i>
           <input type="password" onChange={() => this.handleChange("pwd")} ref="pwd" placeholder="登录密码" maxLength="20"/>
         </div>
-        <button className="block" onClick={this.duSubmit}>{
+        <button className="block" onClick={this.doSubmit}>{
             isSignIn
               ? '登录'
               : '注册'

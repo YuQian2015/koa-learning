@@ -2,37 +2,45 @@ import React from 'react';
 
 import PageContainer from '../container/PageContainer.jsx';
 import Tabs from '../components/Tabs.jsx';
+import Header from '../components/Header.jsx';
 
 export default class HomePage extends React.Component {
+  constructor(props){
+    super(props);
+    this.addDiet = this.addDiet.bind(this);
+  }
+  addDiet() {
+    this.props.history.push("/add-diet");
+  }
   render() {
     let body = <div className="HomePage">
       <div className="todo">
         <div className="todo-title">
-          <i className="healthyDiet hd-mail-fill"></i>
+          <i className="hd-mail-fill"></i>
         </div>
         <div className="todo-content">今日待办今日待办今日待办</div>
       </div>
       <div className="menu">
         <div className="menu-item">
-          <i className="healthyDiet hd-mail-fill"></i>
-          <p>入库</p>
+          <i className="hd-mail-fill material-in"></i>
+          <p>食材入库</p>
         </div>
         <div className="menu-item">
-          <i className="healthyDiet hd-mail-fill"></i>
-          <p>库存</p>
+          <i className="hd-mail-fill"></i>
+          <p>库存查询</p>
         </div>
         <div className="menu-item">
-          <i className="healthyDiet hd-mail-fill"></i>
-          <p>菜单</p>
+          <i className="hd-mail-fill"></i>
+          <p>菜单管理</p>
         </div>
         <div className="menu-item">
-          <i className="healthyDiet hd-mail-fill"></i>
+          <i className="hd-mail-fill"></i>
           <p>材料管理</p>
         </div>
       </div>
       <div className="today-menu">
         <p>今日配菜</p>
-        <div className="new-diet">点击添加</div>
+        <div className="new-diet" onClick={this.addDiet}><i className="hd-add"></i></div>
       </div>
       <div className="news">
         <p>消息动态</p>
@@ -102,7 +110,8 @@ export default class HomePage extends React.Component {
       </div>
 
     </div>;
-    let footer = <Tabs/>;
-    return <PageContainer body={body} footer={footer}/>
+    let footer = <Tabs />;
+    let header = <Header title="健康饮食" />
+    return <PageContainer body={body} footer={footer} header={header}/>
   }
 }

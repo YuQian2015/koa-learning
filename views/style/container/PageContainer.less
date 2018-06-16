@@ -5,10 +5,16 @@
   margin: 0 auto;
   .content{
     overflow-x: hidden;
-    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
     background: @color-white;
-  }
-  .content.has-footer {
-    height: calc(~"100% - 49px");
+    &.has-footer {
+      bottom: 49px;
+    }
+    &.has-header {
+      top: 44px;
+    }
   }
 }

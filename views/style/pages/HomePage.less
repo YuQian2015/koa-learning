@@ -31,8 +31,18 @@
 
     .menu-item {
       .mixin-flex-1;
+      padding: .8rem 0;
       text-align: center;
-      line-height: 4.4rem;
+      i {
+        font-size: 4.4rem;
+      }
+      p {
+        color: @color-darker;
+        font-size: @font-normal;
+      }
+      .material-in {
+        color: @color-green;
+      }
     }
   }
 
@@ -46,13 +56,18 @@
     }
 
     .new-diet {
-      margin: 1rem;
-      background: @color-normal;
-      color: @color-white;
+      width: 10rem;
+      height: 10rem;
       line-height: 10rem;
+      border-radius: 4rem;
+      margin: 1rem auto;
+      background: @color-white;
+      border: solid 1px @color-line;
+      color: @color-element;
       text-align: center;
-      border-radius: 0.8rem;
-      font-size: @font-large;
+      i {
+        font-size: 3rem;
+      }
     }
   }
 
