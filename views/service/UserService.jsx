@@ -1,6 +1,6 @@
-import LocalDB from 'local-db';
-const UserTable = new LocalDB('users');
-const LoginUserTable = new LocalDB('user');
+// import LocalDB from 'local-db';
+// const UserTable = new LocalDB('users');
+// const LoginUserTable = new LocalDB('user');
 
 import HttpService from './HttpService.jsx';
 import {CONFIG} from '../utils/Config.jsx';

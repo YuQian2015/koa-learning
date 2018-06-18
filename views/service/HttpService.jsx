@@ -90,11 +90,21 @@
 //     }
 // }
 
+import LocalDB from 'local-db';
+const userCollection = new LocalDB('user');
+
 class HttpService {
-  constructor() {}
+  constructor() {
+  }
   get() {}
 
   post(url, params, successCallback, errorCallback) {
+
+    let Authorization = "";
+    const user = userCollection.query({});
+    if (user.length) {
+      Authorization = user[0].token;
+    }
     let request = new XMLHttpRequest();
     request.onreadystatechange = function() {
       if (request.readyState == 4) {
@@ -102,13 +112,20 @@ class HttpService {
         if (status >= 200 && status < 300) {
           const res = JSON.parse(request.responseText);
           successCallback && successCallback(res);
-        } else {
-          errorCallback && errorCallback(status);
+          return
         }
+        if (status == 401) {
+          window.location.replace("#/register");
+          return
+        }
+        errorCallback && errorCallback(status);
       }
     };
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
+    if (Authorization) {
+        request.setRequestHeader("Authorization", "Bearer " + Authorization);
+    }
     request.send(JSON.stringify(params));
   }
 }

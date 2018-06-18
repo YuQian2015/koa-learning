@@ -93,6 +93,7 @@ class RegisterPage extends React.Component {
           return;
         }
         if (res.data) {
+          userCollection.drop();
           userCollection.insert({
             time: new Date().getTime(),
             token:res.data.token

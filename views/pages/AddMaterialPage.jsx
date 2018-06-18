@@ -3,6 +3,9 @@ import React from 'react';
 import PageContainer from '../container/PageContainer.jsx';
 import Header from '../components/Header.jsx';
 
+import MaterialService from '../service/MaterialService.jsx';
+import Toast from '../components/Toast.jsx';
+
 export default class AddMaterialPage extends React.Component {
   constructor(props) {
     super(props);
@@ -20,13 +23,30 @@ export default class AddMaterialPage extends React.Component {
         '调料',
         '饮料',
         '其它'
-      ]
+      ],
+      contentText:""
     }
     this.saveMaterial = this.saveMaterial.bind(this);
   }
   saveMaterial() {
     let material = this.state.material;
-    console.log(material)
+    MaterialService.add(material, (data) => {
+      if(data.error) {
+        this.setState({
+          contentText:data.msg
+        },()=>{
+          this.refs.toast.show();
+        });
+        return
+      }
+        this.setState({
+          contentText:"保存成功"
+        },()=>{
+          this.refs.toast.show();
+        });
+    }, (error) => {
+      console.log(error);
+    })
   }
 
   handleChange(type) {
@@ -41,8 +61,10 @@ export default class AddMaterialPage extends React.Component {
   }
 
   render() {
-    const {tags, material} = this.state;
+    const {tags, material, contentText} = this.state;
     let body = <div className="AddMaterialPage">
+
+        <Toast ref="toast" icon="hd-success-fill" contentText={contentText}/>
 
       <div className="list-box">
         <div className="list-item">
@@ -79,7 +101,6 @@ export default class AddMaterialPage extends React.Component {
           </div>
         </div>
       </div>
-
 
     </div>;
     let tools = <div onClick={this.saveMaterial}>保存</div>;

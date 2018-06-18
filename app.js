@@ -4,9 +4,9 @@ const app = new Koa();
 const config = require('config');
 const appConfig = config.get('App');
 const dbConfig = config.get('Database');
-// const fs = require('fs'); 
-console.log(dbConfig);
-console.log(appConfig);
+// const fs = require('fs');
+// console.log(dbConfig);
+// console.log(appConfig);
 
 const routes = require('./routes');
 const db = require('./config/dbConfig');

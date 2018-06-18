@@ -47,25 +47,35 @@ class ImageCarousel extends React.Component {
 class WelcomePage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      show: false
+    }
   }
 
-  componentWillMount() {
+  componentWillMount() {}
+
+  componentDidMount() {
     const first = welcomeCollection.query({});
     if (first.length) {
-      welcomeCollection.update(first[0], {visitTime: new Date().getTime()})
+      welcomeCollection.update(first[0], {visitTime: new Date().getTime()});
       this.props.history.replace("/home");
       return;
     }
-    welcomeCollection.insert({visitTime: new Date().getTime()})
+    welcomeCollection.insert({visitTime: new Date().getTime()});
+    this.setState({show: true});
   }
 
   render() {
-    let WelcomePage = (<div className="WelcomePage">
-      <ImageCarousel />
+    let {show} = this.state;
+    let welcome = (<div className="WelcomePage">
+      {
+        show
+          ? <ImageCarousel/>
+          : null
+      }
     </div>);
-    return <PageContainer body={WelcomePage}/>
+    return welcome
   }
 }
-
 
 export default withRouter(WelcomePage);

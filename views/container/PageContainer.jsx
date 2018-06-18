@@ -11,10 +11,10 @@ class MainTab extends React.Component {
   }
   componentWillMount() {
     const user = userCollection.query({});
-    // if (user.length == 0) {
-    //   this.props.history.replace("/register");
-    //   console.log('登录失效，退回登录页面');
-    // }
+    if (user.length == 0) {
+      this.props.history.replace("/register");
+      console.log('登录失效，退回登录页面');
+    }
   }
   render() {
     let {body, footer, header} = this.props;
