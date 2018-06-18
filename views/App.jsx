@@ -15,6 +15,7 @@ import SettingPage from './pages/SettingPage.jsx';
 import HomePage from './pages/HomePage.jsx';
 import AddDietPage from './pages/AddDietPage.jsx';
 import AddMaterialPage from './pages/AddMaterialPage.jsx';
+import MaterialPage from './pages/MaterialPage.jsx';
 
 
 export default class App extends React.Component {
@@ -30,6 +31,7 @@ export default class App extends React.Component {
           <Route exact path="/monthly" component={MonthlyPage}/>
           <Route exact path="/add-diet" component={AddDietPage}/>
           <Route exact path="/add-material" component={AddMaterialPage}/>
+          <Route exact path="/material" component={MaterialPage}/>
           <Route path="/setting" component={SettingPage}/>
           <Route path="/register" component={RegisterPage}/>
       </Switch>

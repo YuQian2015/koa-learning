@@ -7,6 +7,10 @@ class MaterialService {
   add(params, success, error) {
     HttpService.post(`${CONFIG.apiUrl}/material/add`, params, success, error);
   }
+
+  find(params, success, error) {
+    HttpService.get(`${CONFIG.apiUrl}/material`, params, success, error);
+  }
 }
 
 const Material = new MaterialService();

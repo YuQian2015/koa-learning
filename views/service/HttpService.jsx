@@ -94,9 +94,43 @@ import LocalDB from 'local-db';
 const userCollection = new LocalDB('user');
 
 class HttpService {
-  constructor() {
+  constructor() {}
+  get(url, params, successCallback, errorCallback) {
+
+    let Authorization = "";
+    const user = userCollection.query({});
+    if (user.length) {
+      Authorization = user[0].token;
+    }
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function() {
+      if (request.readyState == 4) {
+        const status = request.status;
+        if (status >= 200 && status < 300) {
+          const res = JSON.parse(request.responseText);
+          successCallback && successCallback(res);
+          return
+        }
+        if (status == 401) {
+          window.location.replace("#/register");
+          return
+        }
+        errorCallback && errorCallback(status);
+      }
+    };
+    let query = "";
+    for (var key in params) {
+      query += key + "=" + params[key];
+    }
+    if (query) {
+      url += url + "?" + query;
+    }
+    request.open("GET", url, true);
+    if (Authorization) {
+      request.setRequestHeader("Authorization", "Bearer " + Authorization);
+    }
+    request.send();
   }
-  get() {}
 
   post(url, params, successCallback, errorCallback) {
 
@@ -124,7 +158,7 @@ class HttpService {
     request.open("POST", url, true);
     request.setRequestHeader("Content-Type", "application/json");
     if (Authorization) {
-        request.setRequestHeader("Authorization", "Bearer " + Authorization);
+      request.setRequestHeader("Authorization", "Bearer " + Authorization);
     }
     request.send(JSON.stringify(params));
   }

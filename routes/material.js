@@ -20,6 +20,19 @@ const getMaterial = {
   }
 }
 
+const findMaterial = {
+  query: {
+    page: Joi.number(), // 页码
+    pageSize: Joi.number(), // 页数
+    name: Joi.string() // 关键词
+  }
+}
+
+router.get('/', validate(findMaterial), async (ctx, next) => {
+  let reqParams = ctx.query;
+  ctx.body = await material.findMaterial(reqParams);
+});
+
 router.post('/add', validate(addMaterial), async (ctx, next) => {
   let reqBody = ctx.request.body;
   ctx.body = await material.addMaterial(reqBody);

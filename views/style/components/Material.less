@@ -1,0 +1,25 @@
+.Material {
+  margin: 1rem;
+  background: @color-white;
+  border-radius: .8rem;
+  border: solid 1px @color-gray;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  .name {
+    color: @color-darkest;
+    font-size: @font-large;
+  }
+  .info {
+    color: @color-dark;
+    font-size: @font-normal;
+    .mixin-flex;
+    .mixin-flex-center;
+    .code {
+      margin-right: 1rem;
+    }
+    .price {
+      .mixin-flex-1;
+      text-align: right;
+    }
+  }
+}

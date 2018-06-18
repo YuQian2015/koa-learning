@@ -15,13 +15,18 @@ export default class Alert extends React.Component {
   componentWillMount() {}
   hide() {
     this.setState({show: false});
+    clearTimeout(this.timer);
+    let {onHide} = this.props;
+    if (onHide) {
+      onHide();
+    }
   }
   show() {
     let time = this.state.time;
     this.setState({show: true});
-    setTimeout(
+    this.timer = setTimeout(
       () => {
-      this.setState({show: false});
+      this.hide();
     }, time
       ? time
       : 2000);

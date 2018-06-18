@@ -40,6 +40,22 @@ class MaterialController {
     }
 
   }
+
+
+    // 查询材料
+    async findMaterial(reqParams) {
+      try {
+        let respon = {};
+        let result = await material.find(reqParams);
+        respon = response({data: result});
+        return respon;
+      } catch (err) {
+        console.log(err)
+        throw new Error(err);
+        return err;
+      }
+
+    }
 }
 
 const materialController = new MaterialController();
