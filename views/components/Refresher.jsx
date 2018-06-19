@@ -6,8 +6,8 @@ export default class Refresher extends React.Component {
     super(props);
     this.state = {
       config: {
-        activate: "释放加载",
-        deactivate: '继续下拉',
+        activate: <div className="pull active">释放加载</div>,
+        deactivate: <div className="pull">继续下拉</div>,
         release: <div className="loader">加载中...</div>,
         finish: "刷新成功"
       }

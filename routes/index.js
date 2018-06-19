@@ -5,6 +5,7 @@ const jwtSecret = config.get('Token.jwtSecret');
 const response = require('../utils/response');
 const users = require('./users');
 const material = require('./material');
+const purchase = require('./purchase');
 const public = require('./public');
 const routeConfig = [
   {
@@ -13,6 +14,9 @@ const routeConfig = [
   }, {
     path: '/material',
     route: material
+  }, {
+    path: '/purchase',
+    route: purchase
   }
 ]
 const publicRouteConfig = [

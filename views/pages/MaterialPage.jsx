@@ -33,7 +33,7 @@ export default class MaterialPage extends React.Component {
   }
 
   fetchData() {
-    MaterialService.find({}, (res) => {
+    MaterialService.find({pageSize:5}, (res) => {
       if (res.error) {
         console.log(res.msg);
         return
@@ -50,7 +50,7 @@ export default class MaterialPage extends React.Component {
 
   handleRefresh() {
     return new Promise((resolve, reject) => {
-      MaterialService.find({}, (data) => {
+      MaterialService.find({pageSize:5}, (data) => {
         if (data.error) {
           reject();
           return

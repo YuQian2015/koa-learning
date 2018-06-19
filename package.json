@@ -10,7 +10,6 @@
     "build": "webpack",
     "auto-config-db": "node config/auto-config-develop-environment.js",
     "auto-config": "node config/auto-config.js"
-
   },
   "keywords": [],
   "author": "",

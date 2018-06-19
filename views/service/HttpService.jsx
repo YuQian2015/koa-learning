@@ -123,7 +123,7 @@ class HttpService {
       query += key + "=" + params[key];
     }
     if (query) {
-      url += url + "?" + query;
+      url += "?" + query;
     }
     request.open("GET", url, true);
     if (Authorization) {
