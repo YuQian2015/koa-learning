@@ -34,7 +34,7 @@ storage:
  dbPath: ${CONFIG.DB_PATH.replace(/\\/g,"\\\\")}
 `
 fs.writeFileSync(DB_LOCATION+"\\"+CONFIG.DB_CONFIG_FILE_NAME,dbConfig)
-let cmdStr = `mongod --config ${DB_LOCATION.replace(/\\\\/g,"\\")}\\${CONFIG.DB_CONFIG_FILE_NAME}`;
+let cmdStr = `mongod --config ${DB_LOCATION.replace(/\\\\/g,"\\")}\\${CONFIG.DB_CONFIG_FILE_NAME} --auth`;
 console.log(cmdStr);
 cmd.get(
   cmdStr,

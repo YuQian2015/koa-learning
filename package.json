@@ -9,7 +9,7 @@
     "views": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build --open",
     "build": "webpack",
     "auto-config-db": "node config/auto-config-develop-environment.js",
-    "auto-config": "node config/auto-config.js"
+    "config": "node config/auto-config.js"
   },
   "keywords": [],
   "author": "",

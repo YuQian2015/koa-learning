@@ -10,4 +10,4 @@ exec('npm run auto-config-db', function(error, stdout, stderr) {
 
 });
 
-console.log("run 'mongo -port 3001' to connect to db");
+console.log("run 'mongo -port 3002' to connect to db");
