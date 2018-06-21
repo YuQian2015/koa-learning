@@ -3,6 +3,8 @@ const response = require('../utils/response');
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const jwtSecret = config.get('Token.jwtSecret');
+const convert = require('joi-to-json-schema');
+const {validation} = require('../routes/config');
 
 const {
   request,
@@ -12,7 +14,7 @@ const {
   body,
   tags
 } = require('koa-swagger-decorator');
-const userSchema = {
+let userSchema = {
   email: {
     type: 'string',
     required: true
@@ -27,6 +29,10 @@ const userSchema = {
     required: true
   }
 }
+
+// for test
+console.log(convert(validation.addMaterial.body));
+userSchema = convert(validation.addMaterial.body).properties;
 class UserController {
   constructor() {}
   // 定义一个一部函数register用来注册用户，接收请求传过来的body
