@@ -4,9 +4,36 @@ const jwt = require('jsonwebtoken');
 const config = require('config');
 const jwtSecret = config.get('Token.jwtSecret');
 
+const {
+  request,
+  summary,
+  query,
+  path,
+  body,
+  tags
+} = require('koa-swagger-decorator');
+const userSchema = {
+  email: {
+    type: 'string',
+    required: true
+  },
+  name: {
+    type: 'string',
+    required: true,
+    example: 'Yuu'
+  },
+  password: {
+    type: 'string',
+    required: true
+  }
+}
 class UserController {
   constructor() {}
   // 定义一个一部函数register用来注册用户，接收请求传过来的body
+  @request('post', '/register')
+  @summary('注册用户接口')
+  @tags(['注册'])
+  @body(userSchema)
   async register(reqBody) {
     let dataArr = { // 展开运算，并添加创建时间
       ...reqBody,
