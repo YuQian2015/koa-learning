@@ -35,7 +35,7 @@ router.prefix(apiVersion); // 设置路由前缀
 
 // 将 swagger文档配置到 http://localhost:3000/${api版本}/swagger-html
 router.swagger({
-  title: '从零开始',
+  title: '从零开始的koa实战',
   description: 'API 文档',
   version: '1.0.0',
 

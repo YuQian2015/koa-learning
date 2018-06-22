@@ -41,9 +41,8 @@ class UserController {
   @tags(['注册'])
   @body(userSchema)
   async register(reqBody) {
-    let dataArr = { // 展开运算，并添加创建时间
-      ...reqBody,
-      createDate: new Date()
+    let dataArr = { // 展开运算
+      ...reqBody
     }
     try {
       let list = await user.find({email: dataArr.email}); // 先查询是否存在该用户

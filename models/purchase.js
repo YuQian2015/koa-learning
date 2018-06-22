@@ -19,11 +19,9 @@ const purchaseSchema = new Schema({
   sign: String, // 签字
 })
 
-let purchaseModel = mongoose.model('Purchase', purchaseSchema);
-
 class Purchase extends Model {
   constructor() {
-    super(purchaseModel);
+    super('Purchase', purchaseSchema);
   }
 }
 

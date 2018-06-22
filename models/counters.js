@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Model = require('./model');
 
-let countersModel = mongoose.model('Counters', new Schema({
+let countersSchema = new Schema({
   "_id": {
     type: String,
     required: true
@@ -11,11 +11,11 @@ let countersModel = mongoose.model('Counters', new Schema({
     type: Number,
     default: 1
   }
-}));
+});
 
 class Counters extends Model {
   constructor() {
-    super(countersModel);
+    super('Counters', countersSchema);
     this.findByIdAndUpdate = this.findByIdAndUpdate.bind(this);
   }
 
@@ -43,6 +43,6 @@ class Counters extends Model {
   }
 }
 
-const counters = new Counters()
+const counters = new Counters();
 
 module.exports = counters;

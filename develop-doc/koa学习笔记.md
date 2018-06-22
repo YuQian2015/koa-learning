@@ -1,4 +1,4 @@
-# 从零开始的koa实战项目
+# 从零开始的koa实战
 
 [TOC]
 
@@ -946,7 +946,7 @@ Server running
 
 dotenv-safe  让我们可以定义私有的变量，这是node进程运行的变量而不是上面配置的环境变量。dotenv-safe 默认会从项目根目录的 *.env* 文件中加载配置。我们新建一个  .env  文件：
 
- .env 
+ .env
 
 ```js
 DB_PASSWORD=123456
@@ -1246,7 +1246,7 @@ const routeConfig = [
 router.use(logger);
 router.get('/', index);
 
-for (item in routeConfig) {
+for (let item in routeConfig) {
   router.use(routeConfig[item].path, routeConfig[item].route.routes(), routeConfig[item].route.allowedMethods());
 }
 
@@ -1690,6 +1690,7 @@ module.exports = router;
 然后在 routes 目录的 index.js 引入刚才新建的 public 路由，并且对路由进行设置，添加到中间件。
 
 ```js
+const publicRouter = require('./public');
 // 省略
 const routeConfig = [
   {
@@ -1703,18 +1704,18 @@ const routeConfig = [
 const publicRouteConfig = [
   {
     path: '/public',
-    route: public
+    route: publicRouter
   }
 ]
 // 省略
 
-for (item in publicRouteConfig) {
+for (let item in publicRouteConfig) {
   router.use(publicRouteConfig[item].path, publicRouteConfig[item].route.routes(), publicRouteConfig[item].route.allowedMethods());
 }
 // 只有token验证通过了之后才执行这一行以后的中间件
 router.use(jwt({ secret: jwtSecret }));
 
-for (item in routeConfig) {
+for (let item in routeConfig) {
   router.use(routeConfig[item].path, routeConfig[item].route.routes(), routeConfig[item].route.allowedMethods());
 }
 
@@ -1913,7 +1914,7 @@ https://github.com/hapijs/joi
 
 > 待整理
 
-Object schema description language and validator for JavaScript objects. 
+Object schema description language and validator for JavaScript objects.
 
 #### Introduction
 
@@ -2213,7 +2214,7 @@ const addMaterial = {
 
 const getMaterial = {
   params: { // 需要注意这里的校验改为了 params
-    code: Joi.string().required(), 
+    code: Joi.string().required(),
   }
 }
 
@@ -2256,10 +2257,22 @@ module.exports = router;
 models/model.js
 
 ```js
+const mongoose = require('mongoose');
 // 新增一个Model class
 class Model {
-  constructor(model) {
-    this.model = model;
+  constructor(name, schema) {
+    // 保存之前更新时间戳
+    schema.pre('save', function(next) {
+      if (this.isNew) {
+        this.createDate = this.updateDate = Date.now()
+      }
+      else {
+        this.updateDate = Date.now()
+      }
+      next()
+    })
+    // 创建model
+    this.model = mongoose.model(name, schema);
     this.find = this.find.bind(this); // 绑定上下文
     this.create = this.create.bind(this);
     this.findOne = this.findOne.bind(this);
@@ -2324,22 +2337,23 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Model = require('./model');
 
-let materialModel = mongoose.model('Material', new Schema({
-  code: String, // 食材编号
+const materialSchema = new Schema({
+  code: Number, // 食材编号
   name: String, // 名称
   unit: String, // 单位
   price: Number, // 单价
   type: Number, // 类型
-  createDate: Date // 创建时间
-}));
+  createDate: Date, // 创建时间
+  updateDate: Date // 修改时间
+});
 
 class Material extends Model {
   constructor() {
-    super(materialModel); // 调用父级class的构造函数，并且把自己的model传递过去
+    super('Material', materialSchema); // 调用父级class的构造函数，并且把自己的schema传递过去
   }
 }
 
-const material = new Material()
+const material = new Material();
 
 module.exports = material;
 
@@ -2352,8 +2366,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Model = require('./model');
 
-// 创建一个User model，包含用户新增的字段定义
-let userModel = mongoose.model('User', new Schema({
+// 创建一个User schema，包含用户新增的字段定义
+let userSchema = new Schema({
   userNo: String,
   email: String,
   password: String,
@@ -2361,15 +2375,16 @@ let userModel = mongoose.model('User', new Schema({
   sex: Number,
   userType: String,
   avatar: String,
-  createDate: Date
-}));
+  createDate: Date,
+  updateDate: Date
+});
 
 class User extends Model {
   constructor() {
-    super(userModel); 
+    super('User', userSchema);
   }
 }
-const user = new User()
+const user = new User();
 
 module.exports = user;
 
@@ -2394,7 +2409,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Model = require('./model');
 
-let countersModel = mongoose.model('Counters', new Schema({
+let countersSchema = new Schema({
   "_id": {
     type: String,
     required: true
@@ -2403,11 +2418,11 @@ let countersModel = mongoose.model('Counters', new Schema({
     type: Number,
     default: 1
   }
-}));
+});
 
 class Counters extends Model {
   constructor() {
-    super(countersModel);
+    super('Counters', countersSchema);
     this.findByIdAndUpdate = this.findByIdAndUpdate.bind(this);
   }
 
@@ -2435,42 +2450,46 @@ class Counters extends Model {
   }
 }
 
-const counters = new Counters()
+const counters = new Counters();
 
 module.exports = counters;
-
 ```
 
-准备好 counters 之后，我们就需要对之前的 models/material.js 进行修改，首先我们把材料的code设置为 Number 类型并且默认值为1，然后使用mongoose的pre钩子在储存之前对model进行操作。我们可以通过下面的代码看到，在更新counters成功之后，我们会设置 material 的 code 和创建时间，并且调用了钩子的 next 进入下一个处理。
+准备好 counters 之后，我们就需要对之前的 models/material.js 进行修改，首先我们把材料的code设置为 Number 类型并且默认值为1，然后使用mongoose的pre钩子在储存之前对model进行操作。我们可以通过下面的代码看到，在更新counters成功之后，我们会设置 material 的 code ，并且调用了钩子的 next 进入下一个处理。
 
 ```js
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Model = require('./model');
 const Counters = require('./Counters');
+
 const materialSchema = new Schema({
   code: {
     type: Number,
     default: 1
   }, // 食材编号
+  
 	// 省略
 })
 
-materialSchema.pre('save', async function(next) {
-  try {
-    let countenr = await Counters.findByIdAndUpdate('materialId');
-    if (!this.createDate) {
-      this.createDate = new Date();
-    }
-    this.code = countenr.sequenceValue;
-    next()
-  } catch (err) {
-    console.log(err);
-    return next(err);
+class Material extends Model {
+  constructor() {
+    materialSchema.pre('save', async function(next) {
+      try {
+        if(this.code == 1) { // 对于已有ID的数据不做自增
+          let counter = await Counters.findByIdAndUpdate('materialId');
+          this.code = counter.sequenceValue;
+          next()
+        }
+      } catch (err) {
+        console.log(err);
+        return next(err);
+      }
+    });
+    super('Material', materialSchema); // 调用父级class的构造，并且把自己的model传递过去
   }
-});
+}
 
-let materialModel = mongoose.model('Material', materialSchema);
 
 // 省略
 
@@ -2478,7 +2497,7 @@ let materialModel = mongoose.model('Material', materialSchema);
 
 然后剩的就是处理controllers和 router了，我们在 controllers/material.js 里把添加材料接收参数去掉日期的创建，并且在 routes/material.js 里面去掉code必填的校验。
 
- controllers/material.js 
+ controllers/material.js
 
 ```js
 
@@ -2502,11 +2521,11 @@ class MaterialController {
 const addMaterial = {
   body: {
     // code: Joi.string().required(), // 把这里的校验去掉
-    name: Joi.string().required(), 
-    unit: Joi.string(), 
+    name: Joi.string().required(),
+    unit: Joi.string(),
     price: Joi.number(),
-    type: Joi.number(), 
-    createDate: Joi.date() 
+    type: Joi.number(),
+    // createDate: Joi.date() // 由于创建时间和更新时间已经放到pre钩子里面处理，这里取消调用时的传递，我们同时也可以移除其它model以及controller里面对创建时间的定义和设置。
   }
 }
 // 省略
@@ -2515,6 +2534,110 @@ const addMaterial = {
 然后我们启动服务，就可以调用接口进行测试了，新增材料可以不传递code，完全有后台自动增加code的值。
 
 ![30](koa/30.jpg)
+
+### 分页查询
+
+前面已经完成了材料添加的接口，接下来将为材料列表的查询增加分页。首先还是为model增加查询列表的方法。
+
+models/model.js
+
+```js
+  constructor(name, schema) {
+    // 省略
+    this.pageSize = 10; // 在这里增加了默认一页查询10条
+      
+    // 省略
+  }
+
+  // 查询
+  find(dataArr = {}) {
+    let pageSize,
+      page;
+    if (dataArr.pageSize || dataArr.page) { // 如果在查询过程中传递了分页pageSize或者前页page
+      pageSize = dataArr.pageSize || this.pageSize; // 使用分页
+      page = dataArr.page || 1; 
+      dataArr.pageSize = undefined;
+      dataArr.page = undefined;
+      return new Promise((resolve, reject) => {
+        this.model.find(dataArr).limit(pageSize).skip(pageSize * (page - 1)).sort({createDate: -1}).lean().exec((err, docs) => {
+          if (err) {
+            console.log(err);
+            reject(err);
+          } else {
+            resolve(docs);
+          }
+        });
+      })
+    }
+    // 如果没有传递分页，保留旧的查询
+    return new Promise((resolve, reject) => {
+      // 上面绑定了上下文，这里使用this.model
+      this.model.find(dataArr, (err, docs) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          resolve(docs);
+        }
+      })
+    })
+  }
+  // 省略
+```
+
+controllers/material.js增加了新的查询方法
+
+```js
+class MaterialController {
+  //省略
+
+
+    // 查询材料
+    async findMaterial(reqParams) {
+      try {
+        let respon = {};
+        let result = await material.find(reqParams);
+        respon = response({data: result});
+        return respon;
+      } catch (err) {
+        console.log(err)
+        throw new Error(err);
+        return err;
+      }
+
+    }
+}
+```
+
+接下来就是配置一个查询接口了：
+
+routes/material.js
+
+```js
+//省略
+
+const findMaterial = {
+  query: {
+    page: Joi.number(), // 页码
+    pageSize: Joi.number(), // 页数
+    name: Joi.string() // 关键词
+  }
+}
+
+router.get('/', validate(findMaterial), async (ctx, next) => {
+  let reqParams = ctx.query;
+  ctx.body = await material.findMaterial(reqParams);
+});
+
+//省略
+
+module.exports = router;
+
+```
+
+可以启动服务调用接口查看结果了。
+
+![31](koa/31.jpg)
 
 
 
@@ -2532,7 +2655,7 @@ const addMaterial = {
 
 constructor
 
-super 
+super
 
 extends
 
@@ -2544,7 +2667,7 @@ extends
 
 HTTP (HyperText   Teansfer Protocol 超文本传输协议)  
 
-- HTTP遵循 client/server 模型，是一个客户端和服务器端请求和应答的标准 
+- HTTP遵循 client/server 模型，是一个客户端和服务器端请求和应答的标准
 - HTTP是无状态的(stateless) 协议，每一次传输都是独立的，互不影响。
 - HTTP是一个应用层 (application layer) 协议，他在传输层(transfer layer)协议之上，99%以上的HTTP协议使用 (TCP) 作为它的传输层协议。
 - 客户端请求服务端使用client action即是method，包括get、post、delete等。
@@ -2606,7 +2729,7 @@ app.listen(3000); // 监听3000端口
 从上面的代码中，我们看到在创建服务是，koa使用了`this.callback()` ，这个 callback 具体做了什么呢？我们先来看源码：
 
 ```js
-  
+
 const compose = require('koa-compose');
 // 省略部分源码
 callback() {
@@ -2645,7 +2768,7 @@ callback() {
 
   createContext(req, res) {
       // 首先分别创建了 context request response三个对象
-    const context = Object.create(this.context); 
+    const context = Object.create(this.context);
     const request = context.request = Object.create(this.request);
     const response = context.response = Object.create(this.response);
       // 然后对三个对象进行了相互的赋值
@@ -3123,7 +3246,7 @@ app.use((ctx, next) => {
     context.req = request.req = response.req = req;
     context.res = request.res = response.res = res;
     request.ctx = response.ctx = context;
-      
+
     request.response = response;
     response.request = request;
     context.originalUrl = request.originalUrl = req.url;
@@ -3162,7 +3285,7 @@ throw(...args) {
 assert使用了http-assert 模块来添加了声明，有点类似于throw ， 使用方法
 
 ```js
-this.assert(this.user, 401, 'User not found. Please login!'); 
+this.assert(this.user, 401, 'User not found. Please login!');
 ```
 
 
@@ -3233,7 +3356,7 @@ assert: httpAssert,
 
 ```
 
-需要注意的是，`ctx.throw` 创建的错误，均为用户级别错误（标记为err.expose），会被返回到客户端。 
+需要注意的是，`ctx.throw` 创建的错误，均为用户级别错误（标记为err.expose），会被返回到客户端。
 
 
 
@@ -3241,7 +3364,7 @@ assert: httpAssert,
 
 ## 代理属性和方法
 
-在context.js中有一段如下的代码，把上下文的多数属性和方法委托代理到他的的 `request` 或 `response`，假如访问 `ctx.type` 和 `ctx.length` 将被代理到 `response` 对象，`ctx.path` 和 `ctx.method` 将被代理到 `request` 对象。 如：我们要获得请求路径需要执行 `ctx.request.path` ，但是由于代理过 `path` 这个属性，那么我们使用 `ctx.path` 也能够获得请求路径，即 `ctx.path === ctx.request.path` 。 
+在context.js中有一段如下的代码，把上下文的多数属性和方法委托代理到他的的 `request` 或 `response`，假如访问 `ctx.type` 和 `ctx.length` 将被代理到 `response` 对象，`ctx.path` 和 `ctx.method` 将被代理到 `request` 对象。 如：我们要获得请求路径需要执行 `ctx.request.path` ，但是由于代理过 `path` 这个属性，那么我们使用 `ctx.path` 也能够获得请求路径，即 `ctx.path === ctx.request.path` 。
 
 ```js
 /**
@@ -3308,7 +3431,7 @@ delegate(proto, 'request')
 - ctx.req: Node.js 中的 request 对象
 - ctx.res: Node.js 中的 response 对象，方法有:
 - ctx.app: app 实例
-- ctx.originalUrl 
+- ctx.originalUrl
 - ctx.request
 - ctx.response
 - ctx.socket

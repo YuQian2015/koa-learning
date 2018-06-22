@@ -4,9 +4,8 @@ const response = require('../utils/response');
 class PurchaseController {
   constructor() {}
   async addPurchase(reqBody) {
-    let dataArr = { // 添加创建时间
-      ...reqBody,
-      createDate: new Date()
+    let dataArr = {
+      ...reqBody
     }
     try {
       console.log("添加采购项目");
