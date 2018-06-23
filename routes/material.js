@@ -1,21 +1,75 @@
 const validate = require('koa2-validation');
-const {material} = require('../controllers');
+const Joi = require('joi');
 const router = require('koa-router')();
-const {validation} = require('./config');
+const {material} = require('../controllers');
 
-router.get('/', validate(validation.findMaterial), async (ctx, next) => {
-  let reqParams = ctx.query;
-  ctx.body = await material.findMaterial(reqParams);
-});
+const Route = require('./route');
+const convert2json = require('../utils/joi2json');
+const { request, summary, query, path, body, tags } = require('koa-swagger-decorator');
 
-router.post('/add', validate(validation.addMaterial), async (ctx, next) => {
-  let reqBody = ctx.request.body;
-  ctx.body = await material.addMaterial(reqBody);
-});
+const validation = {
+  addMaterial: {
+    body: Joi.object({
+      // code: Joi.string().required(),  食材编号
+      name: Joi.string().required(), // 名称
+      unit: Joi.string(), // 单位
+      price: Joi.number(), // 单价
+      type: Joi.number() // 类型
+    })
+  },
+  getMaterial: {
+    params: Joi.object({
+      code: Joi.string().required(), // 食材编号
+    })
+  },
+  findMaterial: {
+    query: Joi.object({
+      page: Joi.number(), // 页码
+      pageSize: Joi.number(), // 页数
+      name: Joi.string() // 关键词
+    })
+  }
+}
 
-router.get('/:code', validate(validation.getMaterial), async (ctx, next) => {
-  let reqParams = ctx.params;
-  ctx.body = await material.getMaterial(reqParams);
-});
+class Material extends Route {
+  constructor() {
+    super();
+  }
+
+  @request('get', '/material/')
+  @summary('获取食材')
+  @tags(['食材'])
+  @query(convert2json(validation.findMaterial))
+  findMaterial() {
+    router.get('/', validate(validation.findMaterial), async (ctx, next) => {
+      let reqParams = ctx.query;
+      ctx.body = await material.findMaterial(reqParams);
+    });
+  }
+
+  @request('post', '/material/add')
+  @summary('添加食材')
+  @tags(['食材'])
+  @body(convert2json(validation.addMaterial))
+  addMaterial() {
+    router.post('/add', validate(validation.addMaterial), async (ctx, next) => {
+      let reqBody = ctx.request.body;
+      ctx.body = await material.addMaterial(reqBody);
+    });
+  }
+
+  @request('get', '/material/{code}')
+  @summary('查询食材详情')
+  @tags(['食材'])
+  @path(convert2json(validation.getMaterial))
+  getMaterial() {
+    router.get('/:code', validate(validation.getMaterial), async (ctx, next) => {
+      let reqParams = ctx.params;
+      ctx.body = await material.getMaterial(reqParams);
+    });
+  }
+}
+
+new Material().route();
 
 module.exports = router;
