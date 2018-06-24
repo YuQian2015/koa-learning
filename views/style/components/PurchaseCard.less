@@ -1,0 +1,96 @@
+.PurchaseCard {
+  margin: 1rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 0 1rem 0.5rem @color-light;
+  background: @color-text-bg;
+  padding: 0 1rem;
+  overflow: hidden;
+
+  .select-material {
+    height: 4rem;
+    line-height: 4rem;
+    font-size: @font-bigger;
+    color: @color-white;
+    background: @color-element;
+    margin: 0 -1rem;
+    padding: 0 1rem;
+    .mixin-flex;
+    .mixin-flex-center;
+
+    span {
+      .mixin-flex-1;
+    }
+  }
+
+  .purchase-detail {
+    padding: 1rem 0;
+    .mixin-flex;
+    .mixin-flex-center;
+
+    .amount,
+    .date {
+      .mixin-flex-1;
+    }
+
+    .amount {
+      .rc-input-number,
+      .rc-input-number-handler-up,
+      .rc-input-number-handler-wrap {
+        border-color: @color-dark-line;
+      }
+
+      .rc-input-number-input {
+        background: transparent;
+      }
+    }
+
+    .date {
+      color: @color-darker;
+      font-size: @font-normal;
+      line-height: 2.6rem;
+      font-size: @font-normal;
+      border: solid 1px @color-dark-line;
+      border-radius: 0.6rem;
+      padding: 0 0.5rem;
+      margin-right: 0.5rem;
+      text-align: center;
+    }
+  }
+
+  .purchase-price {
+    border-top: solid 1px @color-dark-line;
+    line-height: 4rem;
+    font-size: @font-normal;
+    .mixin-flex;
+    .mixin-flex-center;
+
+    .price {
+      color: @color-darker;
+      .mixin-flex-1;
+    }
+
+    .total-price {
+      color: @color-darker;
+
+      span {
+        font-size: 3rem;
+        vertical-align: sub;
+        color: @color-common;
+      }
+    }
+  }
+
+  .sign {
+    margin: 0 -1rem;
+    padding: 0 1rem;
+    border-top: solid 1px @color-dark-line;
+    .mixin-flex;
+
+    input {
+      width: 33%;
+      text-align: center;
+      background: transparent;
+      .mixin-flex-1;
+    }
+  }
+}
