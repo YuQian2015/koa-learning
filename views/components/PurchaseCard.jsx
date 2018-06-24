@@ -1,8 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import DatePicker from 'react-mobile-datepicker';
 import InputNumber from 'rc-input-number';
 import 'rc-input-number/assets/index.css';
+
+import Moment from 'react-moment';
 
 export default class PurchaseCard extends React.Component {
   constructor(props) {
@@ -11,21 +14,7 @@ export default class PurchaseCard extends React.Component {
       time: new Date(),
       isOpen: false,
       dateType: "",
-      data: {
-        "code": 0,
-        "purchasingDate": new Date(),
-        "name": "string",
-        "manufactureDate": new Date(),
-        "qualityPeriod": new Date(),
-        "quantity": 1,
-        "unit": "string",
-        "price": 0,
-        "totalPrice": 0,
-        "purchaserName": "",
-        "inspectorName": "",
-        "supplierName": "",
-        "sign": "string"
-      }
+      data:props.data
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
@@ -44,19 +33,24 @@ export default class PurchaseCard extends React.Component {
   }
 
   handleSelect(date) {
-    let {data, dateType} = this.state;
+    let {data} = this.props;
+    let {dateType} = this.state;
     data[dateType] = date;
     this.setState({data, isOpen: false});
+    this.props.onChange(dateType, date);
   }
   changeAmount(number) {
     let {data} = this.state;
     data.quantity = number
-    this.setState({data})
+    this.setState({data});
+    this.props.onChange('quantity', number);
+
   }
   handleChange(type) {
     let {data} = this.state;
     data[type] = this.refs[type].value;
     this.setState({data})
+    this.props.onChange(type, data);
   }
   render() {
     let {data} = this.state;
@@ -69,12 +63,12 @@ export default class PurchaseCard extends React.Component {
       <div className="purchase-detail">
         <div className="date" ref="manufactureDate" onClick={() => this.handleClick("manufactureDate")}>{
             data.manufactureDate
-              ? new Date(data.manufactureDate).getTime()
+              ? <Moment format="YYYY-MM-DD">{data.manufactureDate}</Moment>
               : '生产日期'
           }</div>
         <div className="date" ref="qualityPeriod" onClick={() => this.handleClick("qualityPeriod")}>{
             data.qualityPeriod
-              ? new Date(data.qualityPeriod).getTime()
+              ? <Moment format="YYYY-MM-DD">{data.qualityPeriod}</Moment>
               : '保质期'
           }</div>
         <div className="amount">
@@ -101,3 +95,8 @@ export default class PurchaseCard extends React.Component {
     </div>)
   }
 }
+
+PurchaseCard.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  data: PropTypes.object.isRequired
+};

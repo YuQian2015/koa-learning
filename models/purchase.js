@@ -12,6 +12,7 @@ const purchaseSchema = new Schema({
   price: Number, // 单价
   type: Number, // 类型
   createDate: Date, // 创建时间
+  updateDate: Date,
   totalPrice: Number, // 金额
   purchaserName: String, // 采购人
   inspectorName: String, // 收验货人
