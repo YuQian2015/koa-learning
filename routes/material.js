@@ -5,7 +5,14 @@ const {material} = require('../controllers');
 
 const Route = require('./route');
 const convert2json = require('../utils/joi2json');
-const { request, summary, query, path, body, tags } = require('koa-swagger-decorator');
+const {
+  request,
+  summary,
+  query,
+  path,
+  body,
+  tags
+} = require('koa-swagger-decorator');
 
 const validation = {
   addMaterial: {
@@ -27,6 +34,14 @@ const validation = {
       page: Joi.number(), // 页码
       pageSize: Joi.number(), // 页数
       name: Joi.string() // 关键词
+    })
+  },
+  searchMaterial: {
+    body: Joi.object({
+      keyword: Joi.string().required(), // 关键词
+      filter: Joi.object({
+
+      })
     })
   }
 }
@@ -66,6 +81,17 @@ class Material extends Route {
     router.get('/:code', validate(validation.getMaterial), async (ctx, next) => {
       let reqParams = ctx.params;
       ctx.body = await material.getMaterial(reqParams);
+    });
+  }
+
+  @request('post', '/material/search')
+  @summary('搜索食材')
+  @tags(['食材'])
+  @body(convert2json(validation.searchMaterial))
+  searchMaterial() {
+    router.post('/search', validate(validation.searchMaterial), async (ctx, next) => {
+      let reqBody = ctx.request.body;
+      ctx.body = await material.searchMaterial(reqBody);
     });
   }
 }

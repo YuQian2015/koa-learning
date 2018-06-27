@@ -6,8 +6,7 @@ class Model {
     schema.pre('save', function(next) {
       if (this.isNew) {
         this.createDate = this.updateDate = Date.now()
-      }
-      else {
+      } else {
         this.updateDate = Date.now()
       }
       next()
@@ -94,6 +93,22 @@ class Model {
         console.log('创建成功');
         resolve(data)
       });
+    })
+  }
+
+  search(field,dataArr) {
+    return new Promise((resolve, reject) => {
+      const filter = dataArr.filter || {};
+      const search = {}
+      search[field] = {$regex: dataArr.keyword, $options: 'i'}
+      this.model.find(filter).or([search]).exec((err, docs) => {
+        if (err) {
+          // console.log(err);
+          reject(err);
+        } else {
+          resolve(docs);
+        }
+      })
     })
   }
 }

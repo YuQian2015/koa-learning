@@ -56,6 +56,21 @@ class MaterialController {
       }
 
     }
+
+    // 搜索材料
+    async searchMaterial(reqParams) {
+      try {
+        let respon = {};
+        let result = await material.search('name',reqParams);
+        respon = response({data: result});
+        return respon;
+      } catch (err) {
+        console.log(err)
+        throw new Error(err);
+        return err;
+      }
+
+    }
 }
 
 const materialController = new MaterialController();

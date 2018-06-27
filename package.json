@@ -17,6 +17,7 @@
   "dependencies": {
     "config": "^1.30.0",
     "dotenv-safe": "^5.0.1",
+    "ejsexcel": "^3.5.2",
     "joi-to-json-schema": "^3.3.0",
     "jsonwebtoken": "^8.2.1",
     "koa": "^2.5.1",
