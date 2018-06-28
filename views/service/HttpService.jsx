@@ -126,6 +126,7 @@ class HttpService {
       url += "?" + query;
     }
     request.open("GET", url, true);
+    request.withCredentials = true;
     if (Authorization) {
       request.setRequestHeader("Authorization", "Bearer " + Authorization);
     }
@@ -156,6 +157,7 @@ class HttpService {
       }
     };
     request.open("POST", url, true);
+    request.withCredentials = true;
     request.setRequestHeader("Content-Type", "application/json");
     if (Authorization) {
       request.setRequestHeader("Authorization", "Bearer " + Authorization);

@@ -5,7 +5,14 @@ const {user} = require('../controllers');
 
 const Route = require('./route');
 const convert2json = require('../utils/joi2json');
-const { request, summary, query, path, body, tags } = require('koa-swagger-decorator');
+const {
+  request,
+  summary,
+  query,
+  path,
+  body,
+  tags
+} = require('koa-swagger-decorator');
 
 // 定义用于验证的 schema
 const register = {
@@ -25,18 +32,11 @@ const signin = {
 
 const validation = {
   register: {
-    body: Joi.object({
-      email: Joi.string().required(),
-      name: Joi.string().required(),
-      password: Joi.string().required()
-    })
+    body: Joi.object({email: Joi.string().required(), name: Joi.string().required(), password: Joi.string().required()})
   },
 
   signin: {
-    body: Joi.object({
-      email: Joi.string().required(),
-      password: Joi.string().required()
-    })
+    body: Joi.object({email: Joi.string().required(), password: Joi.string().required()})
   }
 }
 
@@ -68,6 +68,14 @@ class Public extends Route {
     router.post('/signin', validate(validation.signin), async (ctx, next) => {
       let reqBody = ctx.request.body;
       ctx.body = await user.signin(reqBody);
+      ctx.cookies.set('userId', ctx.body.data.token, {
+        domain: 'localhost',  // cookie写在这个域名下
+        // path: '/#/register',  // cookie写在这个路径下
+        maxAge: 10 * 60 * 1000,  //cookie有效时长
+        // expires: new Date(),  cookie失效时间
+        httpOnly: false, // 是否只用于http请求中获取
+        overwrite: false  // 是否允许重写
+      })
     });
   }
 }

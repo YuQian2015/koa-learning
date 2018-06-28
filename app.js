@@ -18,7 +18,12 @@ const cors = require('koa-cors');
 
 db.connect();
 app.use(logger());
-app.use(cors());
+// https://github.com/brunoyang/blog/issues/11
+// 需要了解 XMLHttpRequest.withCredentials  https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/withCredentials
+// https://segmentfault.com/q/1010000007435062
+app.use(cors({
+  credentials:true
+}));
 app.use(bodyParser());
 // without koa-router
 // function readPage( page ) {

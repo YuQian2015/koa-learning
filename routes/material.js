@@ -14,12 +14,13 @@ const {
   tags
 } = require('koa-swagger-decorator');
 
+// 使用 https://github.com/Cody2333/koa-swagger-decorator
 const validation = {
   addMaterial: {
     body: Joi.object({
       // code: Joi.string().required(),  食材编号
       name: Joi.string().required(), // 名称
-      unit: Joi.string(), // 单位
+      unit: Joi.string().default('斤').example('斤').description('食材的计算单位,可以自己修改'), // 单位
       price: Joi.number(), // 单价
       type: Joi.number() // 类型
     })
