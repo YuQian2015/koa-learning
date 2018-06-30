@@ -1,0 +1,27 @@
+.SelectMaterialPage {
+  .material {
+    padding: 0 1rem;
+    border-bottom: solid @color-gray 1px;
+    .mixin-flex;
+    .mixin-flex-center;
+
+    .icon {
+      width: 4.4rem;
+      height: 4.4rem;
+      text-align: center;
+      i {
+        line-height: 4.4rem;
+        font-size: 2.8rem;
+      }
+    }
+
+    .name {
+      .mixin-flex-1;
+      font-size: @font-large;
+    }
+    .price {
+      color: @color-darker;
+      font-size: @font-normal;
+    }
+  }
+}

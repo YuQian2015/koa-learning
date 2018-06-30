@@ -6,20 +6,42 @@
 
   .refresher-indicator {
     text-align: center;
-    height: 30px;
-    line-height: 30px;
-    margin-top: -30px;
+    height: 3rem;
+    line-height: 3rem;
+    margin-top: -3rem;
   }
+
   .refresher-transition {
-    transition: all .2s ease;
-    -webkit-transition: all .2s ease;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
   }
+
   .pull {
-    transition: all .2s ease;
-    -webkit-transition: all .2s ease;
+    transition: all 0.2s ease;
+    -webkit-transition: all 0.2s ease;
+
+    > div {
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      width: 3rem;
+      height: 3rem;
+      vertical-align: bottom;
+
+      i {
+        transition: all 0.2s ease;
+        -webkit-transition: all 0.2s ease;
+        width: 3rem;
+        left: 0;
+        position: absolute;
+      }
+    }
+
     &.active {
-      background: blue;
-      color: white;
+      i {
+        transform: rotateZ(180deg);
+        -webkit-transform: rotateZ(180deg);
+      }
     }
   }
 
@@ -27,12 +49,12 @@
     margin: 0 auto;
     position: relative;
     text-indent: -9999em;
-    border-top: .2rem solid blue;
-    border-right: .2rem solid blue;
-    border-bottom: .2rem solid blue;
-    border-left: .2rem solid rgba(255, 255, 255, 0.2);
-    -webkit-animation: load8 1.1s infinite linear;
-    animation: load8 1.1s infinite linear;
+    border-top: 0.2rem solid blue;
+    border-right: 0.2rem solid blue;
+    border-bottom: 0.2rem solid blue;
+    border-left: 0.2rem solid rgba(255, 255, 255, 0.2);
+    -webkit-animation: load 1.1s infinite linear;
+    animation: load 1.1s infinite linear;
   }
 
   .loader,
@@ -42,7 +64,7 @@
     height: 2em;
     display: inline-block;
   }
-  @-webkit-keyframes load8 {
+  @-webkit-keyframes load {
     0% {
       -webkit-transform: rotate(0deg);
       transform: rotate(0deg);
@@ -53,7 +75,7 @@
       transform: rotate(360deg);
     }
   }
-  @keyframes load8 {
+  @keyframes load {
     0% {
       -webkit-transform: rotate(0deg);
       transform: rotate(0deg);

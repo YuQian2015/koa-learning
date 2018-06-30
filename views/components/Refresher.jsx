@@ -6,10 +6,10 @@ export default class Refresher extends React.Component {
     super(props);
     this.state = {
       config: {
-        activate: <div className="pull active">释放加载</div>,
-        deactivate: <div className="pull">继续下拉</div>,
+        activate: <div className="pull active"><div><i className="hd-unfold"></i></div>释放加载</div>,
+        deactivate: <div className="pull"><div><i className="hd-unfold"></i></div>继续下拉</div>,
         release: <div className="loader">加载中...</div>,
-        finish: "刷新成功"
+        finish: <div className="pull"><div><i className="hd-unfold"></i></div>继续下拉</div>
       }
     }
     this.handleRefresh = this.handleRefresh.bind(this);
@@ -37,3 +37,7 @@ export default class Refresher extends React.Component {
     </PullToRefresh>)
   }
 }
+
+// direction:	pull direction, can be up or down            String  down
+// className:	additional css class of root dom node        String	-
+// damping:	pull damping, suggest less than 200	           number  100

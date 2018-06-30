@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from "react-router-dom";
 
 import DatePicker from 'react-mobile-datepicker';
 import InputNumber from 'rc-input-number';
@@ -7,7 +8,7 @@ import 'rc-input-number/assets/index.css';
 
 import Moment from 'react-moment';
 
-export default class PurchaseCard extends React.Component {
+class PurchaseCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -21,6 +22,7 @@ export default class PurchaseCard extends React.Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.changeAmount = this.changeAmount.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.selectMaterial = this.selectMaterial.bind(this);
   }
 
   handleClick(type) {
@@ -52,11 +54,15 @@ export default class PurchaseCard extends React.Component {
     this.setState({data})
     this.props.onChange(type, data);
   }
+
+  selectMaterial() {
+    this.props.history.push("/select-material");
+  }
   render() {
     let {data} = this.state;
     return (<div className="PurchaseCard">
       <div className="select-material">
-        <span>请选择食材&nbsp;&nbsp;<i className="hd-enter"></i>
+        <span onClick={this.selectMaterial}>请选择食材&nbsp;&nbsp;<i className="hd-enter"></i>
         </span>
         <i className="hd-close"></i>
       </div>
@@ -100,3 +106,5 @@ PurchaseCard.propTypes = {
   onChange: PropTypes.func.isRequired,
   data: PropTypes.object.isRequired
 };
+
+export default withRouter(PurchaseCard);
