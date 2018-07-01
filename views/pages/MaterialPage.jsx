@@ -50,14 +50,14 @@ export default class MaterialPage extends React.Component {
 
   handleRefresh() {
     return new Promise((resolve, reject) => {
-      MaterialService.find({pageSize:10}, (data) => {
-        if (data.error) {
+      MaterialService.find({pageSize:10}, (res) => {
+        if (res.error) {
           reject();
           return
         }
-        this.setState({materialList: data.data});
+        this.setState({materialList: res.data});
         materialCollection.drop();
-        data.data.map(item => {
+        res.data.map(item => {
           materialCollection.insert(item);
         })
         resolve();

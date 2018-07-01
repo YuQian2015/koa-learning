@@ -95,7 +95,7 @@ export default class SelectMaterialPage extends React.Component {
             </div>
             <div className="name">{material.name}</div>
             <div className="price">{material.price}元/{material.unit}</div>
-            <div className="select">O</div>
+            <div className="select"><i className="hd-radio"></i></div>
           </div>))
         }
       </div>

@@ -23,6 +23,7 @@ const validation = {
       inspectorName: Joi.string().required(), // 收验货人
       supplierName: Joi.string().required(), // 供货人
       sign: Joi.string().required(), // 签字
+      purchaseOrderId: Joi.string().required() // 所属采购单
     })
   }
 }

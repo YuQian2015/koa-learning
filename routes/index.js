@@ -7,6 +7,7 @@ const response = require('../utils/response');
 const users = require('./users');
 const material = require('./material');
 const purchase = require('./purchase');
+const purchaseOrder = require('./purchaseOrder');
 const publicRouter = require('./public');
 const {wrapper} = require('koa-swagger-decorator');
 const routeConfig = [
@@ -19,6 +20,9 @@ const routeConfig = [
   }, {
     path: '/purchase',
     route: purchase
+  }, {
+    path: '/purchase-order',
+    route: purchaseOrder
   }
 ]
 const publicRouteConfig = [

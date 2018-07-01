@@ -18,6 +18,7 @@ const purchaseSchema = new Schema({
   inspectorName: String, // 收验货人
   supplierName: String, // 供货人
   sign: String, // 签字
+  purchaseOrderId: String, // 所属采购单
 })
 
 class Purchase extends Model {
