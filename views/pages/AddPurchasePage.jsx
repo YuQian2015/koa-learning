@@ -6,30 +6,18 @@ import PurchaseCard from '../components/PurchaseCard.jsx';
 
 import PurchaseService from '../service/PurchaseService.jsx';
 
+import LocalDB from 'local-db';
+const materialSelectCollection = new LocalDB('materialSelectCollection');
+
 export default class AddPurchasePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: {
-        "code": 0,
-        "purchasingDate": new Date(),
-        "name": "string",
-        "manufactureDate": new Date(),
-        "qualityPeriod": new Date(),
-        "quantity": 1,
-        "unit": "string",
-        "price": 0,
-        "totalPrice": 0,
-        "purchaserName": "",
-        "inspectorName": "",
-        "supplierName": "",
-        "sign": "string"
-      },
       purchaseOrder: {
         id: "",
         name: ""
       }
-    }
+    };
     this.handleChange = this.handleChange.bind(this);
     this.savePurchase = this.savePurchase.bind(this);
   }
@@ -41,17 +29,49 @@ export default class AddPurchasePage extends React.Component {
       let data = JSON.parse(search.split("?")[1]);
       this.setState({purchaseOrder: data})
     }
+    let selectMaterial = materialSelectCollection.read();
+    let dataList = [];
+    if(selectMaterial.length) {
+      for(let item of selectMaterial) {
+          dataList.push(
+              {
+                  "code": item.code,
+                  "purchasingDate": new Date(),
+                  "name": item.name,
+                  "manufactureDate": new Date(),
+                  "qualityPeriod": new Date(),
+                  "quantity": 1,
+                  "unit": item.unit,
+                  "price": item.price,
+                  "totalPrice": item.price,
+                  "purchaserName": "123",
+                  "inspectorName": "123",
+                  "supplierName": "123",
+                  "sign": "string"
+              }
+          )
+
+      }
+      console.log(dataList)
+    }
+    this.setState({
+        dataList
+    });
+    console.log(selectMaterial);
   }
 
   handleChange() {
-    console.log(this.state.data);
+    console.log(123213);
   }
 
   savePurchase() {
-    let {data} = this.state;
-    data.purchaseOrderId = this.state.purchaseOrder.id;
+    let {dataList} = this.state;
+    for ( let item of dataList) {
+        item.purchaseOrderId = this.state.purchaseOrder.id;
+    }
+    console.log(dataList);
 
-    PurchaseService.add(data, (res) => {
+    PurchaseService.add(dataList[0], (res) => {
       if (res.error) {
         this.setState({
           contentText: res.msg
@@ -66,9 +86,11 @@ export default class AddPurchasePage extends React.Component {
     })
   }
   render() {
-    let {data, purchaseOrder} = this.state;
+    let {purchaseOrder, dataList} = this.state;
     let body = <div className="AddPurchasePage">
-      <PurchaseCard data={data} onChange={this.handleChange}/>
+        {
+            dataList.map((item,i) => <PurchaseCard key={i} data={item} onChange={this.handleChange}/>)
+        }
       <div className="list-box">
         <div className="list-item">
           <div className="list-item-header">采购单</div>

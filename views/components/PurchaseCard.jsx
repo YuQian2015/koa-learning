@@ -43,7 +43,8 @@ class PurchaseCard extends React.Component {
   }
   changeAmount(number) {
     let {data} = this.state;
-    data.quantity = number
+    data.quantity = number;
+    data.totalPrice = number * data.price ;
     this.setState({data});
     this.props.onChange('quantity', number);
 
@@ -62,7 +63,7 @@ class PurchaseCard extends React.Component {
     let {data} = this.state;
     return (<div className="PurchaseCard">
       <div className="select-material">
-        <span onClick={this.selectMaterial}>请选择食材&nbsp;&nbsp;<i className="hd-enter"></i>
+        <span onClick={this.selectMaterial}>{data.name?data.name:"请选择食材"}&nbsp;&nbsp;<i className="hd-enter"></i>
         </span>
         <i className="hd-close"></i>
       </div>
@@ -83,11 +84,11 @@ class PurchaseCard extends React.Component {
       </div>
       <div className="purchase-price">
         <div className="price">
-          <span>￥1</span>/斤
+          <span>￥{data.price}</span>/斤
         </div>
         <div className="total-price">
           总计:￥
-          <span>1</span>
+          <span>{data.totalPrice}</span>
         </div>
       </div>
 

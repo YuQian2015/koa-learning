@@ -2,13 +2,13 @@ import React from 'react';
 
 import PageContainer from '../container/PageContainer.jsx';
 import Header from '../components/Header.jsx';
-import Material from '../components/Material.jsx';
 import Refresher from '../components/Refresher.jsx';
 
 import MaterialService from '../service/MaterialService.jsx';
 
 import LocalDB from 'local-db';
 const materialCollection = new LocalDB('materialCollection');
+const materialSelectCollection = new LocalDB('materialSelectCollection');
 
 export default class SelectMaterialPage extends React.Component {
   constructor(props) {
@@ -31,13 +31,16 @@ export default class SelectMaterialPage extends React.Component {
         '饮料',
         '其它'
       ]
-    }
+    };
     this.handleRefresh = this.handleRefresh.bind(this);
+    this.handleChose = this.handleChose.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+
   }
   componentWillMount() {
     if (materialCollection.read().length) {
       console.log(materialCollection.read());
-      this.setState({materialList: materialCollection.read()})
+      this.setState({materialList: materialCollection.read()});
       return
     }
     this.fetchData();
@@ -74,13 +77,39 @@ export default class SelectMaterialPage extends React.Component {
         materialCollection.drop();
         data.data.map(item => {
           materialCollection.insert(item);
-        })
+        });
         resolve();
       }, (error) => {
         reject();
       })
     });
   }
+  handleChose(index) {
+    let {materialList} = this.state;
+    materialList[index].select = !materialList[index].select;
+    this.setState({
+        materialList
+    })
+  }
+
+  handleClick() {
+    let {materialList} = this.state;
+      materialList.map(item => {
+        if(item.select) {
+          console.log(item);
+          materialSelectCollection.insert({
+              name: item.name,
+              price: item.price,
+              unit: item.unit,
+              code: item.code,
+              type: item.type,
+              _id: item._id
+          });
+        }
+      });
+      this.props.history.goBack();
+  }
+
   render() {
     const {materialList, icons, tags} = this.state;
     let body = <Refresher onRefresh={this.handleRefresh}>
@@ -95,12 +124,13 @@ export default class SelectMaterialPage extends React.Component {
             </div>
             <div className="name">{material.name}</div>
             <div className="price">{material.price}元/{material.unit}</div>
-            <div className="select"><i className="hd-radio"></i></div>
+            <div className="select" onClick={() => this.handleChose(i)}>{material.select?<i className="hd-minus-fill"></i>:<i className="hd-plus"></i>}</div>
           </div>))
         }
       </div>
     </Refresher>;
-    let header = <Header back="" title="选择食材"/>
+    let tools = <div onClick={this.handleClick}>确定</div>;
+    let header = <Header back="" title="选择食材" tools={tools} />;
     return <PageContainer body={body} header={header}/>
   }
 }
