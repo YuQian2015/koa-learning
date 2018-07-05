@@ -25,7 +25,14 @@ const validation = {
       sign: Joi.string().required(), // 签字
       purchaseOrderId: Joi.string().required() // 所属采购单
     })
-  }
+  },
+  findPurchase: {
+    query: Joi.object({
+      page: Joi.number(), // 页码
+      pageSize: Joi.number(), // 页数
+      purchaseOrderId: Joi.string() // 采购单ID
+    })
+  },
 }
 class Purchase extends Route {
   constructor() {
@@ -40,6 +47,18 @@ class Purchase extends Route {
     router.post('/add', validate(validation.addPurchase), async (ctx, next) => {
       let reqBody = ctx.request.body;
       ctx.body = await purchase.addPurchase(reqBody);
+    });
+  }
+
+
+  @request('get', '/purchase/')
+  @summary('查询采购项目')
+  @tags(['采购'])
+  @query(convert2json(validation.findPurchase))
+  findPurchase() {
+    router.get('/', validate(validation.findPurchase), async (ctx, next) => {
+      let reqParams = ctx.query;
+      ctx.body = await purchase.findPurchase(reqParams);
     });
   }
 }

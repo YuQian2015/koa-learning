@@ -13,5 +13,9 @@
   },
   "Token": {
     "jwtSecret": "healthy-diet"
+  },
+  "Rsa": {
+    "public":"-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKj6s31yMIo8sgfiSGZ0hYIL7NamlF6voHcBbsP16yICn5i+a/W6kTRNhVorfD7GDZVxHWAyk7VAmaTH6yjfgoUCAwEAAQ==-----END PUBLIC KEY-----",
+    "private":"-----BEGIN PRIVATE KEY-----MIIBVgIBADANBgkqhkiG9w0BAQEFAASCAUAwggE8AgEAAkEAqPqzfXIwijyyB+JIZnSFggvs1qaUXq+gdwFuw/XrIgKfmL5r9bqRNE2FWit8PsYNlXEdYDKTtUCZpMfrKN+ChQIDAQABAkAwf9Qoey/HXWhTrvTMw0DWdInDiggnrQzHW1fpUpnsJpEddaJ5KTN9z5gJ7Ad1v8ZeCKATaBLsFp2M0sFB/9d5AiEA2MfhIgDrDDQNxGBl3NdxqPPYEsOQYdfJm9RstwfOCgcCIQDHjOoHT91PnBD3JjGAkR9CSGLDn29mCvR6g6yyqaQcEwIhAJakX5hnlu8GBUMf0eljdcJ4oQB5Eg5MC/fT6DBQpidlAiEAsr62ovYW90iEqd28Wb2kkmrkjPYzguQtOdDY0PDD36ECIQCezGb5vxtLC+XRkzPHsR8VFUMTOuXteIe+J1/pn4ZSsw==-----END PRIVATE KEY-----"
   }
 }

@@ -34,7 +34,7 @@ const validation = {
     query: Joi.object({
       page: Joi.number(), // 页码
       pageSize: Joi.number(), // 页数
-      name: Joi.string() // 关键词
+      name: Joi.string() // 材料名
     })
   },
   searchMaterial: {

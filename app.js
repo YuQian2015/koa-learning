@@ -6,33 +6,30 @@ const app = new Koa();
 const config = require('config');
 const appConfig = config.get('App');
 const dbConfig = config.get('Database');
+const key = config.get('Rsa');
 // const fs = require('fs');
 // console.log(dbConfig);
 // console.log(appConfig);
 
 const crypto = require('crypto');
-
 const buf = Buffer.alloc(20);
-console.log(crypto.randomFillSync(buf).toString('hex'));
+const randomKey = crypto.randomFillSync(buf).toString('hex');
+console.log(randomKey);
 
 const NodeRSA = require('node-rsa');
-const key = new NodeRSA({b: 512}); //生成512位秘钥
-
-var pubkey = key.exportKey('pkcs8-public');//导出公钥
-var prikey = key.exportKey('pkcs8-private');//导出私钥
-console.log(pubkey);
-console.log(prikey);
-var pubkeyR = new NodeRSA(pubkey,'pkcs8-public');//导入公钥
-var prikeyR = new NodeRSA(prikey,'pkcs8-private');//导入私钥
-console.log(pubkeyR);
-console.log(prikeyR);
+// const key = new NodeRSA({b: 512}); //生成512位秘钥
+// const pubkey = key.exportKey('pkcs8-public');//导出公钥
+// const prikey = key.exportKey('pkcs8-private');//导出私钥
+const pubkey = key.public;
+const prikey = key.private;
+const pubkeyR = new NodeRSA(pubkey,'pkcs8-public');//导入公钥
+const prikeyR = new NodeRSA(prikey,'pkcs8-private');//导入私钥
 
 
-const text = 'Hello RSA!';
-var encrypted = pubkeyR.encrypt(text, 'base64'); // 公钥加密(返回密文):
+const encrypted = pubkeyR.encrypt(randomKey, 'base64'); // 公钥加密(返回密文):
 console.log("密文："+encrypted);
 
-var decrypted = prikeyR.decrypt(encrypted, 'utf8'); // 公钥加密(返回密文):
+const decrypted = prikeyR.decrypt(encrypted, 'utf8'); // 公钥加密(返回密文):
 console.log("明文："+decrypted);
 
 

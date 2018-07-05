@@ -8,7 +8,7 @@ import Refresher from '../components/Refresher.jsx';
 import MaterialService from '../service/MaterialService.jsx';
 
 import LocalDB from 'local-db';
-const materialCollection = new LocalDB('materialCollection');
+const materialCollection = new LocalDB('material');
 
 export default class MaterialPage extends React.Component {
   constructor(props) {

@@ -18,6 +18,21 @@ class PurchaseController {
       return err;
     }
   }
+
+  // 查询采购
+  async findPurchase(reqParams) {
+    try {
+      let respon = {};
+      let result = await purchase.find(reqParams);
+      respon = response({data: result});
+      return respon;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
+    }
+
+  }
 }
 
 const purchaseController = new PurchaseController();

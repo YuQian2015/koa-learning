@@ -6,7 +6,7 @@ import Header from '../components/Header.jsx';
 import Refresher from '../components/Refresher.jsx';
 
 import LocalDB from 'local-db';
-const materialOrderCollection = new LocalDB('materialOrderCollection');
+const materialOrderCollection = new LocalDB('materialOrder');
 
 import PurchaseService from '../service/PurchaseService.jsx';
 
@@ -19,7 +19,6 @@ export default class PurchasePage extends React.Component {
       showAdd: false,
       inputName: ""
     }
-    this.addPurchase = this.addPurchase.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -91,9 +90,6 @@ export default class PurchasePage extends React.Component {
     });
   }
 
-  addPurchase() {
-    this.props.history.push("/add-purchase");
-  }
   handleAdd() {
     this.setState({showAdd: true})
   }
@@ -141,9 +137,8 @@ export default class PurchasePage extends React.Component {
         </div>
       </div>
     </Refresher>;
-    let tools = <div onClick={this.addPurchase}>添加采购</div>;
     let footer = <Tabs/>;
-    let header = <Header title="采购单" tools={tools}/>
+    let header = <Header title="采购单" />
     return <PageContainer body={body} footer={footer} header={header}/>
   }
 }

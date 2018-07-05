@@ -7,7 +7,7 @@ import MaterialService from '../service/MaterialService.jsx';
 import Toast from '../components/Toast.jsx';
 
 import LocalDB from 'local-db';
-const materialCollection = new LocalDB('materialCollection');
+const materialCollection = new LocalDB('material');
 
 export default class AddMaterialPage extends React.Component {
   constructor(props) {

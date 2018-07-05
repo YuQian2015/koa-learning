@@ -8,6 +8,11 @@ class PurchaseService {
     HttpService.post(`${CONFIG.apiUrl}/purchase/add`, params, success, error);
   }
 
+  // 查询采购列表
+  find(params, success, error) {
+    HttpService.get(`${CONFIG.apiUrl}/purchase/`, params, success, error);
+  }
+
   // 获得采购单
   findOrder(params, success, error) {
     HttpService.get(`${CONFIG.apiUrl}/purchase-order/`, params, success, error);
