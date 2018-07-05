@@ -10,6 +10,32 @@ const dbConfig = config.get('Database');
 // console.log(dbConfig);
 // console.log(appConfig);
 
+const crypto = require('crypto');
+
+const buf = Buffer.alloc(20);
+console.log(crypto.randomFillSync(buf).toString('hex'));
+
+const NodeRSA = require('node-rsa');
+const key = new NodeRSA({b: 512}); //生成512位秘钥
+
+var pubkey = key.exportKey('pkcs8-public');//导出公钥
+var prikey = key.exportKey('pkcs8-private');//导出私钥
+console.log(pubkey);
+console.log(prikey);
+var pubkeyR = new NodeRSA(pubkey,'pkcs8-public');//导入公钥
+var prikeyR = new NodeRSA(prikey,'pkcs8-private');//导入私钥
+console.log(pubkeyR);
+console.log(prikeyR);
+
+
+const text = 'Hello RSA!';
+var encrypted = pubkeyR.encrypt(text, 'base64'); // 公钥加密(返回密文):
+console.log("密文："+encrypted);
+
+var decrypted = prikeyR.decrypt(encrypted, 'utf8'); // 公钥加密(返回密文):
+console.log("明文："+decrypted);
+
+
 const routes = require('./routes');
 const db = require('./config/dbConfig');
 const logger = require('./middleware/logger');
