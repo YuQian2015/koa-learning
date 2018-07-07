@@ -27,21 +27,8 @@
     .mixin-flex;
     .mixin-flex-center;
 
-    .amount,
     .date {
       .mixin-flex-1;
-    }
-
-    .amount {
-      .rc-input-number,
-      .rc-input-number-handler-up,
-      .rc-input-number-handler-wrap {
-        border-color: @color-dark-line;
-      }
-
-      .rc-input-number-input {
-        background: transparent;
-      }
     }
 
     .date {
@@ -64,14 +51,31 @@
     .mixin-flex;
     .mixin-flex-center;
 
-    .price {
+    input {
+      width: 6rem;
+    }
+
+    .amount,
+    .price,
+    .total-price {
       color: @color-darker;
       .mixin-flex-1;
     }
 
-    .total-price {
-      color: @color-darker;
+    .amount,
+    .price {
+      .rc-input-number,
+      .rc-input-number-handler-up,
+      .rc-input-number-handler-wrap {
+        border-color: @color-dark-line;
+      }
 
+      .rc-input-number-input {
+        background: transparent;
+      }
+    }
+
+    .total-price {
       span {
         font-size: 3rem;
         vertical-align: sub;
@@ -79,6 +83,25 @@
       }
     }
   }
+  .sign-box {
+    margin: 0 -1rem;
+    background: @color-white;
+      .sign-tools {
+        .mixin-flex;
+        border-top: solid 1px  @color-dark-line;
+        height: 4rem;
+        div {
+          .mixin-flex-1;
+          text-align: center;
+          line-height: 4rem;
+          font-size: @font-large;
+          & + div {
+            border-left: solid 1px @color-dark-line;
+          }
+        }
+      }
+  }
+
 
   .sign {
     margin: 0 -1rem;

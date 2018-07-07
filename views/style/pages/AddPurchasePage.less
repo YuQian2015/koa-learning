@@ -6,11 +6,20 @@
     font-size: @font-large;
   }
   .purchase {
-    padding: 1rem;
+    padding: 1.6rem 1rem;
     border-bottom: solid 1px @color-gray;
+    font-size: @font-normal;
     .mixin-flex;
-    .name {
+    .date {
+      color: @color-dark;
+    }
+    .action {
+      color: @color-common;
+      margin: 0 1rem;
+    }
+    .price {
       .mixin-flex-1;
+      text-align: right;
     }
   }
 }

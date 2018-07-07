@@ -42,6 +42,7 @@
     "react-redux": "^5.0.7",
     "react-responsive-carousel": "^3.1.39",
     "react-router-dom": "^4.2.2",
+    "react-signature-pad-wrapper": "^1.2.2",
     "react-transition-group": "^2.2.1",
     "react-virtualized": "^9.19.1",
     "request": "^2.87.0",
