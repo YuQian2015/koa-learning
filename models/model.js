@@ -111,6 +111,20 @@ class Model {
       })
     })
   }
+
+  findOneAndUpdate(query, dataArr) {
+    return new Promise((resolve, reject) => {
+        this.model.findOneAndUpdate(query, dataArr, {upsert:true}, (err, doc) => {
+          if (err) {
+              // console.log(err);
+              reject(err);
+          } else {
+            resolve(doc);
+          }
+      });
+    })
+  }
+
 }
 
 module.exports = Model;

@@ -13,6 +13,12 @@ class PurchaseService {
     HttpService.get(`${CONFIG.apiUrl}/purchase/`, params, success, error);
   }
 
+
+  // 修改采购
+  edit(params, success, error) {
+    HttpService.post(`${CONFIG.apiUrl}/purchase/edit`, params, success, error);
+  }
+
   // 获得采购单
   findOrder(params, success, error) {
     HttpService.get(`${CONFIG.apiUrl}/purchase-order/`, params, success, error);

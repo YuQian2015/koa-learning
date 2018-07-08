@@ -17,8 +17,7 @@ class PurchaseCard extends React.Component {
       time: new Date(),
       isOpen: false,
       dateType: "",
-      data: props.data,
-      showSign: false
+      data: props.data
     }
     this.handleClick = this.handleClick.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
@@ -27,10 +26,16 @@ class PurchaseCard extends React.Component {
     this.changePrice = this.changePrice.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.selectMaterial = this.selectMaterial.bind(this);
-    this.toggleSign = this.toggleSign.bind(this);
     this.clearPad = this.clearPad.bind(this);
     this.savePad = this.savePad.bind(this);
     this.onEnd = this.onEnd.bind(this);
+  }
+
+  // 载入签名
+  componentDidMount() {
+    if (this.props.data.sign) {
+      this.signaturePad.fromDataURL(this.props.data.sign)
+    }
   }
 
   handleClick(type) {
@@ -82,12 +87,6 @@ class PurchaseCard extends React.Component {
   selectMaterial() {
     this.props.history.push("/select-material");
   }
-  toggleSign() {
-    let {showSign} = this.state;
-    this.setState({
-      showSign: !showSign
-    })
-  }
   onEnd() {
     this.savePad();
   }
@@ -100,16 +99,11 @@ class PurchaseCard extends React.Component {
     this.signaturePad.clear();
   }
   render() {
-    let {data, showSign} = this.state;
+    let {data} = this.state;
     return (<div className="PurchaseCard">
       <div className="select-material">
-        <span onClick={this.selectMaterial}>{
-            data.name
-              ? data.name
-              : "请选择食材"
-          }&nbsp;&nbsp;<i className="hd-enter"></i>
+        <span onClick={this.selectMaterial}>{data.name}
         </span>
-        <i className="hd-close"></i>
       </div>
       <div className="purchase-detail">
         <div className="date" ref="manufactureDate" onClick={() => this.handleClick("manufactureDate")}>
@@ -138,31 +132,24 @@ class PurchaseCard extends React.Component {
           总计:￥
           <span>{data.totalPrice}</span>
         </div>
-        <div className="sign-name" onClick={this.toggleSign}>
-          {
-            showSign
-              ? "保存签字"
-              : "收起签字"
-          }
-        </div>
+        <div className="sign-name">签字</div>
       </div>
-      {
-        showSign
-          ? <div className="sign-box">
-              <SignaturePad ref={ref => this.signaturePad = ref} options={{
-                  onEnd:this.onEnd,
-                  minWidth: 1,
-                  maxWidth: 3,
-                  dotSize: 2,
-                  penColor: 'rgb(0, 0, 0)'
-                }}/>
-              <div className="sign-tools">
-                <div onClick={this.clearPad}>重写</div>
-                <div onClick={this.savePad}>保存生效</div>
-              </div>
-            </div>
-          : null
-      }
+      <div className="sign-box">
+        <SignaturePad ref={ref => this.signaturePad = ref} options={{
+            onEnd: this.onEnd,
+            minWidth: 1,
+            maxWidth: 3,
+            dotSize: 2,
+            penColor: 'rgb(0, 0, 0)'
+          }}/>
+          {
+            data.sign?
+          <div className="sign-tools">
+            <div onClick={this.clearPad}>重写</div>
+            <div onClick={this.clearPad}>签名预览 <img src={data.sign}></img></div>
+          </div>:null
+          }
+      </div>
 
       <div className="sign">
         <input className="list-item-body" type="text" onChange={() => this.handleChange("purchaserName")} ref="purchaserName" value={data.purchaserName} placeholder="采购人"/>
@@ -192,8 +179,8 @@ PurchaseCard.propTypes = {
     "inspectorName": PropTypes.string,
     "supplierName": PropTypes.string,
     "sign": PropTypes.string,
-    "purchaseOrderId":  PropTypes.string
-  }).isRequired
+    "purchaseOrderId": PropTypes.string
+  })
 };
 
 export default withRouter(PurchaseCard);

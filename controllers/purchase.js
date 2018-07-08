@@ -33,6 +33,19 @@ class PurchaseController {
     }
 
   }
+  // 修改采购
+  async updatePurchase(id, reqBody) {
+    try {
+      let respon = {};
+      let result = await purchase.findOneAndUpdate({_id:id},reqBody);
+      respon = response({data: result});
+      return respon;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
+    }
+  }
 }
 
 const purchaseController = new PurchaseController();

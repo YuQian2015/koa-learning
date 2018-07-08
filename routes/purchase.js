@@ -26,6 +26,25 @@ const validation = {
       purchaseOrderId: Joi.string().required() // 所属采购单
     })
   },
+    editPurchase: {
+      body: Joi.object({
+        id:Joi.string().required(), // 采购id
+        code: Joi.number().required(), // 食材编号
+        purchasingDate: Joi.date().required(), // 采购日期
+        name: Joi.string().required(), // 食品名称
+        manufactureDate: Joi.date(), // 生产日期
+        qualityPeriod: Joi.date(), // 保质期
+        quantity: Joi.number().required(), // 数量
+        unit: Joi.string(), // 单位
+        price: Joi.number().required(), // 单价
+        totalPrice: Joi.number().required(), // 金额
+        purchaserName: Joi.string().required(), // 采购人
+        inspectorName: Joi.string().required(), // 收验货人
+        supplierName: Joi.string().required(), // 供货人
+        sign: Joi.string().required(), // 签字
+        purchaseOrderId: Joi.string().required() // 所属采购单
+      })
+    },
   findPurchase: {
     query: Joi.object({
       page: Joi.number(), // 页码
@@ -50,6 +69,17 @@ class Purchase extends Route {
     });
   }
 
+
+  @request('post', '/purchase/edit')
+  @summary('修改采购项目')
+  @tags(['采购'])
+  @body(convert2json(validation.editPurchase))
+  editPurchase() {
+    router.post('/edit', validate(validation.editPurchase), async (ctx, next) => {
+      let reqBody = ctx.request.body;
+      ctx.body = await purchase.updatePurchase(reqBody.id, reqBody);
+    });
+  }
 
   @request('get', '/purchase/')
   @summary('查询采购项目')

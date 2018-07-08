@@ -8,6 +8,10 @@ import Refresher from '../components/Refresher.jsx';
 import PurchaseCard from '../components/PurchaseCard.jsx';
 import Moment from 'react-moment';
 
+import ImageCompressor from 'image-compressor.js';
+const imageCompressor = new ImageCompressor();
+import {file} from '../utils/File.jsx';
+
 import PurchaseService from '../service/PurchaseService.jsx';
 
 import LocalDB from 'local-db';
@@ -32,42 +36,42 @@ export default class AddPurchasePage extends React.Component {
     this.hideToast = this.hideToast.bind(this);
     this.showPurchaseDetail = this.showPurchaseDetail.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
+    this.selectMaterial = this.selectMaterial.bind(this);
   }
 
   componentWillMount() {
     console.log(this.props.location.state);
+    let urlData;
     if (this.props.location.search) {
       let search = decodeURI(this.props.location.search);
-      let data = JSON.parse(search.split("?")[1]);
-      this.setState({purchaseOrder: data})
+      urlData = JSON.parse(search.split("?")[1]);
+      this.setState({purchaseOrder: urlData})
     }
     let selectMaterial = materialSelectCollection.read();
     let user = userCollection.read()[0];
     console.log(user);
-    let dataList = [];
     if (selectMaterial.length) {
-      for (let item of selectMaterial) {
-        dataList.push({
-          "code": item.code,
-          "purchasingDate": new Date(),
-          "name": item.name,
-          "manufactureDate": undefined,
-          "qualityPeriod": undefined,
-          "quantity": 1,
-          "unit": item.unit,
-          "price": item.price,
-          "totalPrice": item.price,
-          "purchaserName": "采购人",
-          "inspectorName": "收验货人",
-          "supplierName": "供货人",
-          "sign": ""
-        })
-
+      console.log(selectMaterial);
+      const item = selectMaterial[0];
+      let dataList = {
+        "code": item.code,
+        "purchasingDate": new Date(),
+        "name": item.name,
+        "manufactureDate": undefined,
+        "qualityPeriod": undefined,
+        "quantity": 1,
+        "unit": item.unit,
+        "price": item.price,
+        "totalPrice": item.price,
+        "purchaserName": "采购人",
+        "inspectorName": "收验货人",
+        "supplierName": "供货人",
+        "sign": "",
+        "purchaseOrderId": urlData.id
       }
-      console.log(dataList)
+
+      this.showPurchaseDetail(dataList)
     }
-    this.setState({dataList});
-    console.log(selectMaterial);
     this.fetchData();
   }
 
@@ -88,24 +92,24 @@ export default class AddPurchasePage extends React.Component {
   }
 
   handleRefresh() {
-      return new Promise((resolve, reject) => {
-        PurchaseService.find({}, (res) => {
-          if (res.error) {
-            console.log(res.msg);
-              reject();
-              return
-          }
-          this.setState({purchaseList: res.data});
-          materialListCollection.drop();
-          res.data.map(item => {
-            materialListCollection.insert(item);
-          })
-          resolve();
-        }, (error) => {
-          console.log(error);
-            reject();
+    return new Promise((resolve, reject) => {
+      PurchaseService.find({}, (res) => {
+        if (res.error) {
+          console.log(res.msg);
+          reject();
+          return
+        }
+        this.setState({purchaseList: res.data});
+        materialListCollection.drop();
+        res.data.map(item => {
+          materialListCollection.insert(item);
         })
-      });
+        resolve();
+      }, (error) => {
+        console.log(error);
+        reject();
+      })
+    });
   }
 
   handleChange() {
@@ -121,9 +125,7 @@ export default class AddPurchasePage extends React.Component {
   }
 
   hideToast() {
-    this.setState({
-      dataList:[]
-    })
+    this.setState({purchaseDetail: null})
     // this.props.history.goBack();
   }
   showPurchaseDetail(item) {
@@ -136,51 +138,82 @@ export default class AddPurchasePage extends React.Component {
     })
   }
 
+  selectMaterial() {
+    this.props.history.push("/select-material");
+  }
   savePurchase() {
-    let {dataList} = this.state;
-    for (let item of dataList) {
-      item.purchaseOrderId = this.state.purchaseOrder.id;
-    }
-    console.log(dataList);
 
-    PurchaseService.add(dataList[0], (res) => {
-      if (res.error) {
-        this.setState({
-          contentText: res.msg
-        }, () => {
-          this.refs.toast.show();
-        });
-        return
-      }
-      materialSelectCollection.drop();
-      this.setState({
-        contentText: "保存成功"
-      }, () => {
-        this.refs.toast.show();
+    let {purchaseDetail} = this.state;
+    let blob = file.dataURLtoBlob(purchaseDetail.sign)
+    console.log(blob);
+    imageCompressor.compress(blob, {
+      quality: 0,
+      maxWidth: 180
+    }).then(result => {
+      file.blobToDataURL(result).then(image => {
+        console.log(image);
+        purchaseDetail.sign = image;
+
+        console.log(purchaseDetail);
+
+
+        if(purchaseDetail._id) {
+          
+          purchaseDetail.id = purchaseDetail._id;
+                  PurchaseService.edit(purchaseDetail, (res) => {
+                    if (res.error) {
+                      alert(res.msg)
+                      return
+                    }
+                    materialSelectCollection.drop();
+                    this.setState({
+                      contentText: "保存成功",
+                      purchaseDetail: null
+                    }, () => {
+                      this.refs.toast.show();
+                      this.refs.modal.hide();
+                    });
+                  }, (error) => {
+                    console.log(error);
+                  })
+        } else {
+
+                  PurchaseService.add(purchaseDetail, (res) => {
+                    if (res.error) {
+                      alert(res.msg)
+                      return
+                    }
+                    materialSelectCollection.drop();
+                    this.setState({
+                      contentText: "保存成功",
+                      purchaseDetail: null
+                    }, () => {
+                      this.refs.toast.show();
+                      this.refs.modal.hide();
+                    });
+                  }, (error) => {
+                    console.log(error);
+                  })
+        }
+      }).catch(e => {
+        console.log(e);
       });
-    }, (error) => {
-      console.log(error);
-    })
+      console.log(result);
+    }).catch(e => {
+      alert(e.message)
+    });
   }
   render() {
-    let {
-      purchaseOrder,
-      dataList,
-      contentText,
-      purchaseList,
-      title,
-      purchaseDetail
-    } = this.state;
-    let content = <PurchaseCard data={purchaseDetail} onChange={this.handleChangeDetail}/>
+    let {purchaseOrder, contentText, purchaseList, title, purchaseDetail} = this.state;
+    let content = <PurchaseCard data={purchaseDetail} onChange={this.handleChange}/>
+    const button = {
+      text: "保存",
+      callback: this.savePurchase
+    }
     let body = <Refresher onRefresh={this.handleRefresh}>
       <div className="AddPurchasePage">
         <Toast ref="toast" icon="hd-success-fill" contentText={contentText} onHide={this.hideToast}/>
-        <Modal ref="modal" content={content} title={title}/> {
-          dataList.length
-            ? dataList.map((item, i) => <PurchaseCard key={i} data={item} onChange={this.handleChange}/>)
-            : null
-        }
-        {
+        <Modal ref="modal" content={content} title={title} button={button}/> {
           purchaseList.map((item, i) => (<div className="purchase" key={i} onClick={() => this.showPurchaseDetail(item)}>
             <div className="date">
               <Moment format="YYYY-MM-DD  HH:mm">{item.purchasingDate}</Moment>
@@ -191,19 +224,9 @@ export default class AddPurchasePage extends React.Component {
             <div className="price">共{item.totalPrice}元</div>
           </div>))
         }
-        {/* <div className="list-box">
-        <div className="list-item">
-          <div className="list-item-header">采购单</div>
-          <input className="list-item-body" type="text" value={purchaseOrder.name} disabled="disabled" placeholder="选择采购单"/>
-          <div className="list-item-footer">
-            <i className="hd-enter"></i>
-          </div>
-        </div>
-      </div> */
-        }
       </div>
     </Refresher>;
-    let tools = dataList.length
+    let tools = purchaseDetail && purchaseDetail.code
       ? <div onClick={this.savePurchase}>保存</div>
       : <div onClick={this.addPurchase}>新增</div>;
     let header = <Header back="" title={purchaseOrder.name

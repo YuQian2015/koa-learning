@@ -83,25 +83,33 @@
       }
     }
   }
+
   .sign-box {
     margin: 0 -1rem;
     background: @color-white;
-      .sign-tools {
-        .mixin-flex;
-        border-top: solid 1px  @color-dark-line;
-        height: 4rem;
-        div {
-          .mixin-flex-1;
-          text-align: center;
-          line-height: 4rem;
-          font-size: @font-large;
-          & + div {
-            border-left: solid 1px @color-dark-line;
-          }
+
+    .sign-tools {
+      .mixin-flex;
+      border-top: solid 1px @color-dark-line;
+      height: 4rem;
+
+      div {
+        .mixin-flex-1;
+        text-align: center;
+        line-height: 4rem;
+        font-size: @font-large;
+
+        img {
+          height: 4rem;
+          vertical-align: middle;
+        }
+
+        & + div {
+          border-left: solid 1px @color-dark-line;
         }
       }
+    }
   }
-
 
   .sign {
     margin: 0 -1rem;

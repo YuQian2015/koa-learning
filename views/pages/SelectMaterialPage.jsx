@@ -84,30 +84,35 @@ export default class SelectMaterialPage extends React.Component {
       })
     });
   }
-  handleChose(index) {
+  handleChose(material) {
     let {materialList} = this.state;
-    materialList[index].select = !materialList[index].select;
-    this.setState({
-        materialList
-    })
+    for (let item of materialList) {
+      if (item.code == material.code) {
+        item.select = true;
+      } else {
+        item.select = false;
+      }
+    }
+    this.setState({materialList})
   }
 
   handleClick() {
     let {materialList} = this.state;
-      materialList.map(item => {
-        if(item.select) {
-          console.log(item);
-          materialSelectCollection.insert({
-              name: item.name,
-              price: item.price,
-              unit: item.unit,
-              code: item.code,
-              type: item.type,
-              _id: item._id
-          });
-        }
-      });
-      this.props.history.goBack();
+    materialList.map(item => {
+      if (item.select) {
+        console.log(item);
+        materialSelectCollection.drop();
+        materialSelectCollection.insert({
+          name: item.name,
+          price: item.price,
+          unit: item.unit,
+          code: item.code,
+          type: item.type,
+          _id: item._id
+        });
+      }
+    });
+    this.props.history.goBack();
   }
 
   render() {
@@ -118,19 +123,23 @@ export default class SelectMaterialPage extends React.Component {
       </div>
       <div className="SelectMaterialPage">
         {
-          materialList.map((material, i) => (<div className="material" key={i}>
+          materialList.map((material, i) => (<div className="material" key={i} onClick={() => this.handleChose(material)}>
             <div className="icon">
               <i className={icons[material.type - 1]}></i>
             </div>
             <div className="name">{material.name}</div>
             <div className="price">{material.price}元/{material.unit}</div>
-            <div className="select" onClick={() => this.handleChose(i)}>{material.select?<i className="hd-minus-fill"></i>:<i className="hd-plus"></i>}</div>
+            <div className="select">{
+                material.select
+                  ? <i className="hd-radio-fill"></i>
+                  : <i className="hd-radio"></i>
+              }</div>
           </div>))
         }
       </div>
     </Refresher>;
     let tools = <div onClick={this.handleClick}>确定</div>;
-    let header = <Header back="" title="选择食材" tools={tools} />;
+    let header = <Header back="" title="选择食材" tools={tools}/>;
     return <PageContainer body={body} header={header}/>
   }
 }
