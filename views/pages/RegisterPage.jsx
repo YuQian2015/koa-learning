@@ -146,7 +146,7 @@ class RegisterPage extends React.Component {
           <i className="hd-lock-fill"></i>
           <input type="password" onChange={() => this.handleChange("pwd")} ref="pwd" placeholder="登录密码" maxLength="20"/>
         </div>
-        <button className="block" onClick={this.doSubmit}>{
+        <button className="block" onClick={this.doSubmit} type="button">{
             isSignIn
               ? '登录'
               : '注册'

@@ -19,6 +19,11 @@ class PurchaseService {
     HttpService.post(`${CONFIG.apiUrl}/purchase/edit`, params, success, error);
   }
 
+  // 导出采购列表
+  export(params, success, error) {
+    HttpService.get(`${CONFIG.apiUrl}/purchase/export`, params, success, error);
+  }
+
   // 获得采购单
   findOrder(params, success, error) {
     HttpService.get(`${CONFIG.apiUrl}/purchase-order/`, params, success, error);

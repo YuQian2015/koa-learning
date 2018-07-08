@@ -46,6 +46,20 @@ class PurchaseController {
       return err;
     }
   }
+
+
+    // 导出采购
+    async exportPurchase(reqParams) {
+      try {
+        let result = await purchase.exportExcel(reqParams);
+        return result;
+      } catch (err) {
+        console.log(err)
+        throw new Error(err);
+        return err;
+      }
+
+    }
 }
 
 const purchaseController = new PurchaseController();

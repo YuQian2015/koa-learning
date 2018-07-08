@@ -93,17 +93,17 @@ export default class AddPurchasePage extends React.Component {
 
   handleRefresh() {
     return new Promise((resolve, reject) => {
-      PurchaseService.find({}, (res) => {
+      PurchaseService.export({}, (res) => {
         if (res.error) {
           console.log(res.msg);
           reject();
           return
         }
-        this.setState({purchaseList: res.data});
-        materialListCollection.drop();
-        res.data.map(item => {
-          materialListCollection.insert(item);
-        })
+        // this.setState({purchaseList: res.data});
+        // materialListCollection.drop();
+        // res.data.map(item => {
+        //   materialListCollection.insert(item);
+        // })
         resolve();
       }, (error) => {
         console.log(error);
@@ -158,7 +158,7 @@ export default class AddPurchasePage extends React.Component {
 
 
         if(purchaseDetail._id) {
-          
+
           purchaseDetail.id = purchaseDetail._id;
                   PurchaseService.edit(purchaseDetail, (res) => {
                     if (res.error) {

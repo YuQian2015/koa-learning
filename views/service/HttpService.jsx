@@ -107,8 +107,12 @@ class HttpService {
       if (request.readyState == 4) {
         const status = request.status;
         if (status >= 200 && status < 300) {
-          const res = JSON.parse(request.responseText);
-          successCallback && successCallback(res);
+          try {
+            const res = JSON.parse(request.responseText);
+            successCallback && successCallback(res);
+          } catch (e){
+            console.error(e);
+          }
           return
         }
         if (status == 401) {

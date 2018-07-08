@@ -52,6 +52,13 @@ const validation = {
       purchaseOrderId: Joi.string() // 采购单ID
     })
   },
+  exportPurchase: {
+    query: Joi.object({
+      page: Joi.number(), // 页码
+      pageSize: Joi.number(), // 页数
+      purchaseOrderId: Joi.string() // 采购单ID
+    })
+  },
 }
 class Purchase extends Route {
   constructor() {
@@ -89,6 +96,24 @@ class Purchase extends Route {
     router.get('/', validate(validation.findPurchase), async (ctx, next) => {
       let reqParams = ctx.query;
       ctx.body = await purchase.findPurchase(reqParams);
+    });
+  }
+
+  @request('get', '/purchase/export')
+  @summary('导出采购项目')
+  @tags(['采购'])
+  @query(convert2json(validation.exportPurchase))
+  exportPurchase() {
+    router.get('/export', validate(validation.exportPurchase), async (ctx, next) => {
+      let reqParams = ctx.query;
+      ctx.set({
+        'Content-Type': 'application/vnd.ms-excel', // xls
+        // 'Content-Type': 'application/vnd.openxmlformats',
+        // 'Content-Type': 'application/vnd.openxmlformats',
+
+        'Content-Disposition': 'attachment; filename=o2olog.xlsx'
+      });
+      ctx.body = await purchase.exportPurchase(reqParams);
     });
   }
 }
