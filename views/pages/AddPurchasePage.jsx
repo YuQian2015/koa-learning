@@ -28,7 +28,8 @@ export default class AddPurchasePage extends React.Component {
         name: ""
       },
       purchaseList: [],
-      purchaseDetail: {}
+      purchaseDetail: {},
+      purchaseOrderId: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.savePurchase = this.savePurchase.bind(this);
@@ -37,6 +38,7 @@ export default class AddPurchasePage extends React.Component {
     this.showPurchaseDetail = this.showPurchaseDetail.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
     this.selectMaterial = this.selectMaterial.bind(this);
+    this.exportExcel = this.exportExcel.bind(this);
   }
 
   componentWillMount() {
@@ -72,11 +74,11 @@ export default class AddPurchasePage extends React.Component {
 
       this.showPurchaseDetail(dataList)
     }
-    this.fetchData();
+    this.fetchData({purchaseOrderId: urlData.id});
   }
 
-  fetchData() {
-    PurchaseService.find({}, (res) => {
+  fetchData(params = {}) {
+    PurchaseService.find(params, (res) => {
       if (res.error) {
         console.log(res.msg);
         return
@@ -91,9 +93,9 @@ export default class AddPurchasePage extends React.Component {
     })
   }
 
-  handleRefresh() {
+  handleRefresh(params = {}) {
     return new Promise((resolve, reject) => {
-      PurchaseService.find({}, (res) => {
+      PurchaseService.find(params, (res) => {
         if (res.error) {
           console.log(res.msg);
           reject();
@@ -113,11 +115,8 @@ export default class AddPurchasePage extends React.Component {
   }
 
   exportExcel() {
-      PurchaseService.exportExcel({}, () => {
-        console.log(12313);
-      }, (error) => {
-        console.log(error);
-      })
+    let {purchaseOrder} = this.state;
+    PurchaseService.exportExcel({purchaseOrderId: purchaseOrder.id})
   }
 
   handleChange() {
@@ -164,44 +163,43 @@ export default class AddPurchasePage extends React.Component {
 
         console.log(purchaseDetail);
 
-
-        if(purchaseDetail._id) {
+        if (purchaseDetail._id) {
 
           purchaseDetail.id = purchaseDetail._id;
-                  PurchaseService.edit(purchaseDetail, (res) => {
-                    if (res.error) {
-                      alert(res.msg)
-                      return
-                    }
-                    materialSelectCollection.drop();
-                    this.setState({
-                      contentText: "保存成功",
-                      purchaseDetail: null
-                    }, () => {
-                      this.refs.toast.show();
-                      this.refs.modal.hide();
-                    });
-                  }, (error) => {
-                    console.log(error);
-                  })
+          PurchaseService.edit(purchaseDetail, (res) => {
+            if (res.error) {
+              alert(res.msg)
+              return
+            }
+            materialSelectCollection.drop();
+            this.setState({
+              contentText: "保存成功",
+              purchaseDetail: null
+            }, () => {
+              this.refs.toast.show();
+              this.refs.modal.hide();
+            });
+          }, (error) => {
+            console.log(error);
+          })
         } else {
 
-                  PurchaseService.add(purchaseDetail, (res) => {
-                    if (res.error) {
-                      alert(res.msg)
-                      return
-                    }
-                    materialSelectCollection.drop();
-                    this.setState({
-                      contentText: "保存成功",
-                      purchaseDetail: null
-                    }, () => {
-                      this.refs.toast.show();
-                      this.refs.modal.hide();
-                    });
-                  }, (error) => {
-                    console.log(error);
-                  })
+          PurchaseService.add(purchaseDetail, (res) => {
+            if (res.error) {
+              alert(res.msg)
+              return
+            }
+            materialSelectCollection.drop();
+            this.setState({
+              contentText: "保存成功",
+              purchaseDetail: null
+            }, () => {
+              this.refs.toast.show();
+              this.refs.modal.hide();
+            });
+          }, (error) => {
+            console.log(error);
+          })
         }
       }).catch(e => {
         console.log(e);
@@ -218,11 +216,12 @@ export default class AddPurchasePage extends React.Component {
       text: "保存",
       callback: this.savePurchase
     }
-    let body = <Refresher onRefresh={this.handleRefresh}>
+    let body = <Refresher onRefresh={() => this.handleRefresh({purchaseOrderId: purchaseOrder.id})}>
+
       <div className="AddPurchasePage">
+        <div className="export-excel" onClick={this.exportExcel}>导出</div>
         <Toast ref="toast" icon="hd-success-fill" contentText={contentText} onHide={this.hideToast}/>
-        <Modal ref="modal" content={content} title={title} button={button} />
-        {
+        <Modal ref="modal" content={content} title={title} button={button}/> {
           purchaseList.map((item, i) => (<div className="purchase" key={i} onClick={() => this.showPurchaseDetail(item)}>
             <div className="date">
               <Moment format="YYYY-MM-DD  HH:mm">{item.purchasingDate}</Moment>
@@ -233,7 +232,6 @@ export default class AddPurchasePage extends React.Component {
             <div className="price">共{item.totalPrice}元</div>
           </div>))
         }
-        <div onClick={this.exportExcel}>导出</div>
       </div>
     </Refresher>;
     let tools = purchaseDetail && purchaseDetail.code

@@ -49,14 +49,14 @@ const validation = {
     query: Joi.object({
       page: Joi.number(), // 页码
       pageSize: Joi.number(), // 页数
-      purchaseOrderId: Joi.string() // 采购单ID
+      purchaseOrderId: Joi.string().required() // 采购单ID
     })
   },
   exportPurchase: {
     query: Joi.object({
       page: Joi.number(), // 页码
       pageSize: Joi.number(), // 页数
-      purchaseOrderId: Joi.string() // 采购单ID
+      purchaseOrderId: Joi.string().required() // 采购单ID
     })
   },
 }

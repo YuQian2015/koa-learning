@@ -20,8 +20,8 @@ class PurchaseService {
   }
 
   // 导出采购列表
-  exportExcel(params, success, error) {
-    HttpService.download(`${CONFIG.apiUrl}/purchase/export`, params, success, error);
+  exportExcel(params) {
+    HttpService.download(`${CONFIG.apiUrl}/public/export/purchase`, params);
   }
 
   // 获得采购单

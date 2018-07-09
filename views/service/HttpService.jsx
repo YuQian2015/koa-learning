@@ -122,12 +122,12 @@ class HttpService {
         errorCallback && errorCallback(status);
       }
     };
-    let query = "";
+    let query = [];
     for (var key in params) {
-      query += key + "=" + params[key];
+      query.push(key + "=" + params[key]);
     }
     if (query) {
-      url += "?" + query;
+      url += "?" + query.join("&");
     }
     request.open("GET", url, true);
     request.withCredentials = true;
@@ -169,45 +169,15 @@ class HttpService {
     request.send(JSON.stringify(params));
   }
 
-  download(url, params, successCallback, errorCallback) {
-
-    let Authorization = "";
-    const user = userCollection.query({});
-    if (user.length) {
-      Authorization = user[0].token;
-    }
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-      if (request.readyState == 4) {
-        const status = request.status;
-        if (status >= 200 && status < 300) {
-          try {
-            successCallback && successCallback();
-          } catch (e){
-            console.error(e);
-          }
-          return
-        }
-        if (status == 401) {
-          window.location.replace("#/register");
-          return
-        }
-        errorCallback && errorCallback(status);
-      }
-    };
-    let query = "";
+  download(url, params) {
+    let query = [];
     for (var key in params) {
-      query += key + "=" + params[key];
+      query.push(key + "=" + params[key]);
     }
     if (query) {
-      url += "?" + query;
+      url += "?" + query.join("&");
     }
-    request.open("GET", url, true);
-    request.withCredentials = true;
-    if (Authorization) {
-      request.setRequestHeader("Authorization", "Bearer " + Authorization);
-    }
-    request.send();
+    window.open(url)
   }
 }
 

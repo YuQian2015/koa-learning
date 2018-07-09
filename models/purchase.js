@@ -38,7 +38,7 @@ class Purchase extends Model {
           exportExcel.exportPurchase("导出文件", docs).then(path => {
             console.log(path);
             // let result = fs.readFileSync(path, {encoding:'binary'});
-            let result = fs.createReadStream(path, {encoding:'binary'});
+            let result = fs.createReadStream(path);
             //将数据转为二进制输出
       			// let dataBuffer = new Buffer.from(result,'binary');
             resolve(result);

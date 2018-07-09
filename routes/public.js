@@ -1,7 +1,7 @@
 const validate = require('koa2-validation'); // 引入 koa2-validation
 const Joi = require('joi');
 const router = require('koa-router')();
-const {user} = require('../controllers');
+const {user, purchase} = require('../controllers');
 
 const Route = require('./route');
 const convert2json = require('../utils/joi2json');
@@ -37,6 +37,13 @@ const validation = {
 
   signin: {
     body: Joi.object({email: Joi.string().required(), password: Joi.string().required()})
+  },
+  exportPurchase: {
+    query: Joi.object({
+      page: Joi.number(), // 页码
+      pageSize: Joi.number(), // 页数
+      purchaseOrderId: Joi.string().required() // 采购单ID
+    })
   }
 }
 
@@ -76,6 +83,22 @@ class Public extends Route {
         httpOnly: false, // 是否只用于http请求中获取
         overwrite: false  // 是否允许重写
       })
+    });
+  }
+  
+  @request('get', '/public/export/purchase')
+  @summary('导出采购项目')
+  @tags(['公用'])
+  @query(convert2json(validation.exportPurchase))
+  exportPurchase() {
+    router.get('/export/purchase', validate(validation.exportPurchase), async (ctx, next) => {
+      let reqParams = ctx.query;
+      ctx.set({
+        // 'Content-Type': 'application/vnd.ms-excel', // xls
+        'Content-Type': 'application/vnd.openxmlformats',
+        'Content-Disposition': `attachment; filename=${new Date().getTime()}.xlsx`
+      });
+      ctx.body = await purchase.exportPurchase(reqParams);
     });
   }
 }
