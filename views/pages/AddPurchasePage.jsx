@@ -93,23 +93,31 @@ export default class AddPurchasePage extends React.Component {
 
   handleRefresh() {
     return new Promise((resolve, reject) => {
-      PurchaseService.export({}, (res) => {
+      PurchaseService.find({}, (res) => {
         if (res.error) {
           console.log(res.msg);
           reject();
           return
         }
-        // this.setState({purchaseList: res.data});
-        // materialListCollection.drop();
-        // res.data.map(item => {
-        //   materialListCollection.insert(item);
-        // })
+        this.setState({purchaseList: res.data});
+        materialListCollection.drop();
+        res.data.map(item => {
+          materialListCollection.insert(item);
+        })
         resolve();
       }, (error) => {
         console.log(error);
         reject();
       })
     });
+  }
+
+  exportExcel() {
+      PurchaseService.exportExcel({}, () => {
+        console.log(12313);
+      }, (error) => {
+        console.log(error);
+      })
   }
 
   handleChange() {
@@ -213,7 +221,8 @@ export default class AddPurchasePage extends React.Component {
     let body = <Refresher onRefresh={this.handleRefresh}>
       <div className="AddPurchasePage">
         <Toast ref="toast" icon="hd-success-fill" contentText={contentText} onHide={this.hideToast}/>
-        <Modal ref="modal" content={content} title={title} button={button}/> {
+        <Modal ref="modal" content={content} title={title} button={button} />
+        {
           purchaseList.map((item, i) => (<div className="purchase" key={i} onClick={() => this.showPurchaseDetail(item)}>
             <div className="date">
               <Moment format="YYYY-MM-DD  HH:mm">{item.purchasingDate}</Moment>
@@ -224,6 +233,7 @@ export default class AddPurchasePage extends React.Component {
             <div className="price">共{item.totalPrice}元</div>
           </div>))
         }
+        <div onClick={this.exportExcel}>导出</div>
       </div>
     </Refresher>;
     let tools = purchaseDetail && purchaseDetail.code

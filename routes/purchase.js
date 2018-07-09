@@ -107,10 +107,9 @@ class Purchase extends Route {
     router.get('/export', validate(validation.exportPurchase), async (ctx, next) => {
       let reqParams = ctx.query;
       ctx.set({
-        'Content-Type': 'application/vnd.ms-excel', // xls
+        // 'Content-Type': 'application/vnd.ms-excel', // xls
         // 'Content-Type': 'application/vnd.openxmlformats',
-        // 'Content-Type': 'application/vnd.openxmlformats',
-
+        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         'Content-Disposition': 'attachment; filename=o2olog.xlsx'
       });
       ctx.body = await purchase.exportPurchase(reqParams);
