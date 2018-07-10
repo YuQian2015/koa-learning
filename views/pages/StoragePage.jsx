@@ -7,7 +7,7 @@ import Header from '../components/Header.jsx';
 export default class StoragePage extends React.Component {
   render() {
     let body = <div>
-      123123123
+    12312
     </div>;
     let footer = <Tabs />;
     let tools = <div onClick={this.addMaterial}>查看历史</div>;

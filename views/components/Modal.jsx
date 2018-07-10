@@ -28,7 +28,7 @@ export default class Modal extends React.Component {
   render() {
     let {show} = this.state;
     let {content, title, button} = this.props;
-    return (<Dialog animation="zoom" onClose={this.hide} visible={show} bodyStyle={{
+    return (<Dialog animation="zoom" zIndex={20} onClose={this.hide} visible={show} bodyStyle={{
         padding: 0
       }} closable={false} maskClosable={false}>
       <div className="UI">

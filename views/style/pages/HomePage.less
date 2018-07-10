@@ -31,15 +31,18 @@
 
     .menu-item {
       .mixin-flex-1;
-      padding: .8rem 0;
+      padding: 0.8rem 0;
       text-align: center;
+
       i {
         font-size: 4.4rem;
       }
+
       p {
         color: @color-darker;
         font-size: @font-normal;
       }
+
       .material-in {
         color: @color-green;
       }
@@ -65,6 +68,7 @@
       border: solid 1px @color-line;
       color: @color-element;
       text-align: center;
+
       i {
         font-size: 3rem;
       }
@@ -80,37 +84,29 @@
       padding: 0 1rem;
     }
 
-    .news-box {
-      padding-left: 1rem;
+    .news-item {
+      .mixin-flex;
+      .mixin-flex-center;
+      border-bottom: solid 1px @color-gray;
 
-      .news-item {
-        .mixin-flex;
-        .mixin-flex-center;
-        border-bottom: solid 1px @color-gray;
-        .icon {
-          font-size: 3.2rem;
-        }
-        p {
-          line-height: 6rem;
-          color: @color-darker;
-          font-size: @font-normal;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          height: 6rem;
-          .mixin-flex-1;
-        }
-        span {
-          padding: 1rem;
-        }
+      .icon {
+        font-size: 3.2rem;
+        margin: 0 1rem;
       }
-    }
 
-    .news-box:last-child {
-      padding-left: 0;
+      p {
+        line-height: 4.8rem;
+        color: @color-darker;
+        font-size: @font-normal;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        height: 4.8rem;
+        .mixin-flex-1;
+      }
 
-      .news-item {
-        padding-left: 1rem;
+      span {
+        padding: 1rem;
       }
     }
   }

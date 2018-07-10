@@ -29,21 +29,23 @@ class Purchase extends Model {
   }
 
   exportExcel(dataArr = {}) {
+    const form = dataArr.fromDate?dataArr.fromDate:new Date(0);
+    const to = dataArr.toDate?dataArr.toDate:new Date();
     return new Promise((resolve, reject) => {
-      this.model.find({...dataArr,fileName:undefined}, (err, docs) => {
-        if (err) {
-          console.log(err);
-          reject(err);
-        } else {
-          exportExcel.exportPurchase(dataArr.fileName, docs).then(path => {
-            console.log(path);
-            let result = fs.createReadStream(path);
-            //将数据转为二进制输出
-            // let result = fs.readFileSync(path, {encoding:'binary'});
-      			// let dataBuffer = new Buffer.from(result,'binary');
-            resolve(result);
-          });
-        }
+      this.model.find({...dataArr,fileName:undefined,fromDate:undefined,toDate:undefined}).where('createDate').gte(form).lte(to).exec((err, docs) => {
+          if (err) {
+            console.log(err);
+            reject(err);
+          } else {
+            exportExcel.exportPurchase(dataArr.fileName, docs).then(path => {
+              console.log(path);
+              let result = fs.createReadStream(path);
+              //将数据转为二进制输出
+              // let result = fs.readFileSync(path, {encoding:'binary'});
+        			// let dataBuffer = new Buffer.from(result,'binary');
+              resolve(result);
+            });
+          }
       })
     })
   }

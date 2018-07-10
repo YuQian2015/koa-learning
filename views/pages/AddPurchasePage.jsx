@@ -2,11 +2,12 @@ import React from 'react';
 
 import PageContainer from '../container/PageContainer.jsx';
 import Header from '../components/Header.jsx';
-import Toast from '../components/Toast.jsx';
 import Modal from '../components/Modal.jsx';
 import Refresher from '../components/Refresher.jsx';
 import PurchaseCard from '../components/PurchaseCard.jsx';
 import Moment from 'react-moment';
+
+import {toast} from 'react-toastify';
 
 import ImageCompressor from 'image-compressor.js';
 const imageCompressor = new ImageCompressor();
@@ -34,11 +35,11 @@ export default class AddPurchasePage extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.savePurchase = this.savePurchase.bind(this);
     this.addPurchase = this.addPurchase.bind(this);
-    this.hideToast = this.hideToast.bind(this);
     this.showPurchaseDetail = this.showPurchaseDetail.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
     this.selectMaterial = this.selectMaterial.bind(this);
     this.exportExcel = this.exportExcel.bind(this);
+    this.showExportFunc = this.showExportFunc.bind(this);
   }
 
   componentWillMount() {
@@ -116,9 +117,12 @@ export default class AddPurchasePage extends React.Component {
 
   exportExcel() {
     let {purchaseOrder} = this.state;
-    PurchaseService.exportExcel(
-      {purchaseOrderId: purchaseOrder.id, fileName:purchaseOrder.name}
-    );
+    PurchaseService.exportExcel({purchaseOrderId: purchaseOrder.id, fileName: purchaseOrder.name});
+  }
+  showExportFunc() {
+    this.setState({
+      showExport:!this.state.showExport
+    })
   }
 
   handleChange() {
@@ -133,10 +137,6 @@ export default class AddPurchasePage extends React.Component {
     this.props.history.push("/select-material");
   }
 
-  hideToast() {
-    this.setState({purchaseDetail: null})
-    // this.props.history.goBack();
-  }
   showPurchaseDetail(item) {
     console.log(item);
     this.setState({
@@ -175,10 +175,12 @@ export default class AddPurchasePage extends React.Component {
             }
             materialSelectCollection.drop();
             this.setState({
-              contentText: "保存成功",
               purchaseDetail: null
             }, () => {
-              this.refs.toast.show();
+              toast.info("保存采购信息成功！", {
+                position: toast.POSITION.BOTTOM_CENTER,
+                closeButton: false
+              });
               this.refs.modal.hide();
             });
           }, (error) => {
@@ -193,10 +195,12 @@ export default class AddPurchasePage extends React.Component {
             }
             materialSelectCollection.drop();
             this.setState({
-              contentText: "保存成功",
               purchaseDetail: null
             }, () => {
-              this.refs.toast.show();
+              toast.info("保存采购信息成功！", {
+                position: toast.POSITION.BOTTOM_CENTER,
+                closeButton: false
+              });
               this.refs.modal.hide();
             });
           }, (error) => {
@@ -212,7 +216,7 @@ export default class AddPurchasePage extends React.Component {
     });
   }
   render() {
-    let {purchaseOrder, contentText, purchaseList, title, purchaseDetail} = this.state;
+    let {purchaseOrder, purchaseList, title, purchaseDetail, fromDate, toDate, showExport} = this.state;
     let content = <PurchaseCard data={purchaseDetail} onChange={this.handleChange}/>
     const button = {
       text: "保存",
@@ -221,8 +225,16 @@ export default class AddPurchasePage extends React.Component {
     let body = <Refresher onRefresh={() => this.handleRefresh({purchaseOrderId: purchaseOrder.id})}>
 
       <div className="AddPurchasePage">
-        <div className="export-excel" onClick={this.exportExcel}>导出</div>
-        <Toast ref="toast" icon="hd-success-fill" contentText={contentText} onHide={this.hideToast}/>
+        {
+          showExport?
+          <div className="export-select">选择时间段: 
+          <div className="time"><Moment format="YYYY-MM-DD">{fromDate}</Moment></div>
+          <div className="time"><Moment format="YYYY-MM-DD">{toDate}</Moment></div>
+          <div className="button cancel" onClick={this.showExportFunc}>取消</div>
+          <div className="button" onClick={this.exportExcel}>导出</div>
+        </div>:
+          <div className="export-excel" onClick={this.showExportFunc}>导出</div>
+        }
         <Modal ref="modal" content={content} title={title} button={button}/> {
           purchaseList.map((item, i) => (<div className="purchase" key={i} onClick={() => this.showPurchaseDetail(item)}>
             <div className="date">

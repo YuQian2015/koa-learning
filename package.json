@@ -39,6 +39,7 @@
     "node-rsa": "^1.0.0",
     "prop-types": "^15.6.0",
     "rc-input-number": "^4.0.8",
+    "rc-swipeout": "^2.0.11",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-highlight-words": "^0.11.0",

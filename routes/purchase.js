@@ -54,8 +54,8 @@ const validation = {
   },
   exportPurchase: {
     body: Joi.object({
-      page: Joi.number(), // 页码
-      pageSize: Joi.number(), // 页数
+      fromDate: Joi.date(), // 开始时间
+      toDate: Joi.date(), // 结束时间
       purchaseOrderId: Joi.string().required(), // 采购单ID
       fileName: Joi.string().required(), // 文件名
     })
