@@ -26,25 +26,25 @@ const validation = {
       purchaseOrderId: Joi.string().required() // 所属采购单
     })
   },
-    editPurchase: {
-      body: Joi.object({
-        id:Joi.string().required(), // 采购id
-        code: Joi.number().required(), // 食材编号
-        purchasingDate: Joi.date().required(), // 采购日期
-        name: Joi.string().required(), // 食品名称
-        manufactureDate: Joi.date(), // 生产日期
-        qualityPeriod: Joi.date(), // 保质期
-        quantity: Joi.number().required(), // 数量
-        unit: Joi.string(), // 单位
-        price: Joi.number().required(), // 单价
-        totalPrice: Joi.number().required(), // 金额
-        purchaserName: Joi.string().required(), // 采购人
-        inspectorName: Joi.string().required(), // 收验货人
-        supplierName: Joi.string().required(), // 供货人
-        sign: Joi.string().required(), // 签字
-        purchaseOrderId: Joi.string().required() // 所属采购单
-      })
-    },
+  editPurchase: {
+    body: Joi.object({
+      id:Joi.string().required(), // 采购id
+      code: Joi.number().required(), // 食材编号
+      purchasingDate: Joi.date().required(), // 采购日期
+      name: Joi.string().required(), // 食品名称
+      manufactureDate: Joi.date(), // 生产日期
+      qualityPeriod: Joi.date(), // 保质期
+      quantity: Joi.number().required(), // 数量
+      unit: Joi.string(), // 单位
+      price: Joi.number().required(), // 单价
+      totalPrice: Joi.number().required(), // 金额
+      purchaserName: Joi.string().required(), // 采购人
+      inspectorName: Joi.string().required(), // 收验货人
+      supplierName: Joi.string().required(), // 供货人
+      sign: Joi.string().required(), // 签字
+      purchaseOrderId: Joi.string().required() // 所属采购单
+    })
+  },
   findPurchase: {
     query: Joi.object({
       page: Joi.number(), // 页码
@@ -53,10 +53,11 @@ const validation = {
     })
   },
   exportPurchase: {
-    query: Joi.object({
+    body: Joi.object({
       page: Joi.number(), // 页码
       pageSize: Joi.number(), // 页数
-      purchaseOrderId: Joi.string().required() // 采购单ID
+      purchaseOrderId: Joi.string().required(), // 采购单ID
+      fileName: Joi.string().required(), // 文件名
     })
   },
 }
@@ -99,20 +100,18 @@ class Purchase extends Route {
     });
   }
 
-  @request('get', '/purchase/export')
+  @request('post', '/purchase/export')
   @summary('导出采购项目')
   @tags(['采购'])
-  @query(convert2json(validation.exportPurchase))
+  @body(convert2json(validation.exportPurchase))
   exportPurchase() {
-    router.get('/export', validate(validation.exportPurchase), async (ctx, next) => {
-      let reqParams = ctx.query;
-      ctx.set({
-        // 'Content-Type': 'application/vnd.ms-excel', // xls
-        // 'Content-Type': 'application/vnd.openxmlformats',
-        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        'Content-Disposition': 'attachment; filename=o2olog.xlsx'
-      });
+    router.post('/export', validate(validation.exportPurchase), async (ctx, next) => {
+      let reqParams = ctx.request.body;
       ctx.body = await purchase.exportPurchase(reqParams);
+      ctx.set({
+        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'Content-Disposition': `attachment; filename=${reqParams.fileName}.xlsx`
+      });
     });
   }
 }

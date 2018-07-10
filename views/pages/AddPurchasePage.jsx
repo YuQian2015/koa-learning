@@ -116,7 +116,9 @@ export default class AddPurchasePage extends React.Component {
 
   exportExcel() {
     let {purchaseOrder} = this.state;
-    PurchaseService.exportExcel({purchaseOrderId: purchaseOrder.id})
+    PurchaseService.exportExcel(
+      {purchaseOrderId: purchaseOrder.id, fileName:purchaseOrder.name}
+    );
   }
 
   handleChange() {

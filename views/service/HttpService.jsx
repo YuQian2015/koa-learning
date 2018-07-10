@@ -93,6 +93,11 @@
 import LocalDB from 'local-db';
 const userCollection = new LocalDB('user');
 
+import FileSaver from 'file-saver';
+import mime from 'mime-types';
+
+import {toast} from 'react-toastify';
+
 class HttpService {
   constructor() {}
   get(url, params, successCallback, errorCallback) {
@@ -110,7 +115,7 @@ class HttpService {
           try {
             const res = JSON.parse(request.responseText);
             successCallback && successCallback(res);
-          } catch (e){
+          } catch (e) {
             console.error(e);
           }
           return
@@ -118,6 +123,13 @@ class HttpService {
         if (status == 401) {
           window.location.replace("#/register");
           return
+        }
+        if (status == 400) {
+          const error = JSON.parse(request.responseText);
+          toast(error.msg, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            closeButton: false
+          });
         }
         errorCallback && errorCallback(status);
       }
@@ -157,6 +169,13 @@ class HttpService {
           window.location.replace("#/register");
           return
         }
+        if (status == 400) {
+          const error = JSON.parse(request.responseText);
+          toast(error.msg, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            closeButton: false
+          });
+        }
         errorCallback && errorCallback(status);
       }
     };
@@ -169,15 +188,56 @@ class HttpService {
     request.send(JSON.stringify(params));
   }
 
-  download(url, params) {
-    let query = [];
-    for (var key in params) {
-      query.push(key + "=" + params[key]);
+  // 下载文件，默认是excel
+  downloadFile(url, params, fileType, successCallback, errorCallback) {
+    console.log(fileType);
+    let Authorization = "";
+    const user = userCollection.query({});
+    if (user.length) {
+      Authorization = user[0].token;
     }
-    if (query) {
-      url += "?" + query.join("&");
+    let request = new XMLHttpRequest();
+
+    // 使用JavaScript类型数组接受二进制数据
+    // 可以通过设置一个XMLHttpRequest对象的responseType属性来改变一个从服务器上返回的响应的数据类型。
+    // 可用的属性值为空字符串 (默认), "arraybuffer", "blob", "document",和 "text"。
+    // response属性的值会根据responseType属性的值的不同而不同,
+    // 可能会是一个 ArrayBuffer, Blob, Document, string,或者为NULL(如果请求未完成或失败)
+    // 下例读取了一个二进制图像文件,并且由该文件的二进制原生字节创建了一个8位无符号整数的数组。
+    request.responseType = "blob";
+    request.onreadystatechange = function() {
+      if (request.readyState == 4) {
+        const status = request.status;
+        if (status >= 200 && status < 300) {
+          const extensions = mime.extensions[fileType?fileType:"application/vnd.ms-excel"];
+          FileSaver.saveAs(request.response, params.fileName+'.'+[extensions]);
+
+          successCallback && successCallback();
+          return
+        }
+        if (status == 401) {
+          window.location.replace("#/register");
+          return
+        }
+        if (status == 400) {
+          const error = JSON.parse(request.responseText);
+          toast(error.msg, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            closeButton: false
+          });
+        }
+
+        errorCallback && errorCallback(status);
+      }
+    };
+    request.open("POST", url, true);
+    request.withCredentials = true;
+    request.setRequestHeader("Content-Type", "application/json");
+    // request.setRequestHeader("responseType", "blob");
+    if (Authorization) {
+      request.setRequestHeader("Authorization", "Bearer " + Authorization);
     }
-    window.open(url)
+    request.send(JSON.stringify(params));
   }
 }
 

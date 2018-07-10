@@ -30,16 +30,16 @@ class Purchase extends Model {
 
   exportExcel(dataArr = {}) {
     return new Promise((resolve, reject) => {
-      this.model.find(dataArr, (err, docs) => {
+      this.model.find({...dataArr,fileName:undefined}, (err, docs) => {
         if (err) {
           console.log(err);
           reject(err);
         } else {
-          exportExcel.exportPurchase("导出文件", docs).then(path => {
+          exportExcel.exportPurchase(dataArr.fileName, docs).then(path => {
             console.log(path);
-            // let result = fs.readFileSync(path, {encoding:'binary'});
             let result = fs.createReadStream(path);
             //将数据转为二进制输出
+            // let result = fs.readFileSync(path, {encoding:'binary'});
       			// let dataBuffer = new Buffer.from(result,'binary');
             resolve(result);
           });

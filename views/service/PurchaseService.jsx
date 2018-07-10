@@ -20,8 +20,8 @@ class PurchaseService {
   }
 
   // 导出采购列表
-  exportExcel(params) {
-    HttpService.download(`${CONFIG.apiUrl}/public/export/purchase`, params);
+  exportExcel(params, success, error) {
+    HttpService.downloadFile(`${CONFIG.apiUrl}/purchase/export`, params, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', success, error);
   }
 
   // 获得采购单
