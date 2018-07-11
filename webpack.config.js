@@ -6,6 +6,10 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const node_modules = path.resolve(__dirname, 'node_modules');
 const pathToReact = path.resolve(node_modules, 'react/dist/react.min.js');
 
+const CompressionPlugin = require("compression-webpack-plugin")
+
+
+
 module.exports = {
   entry: [// 'webpack/hot/dev-server',
     // 'webpack-dev-server/client?http://localhost:8080',
@@ -98,6 +102,13 @@ module.exports = {
       cssProcessorOptions: { discardComments: {removeAll: true } },
       canPrint: true
     }),
-    new UglifyJsPlugin()
+    new UglifyJsPlugin(),
+    new CompressionPlugin({
+        asset: "[path].gz[query]",
+        algorithm: "gzip",
+        test: /\.js$|\.css$|\.html$/,
+        threshold: 10240,
+        minRatio: 0.8
+    })
   ]
 };
