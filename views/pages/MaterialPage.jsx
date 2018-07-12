@@ -7,6 +7,8 @@ import Refresher from '../components/Refresher.jsx';
 
 import MaterialService from '../service/MaterialService.jsx';
 
+import SearchInput from 'react-search-input';
+
 import LocalDB from 'local-db';
 const materialCollection = new LocalDB('material');
 
@@ -18,6 +20,7 @@ export default class MaterialPage extends React.Component {
     }
     this.addMaterial = this.addMaterial.bind(this);
     this.handleRefresh = this.handleRefresh.bind(this);
+    this.searchChange = this.searchChange.bind(this);
   }
 
   addMaterial() {
@@ -48,6 +51,25 @@ export default class MaterialPage extends React.Component {
     })
   }
 
+  searchChange(keyword) {
+    if(!keyword) {
+      this.fetchData()
+      return
+    }
+    MaterialService.search({keyword:keyword}, (res) => {
+      if (res.error) {
+        console.log(res.msg);
+        return
+      }
+      this.setState({materialList: res.data});
+      materialCollection.drop();
+      res.data.map(item => {
+        materialCollection.insert(item);
+      })
+    }, (error) => {
+      console.log(error);
+    })
+  }
   handleRefresh() {
     return new Promise((resolve, reject) => {
       MaterialService.find({pageSize:10}, (res) => {
@@ -72,6 +94,7 @@ export default class MaterialPage extends React.Component {
 
     let body = <Refresher onRefresh={this.handleRefresh}>
       <div className="MaterialPage">
+        <SearchInput className="search-box" onChange={this.searchChange} placeholder="输入食材名称" throttle={400}/>
         {materialList.map((material, i) => (<Material {...material} key={material.code}/>))}
       </div>
     </Refresher>
