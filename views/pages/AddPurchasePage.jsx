@@ -177,10 +177,7 @@ export default class AddPurchasePage extends React.Component {
             this.setState({
               purchaseDetail: null
             }, () => {
-              toast.info("保存采购信息成功！", {
-                position: toast.POSITION.BOTTOM_CENTER,
-                closeButton: false
-              });
+              toast.info("保存采购信息成功！");
               this.refs.modal.hide();
             });
           }, (error) => {
@@ -197,10 +194,7 @@ export default class AddPurchasePage extends React.Component {
             this.setState({
               purchaseDetail: null
             }, () => {
-              toast.info("保存采购信息成功！", {
-                position: toast.POSITION.BOTTOM_CENTER,
-                closeButton: false
-              });
+              toast.info("保存采购信息成功！");
               this.refs.modal.hide();
             });
           }, (error) => {
@@ -227,13 +221,13 @@ export default class AddPurchasePage extends React.Component {
       <div className="AddPurchasePage">
         {
           showExport?
-          <div className="export-select">选择时间段: 
-          <div className="time"><Moment format="YYYY-MM-DD">{fromDate}</Moment></div>
+          <div className="export-select">从
+          <div className="time"><Moment format="YYYY-MM-DD">{fromDate}</Moment></div>到
           <div className="time"><Moment format="YYYY-MM-DD">{toDate}</Moment></div>
           <div className="button cancel" onClick={this.showExportFunc}>取消</div>
-          <div className="button" onClick={this.exportExcel}>导出</div>
+          <div className="button export" onClick={this.exportExcel}>导出<i className="hd-enter"></i></div>
         </div>:
-          <div className="export-excel" onClick={this.showExportFunc}>导出</div>
+          <div className="export-excel" onClick={this.showExportFunc}><div className="time">导出excel文档</div><i className="hd-excel"></i></div>
         }
         <Modal ref="modal" content={content} title={title} button={button}/> {
           purchaseList.map((item, i) => (<div className="purchase" key={i} onClick={() => this.showPurchaseDetail(item)}>

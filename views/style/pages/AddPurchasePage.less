@@ -1,35 +1,68 @@
 .AddPurchasePage {
-  .export-excel {
-    text-align: center;
-    padding: 2rem;
-    color: @color-text-dark;
-    font-size: @font-large;
-  }
+  .export-excel,
   .export-select {
     padding-left: 1rem;
     font-size: @font-normal;
     .mixin-flex;
     height: 5rem;
     line-height: 5rem;
+    border-bottom: solid 1px @color-gray;
+
     .time {
       .mixin-flex-1;
     }
-    .cancel {
-      background: @color-darker;
+  }
+
+  .export-excel {
+    i {
+      margin: 0 1rem;
+      color: @color-green-dark;
+      font-size: 3rem;
     }
   }
+
+  .export-select {
+    .time {
+      text-align: center;
+
+      time {
+        color: @color-common;
+        border: solid 1px @color-gray;
+        padding: 0.2rem 0.6rem;
+        border-radius: 0.5rem;
+      }
+    }
+
+    .button {
+      height: 5rem;
+      line-height: 5rem;
+    }
+
+    .cancel {
+      background: @color-dark;
+    }
+
+    .export {
+      background: @color-green-dark;
+      padding: 0 2rem;
+    }
+  }
+
   .purchase {
     padding: 1.6rem 1rem;
     border-bottom: solid 1px @color-gray;
     font-size: @font-normal;
     .mixin-flex;
+
     .date {
       color: @color-dark;
     }
+
     .action {
       color: @color-common;
       margin: 0 1rem;
     }
+
     .price {
       .mixin-flex-1;
       text-align: right;

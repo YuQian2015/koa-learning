@@ -18,12 +18,12 @@ export default class HomePage extends React.Component {
   }
   render() {
     let body = <div className="HomePage">
-      <div className="todo">
+      {/* <div className="todo">
         <div className="todo-title">
           <i className="hd-mail-fill"></i>
         </div>
         <div className="todo-content">今日待办今日待办今日待办</div>
-      </div>
+      </div> */}
       <div className="menu">
         <div className="menu-item">
           <i className="hd-mail-fill material-in"></i>
@@ -41,7 +41,7 @@ export default class HomePage extends React.Component {
             this.goToPage("/material")
           }}>
           <i className="hd-mail-fill"></i>
-          <p>材料管理</p>
+          <p>食材管理</p>
         </div>
       </div>
       <div className="today-menu">

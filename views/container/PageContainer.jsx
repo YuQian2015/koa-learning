@@ -4,7 +4,7 @@ import {withRouter} from "react-router-dom";
 import LocalDB from 'local-db';
 const userCollection = new LocalDB('user');
 
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Flip } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 // history objects typically have the following properties and methods:
@@ -46,7 +46,7 @@ class MainTab extends React.Component {
       contentClass.push('has-header');
     }
     return (<div className="PageContainer UI">
-      <ToastContainer />
+      <ToastContainer transition={Flip} position={"bottom-center"} closeButton={false} className={"Toast"}/>
       {
         header
           ? header

@@ -4,7 +4,7 @@ import PageContainer from '../container/PageContainer.jsx';
 import Header from '../components/Header.jsx';
 
 import MaterialService from '../service/MaterialService.jsx';
-import Toast from '../components/Toast.jsx';
+import {toast} from 'react-toastify';
 
 import LocalDB from 'local-db';
 const materialCollection = new LocalDB('material');
@@ -26,36 +26,26 @@ export default class AddMaterialPage extends React.Component {
         '调料',
         '饮料',
         '其它'
-      ],
-      contentText:""
+      ]
     }
     this.saveMaterial = this.saveMaterial.bind(this);
-    this.hideToast = this.hideToast.bind(this);
   }
   saveMaterial() {
     let material = this.state.material;
     MaterialService.add(material, (data) => {
-      if(data.error) {
-        this.setState({
-          contentText:data.msg
-        },()=>{
-          this.refs.toast.show();
-        });
+      if (data.error) {
+        toast.error(data.msg);
         return
       }
-        this.setState({
-          contentText:"保存成功"
-        },()=>{
-
-          materialCollection.insert(data.data);
-          this.refs.toast.show();
-        });
+      toast.success("保存成功！", {
+        onClose: () => this.props.history.goBack(),
+        autoClose: 2000
+      });
+      materialCollection.insert(data.data);
     }, (error) => {
+      toast.error("保存出错");
       console.log(error);
     })
-  }
-  hideToast() {
-    this.props.history.goBack();
   }
 
   handleChange(type) {
@@ -70,10 +60,8 @@ export default class AddMaterialPage extends React.Component {
   }
 
   render() {
-    const {tags, material, contentText} = this.state;
+    const {tags, material} = this.state;
     let body = <div className="AddMaterialPage">
-
-        <Toast ref="toast" icon="hd-success-fill" contentText={contentText} onHide={this.hideToast}/>
 
       <div className="list-box">
         <div className="list-item">

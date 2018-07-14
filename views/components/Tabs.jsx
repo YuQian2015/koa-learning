@@ -18,7 +18,7 @@ export default class Tabs extends React.Component {
           normalIcon: "hd-bill",
           activeIcon: "hd-bill-fill"
         }, {
-          tabName: "入库",
+          tabName: "出入库",
           linkUrl: "/storage",
           normalIcon: "hd-food",
           activeIcon: "hd-food-fill"
