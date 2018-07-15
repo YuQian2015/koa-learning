@@ -47,6 +47,19 @@ class PurchaseController {
     }
   }
 
+  // 删除采购
+  async deletePurchase(id) {
+    try {
+      let respon = {};
+      let result = await purchase.findOneAndRemove({_id: id});
+      respon = response({data: result});
+      return respon;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
+    }
+  }
 
     // 导出采购
     async exportPurchase(reqParams) {

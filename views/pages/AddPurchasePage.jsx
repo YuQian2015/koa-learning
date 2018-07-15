@@ -9,6 +9,8 @@ import Moment from 'react-moment';
 
 import {toast} from 'react-toastify';
 
+import DatePicker from 'react-mobile-datepicker';
+
 import ImageCompressor from 'image-compressor.js';
 const imageCompressor = new ImageCompressor();
 import {file} from '../utils/File.jsx';
@@ -30,7 +32,12 @@ export default class AddPurchasePage extends React.Component {
       },
       purchaseList: [],
       purchaseDetail: {},
-      purchaseOrderId: ""
+      purchaseOrderId: "",
+      isOpen: false,
+      time: new Date(),
+      fromDate: new Date(),
+      toDate: new Date(),
+      dateType: ""
     };
     this.handleChange = this.handleChange.bind(this);
     this.savePurchase = this.savePurchase.bind(this);
@@ -40,6 +47,10 @@ export default class AddPurchasePage extends React.Component {
     this.selectMaterial = this.selectMaterial.bind(this);
     this.exportExcel = this.exportExcel.bind(this);
     this.showExportFunc = this.showExportFunc.bind(this);
+    this.deletePurchase = this.deletePurchase.bind(this);
+    this.openTimeSelect = this.openTimeSelect.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentWillMount() {
@@ -66,9 +77,9 @@ export default class AddPurchasePage extends React.Component {
         "unit": item.unit,
         "price": item.price,
         "totalPrice": item.price,
-        "purchaserName": "采购人",
-        "inspectorName": "收验货人",
-        "supplierName": "供货人",
+        "purchaserName": "",
+        "inspectorName": "",
+        "supplierName": "",
         "sign": "",
         "purchaseOrderId": urlData.id
       }
@@ -116,12 +127,12 @@ export default class AddPurchasePage extends React.Component {
   }
 
   exportExcel() {
-    let {purchaseOrder} = this.state;
-    PurchaseService.exportExcel({purchaseOrderId: purchaseOrder.id, fileName: purchaseOrder.name});
+    let {purchaseOrder, fromDate, toDate} = this.state;
+    PurchaseService.exportExcel({purchaseOrderId: purchaseOrder.id, fileName: purchaseOrder.name, fromDate, toDate});
   }
   showExportFunc() {
     this.setState({
-      showExport:!this.state.showExport
+      showExport: !this.state.showExport
     })
   }
 
@@ -150,9 +161,48 @@ export default class AddPurchasePage extends React.Component {
   selectMaterial() {
     this.props.history.push("/select-material");
   }
+
+  deletePurchase(id) {
+    PurchaseService.delete({
+      id: id
+    }, (res) => {
+      if (res.error) {
+        console.log(res.msg);
+        return
+      }
+      let {purchaseList} = this.state;
+      for (let i in purchaseList) {
+        if (purchaseList[i]._id == id) {
+          purchaseList.splice(i, 1)
+        }
+      }
+      this.setState({purchaseList});
+      toast.success("删除成功");
+      this.refs.modal.hide();
+    }, (error) => {
+      console.log(error);
+    })
+  }
   savePurchase() {
 
     let {purchaseDetail} = this.state;
+    if (!purchaseDetail.sign) {
+      toast("先签字才能保存，签字可以在保存之后修改。");
+      return
+    }
+    if (!purchaseDetail.purchaserName) {
+      toast("输入采购人。");
+      return
+    }
+    if (!purchaseDetail.inspectorName) {
+      toast("输入收验货人。");
+      return
+    }
+    if (!purchaseDetail.supplierName) {
+      toast("输入供货人。");
+      return
+    }
+
     let blob = file.dataURLtoBlob(purchaseDetail.sign)
     console.log(blob);
     imageCompressor.compress(blob, {
@@ -209,9 +259,44 @@ export default class AddPurchasePage extends React.Component {
       alert(e.message)
     });
   }
+
+  // 选择时间
+
+  handleSelect(date) {
+    const {dateType, fromDate, toDate} = this.state;
+    if (dateType == 'fromDate' && toDate && date > toDate || dateType == 'toDate' && fromDate && date < fromDate) {
+      toast.error("开始时间不能大于结束时间。");
+      return
+    }
+    this.setState({[dateType]: date, time: date, isOpen: false});
+  }
+
+  // 取消选择时间
+  handleCancel() {
+    this.setState({isOpen: false});
+  }
+
+  openTimeSelect(type) {
+    const date = this.state[type];
+    this.setState({
+      dateType: type,
+      time: date
+        ? date
+        : new Date(),
+      isOpen: true
+    })
+  }
   render() {
-    let {purchaseOrder, purchaseList, title, purchaseDetail, fromDate, toDate, showExport} = this.state;
-    let content = <PurchaseCard data={purchaseDetail} onChange={this.handleChange}/>
+    let {
+      purchaseOrder,
+      purchaseList,
+      title,
+      purchaseDetail,
+      fromDate,
+      toDate,
+      showExport
+    } = this.state;
+    let content = <PurchaseCard data={purchaseDetail} onChange={this.handleChange} onDelete={this.deletePurchase}/>
     const button = {
       text: "保存",
       callback: this.savePurchase
@@ -220,14 +305,23 @@ export default class AddPurchasePage extends React.Component {
 
       <div className="AddPurchasePage">
         {
-          showExport?
-          <div className="export-select">从
-          <div className="time"><Moment format="YYYY-MM-DD">{fromDate}</Moment></div>到
-          <div className="time"><Moment format="YYYY-MM-DD">{toDate}</Moment></div>
-          <div className="button cancel" onClick={this.showExportFunc}>取消</div>
-          <div className="button export" onClick={this.exportExcel}>导出<i className="hd-enter"></i></div>
-        </div>:
-          <div className="export-excel" onClick={this.showExportFunc}><div className="time">导出excel文档</div><i className="hd-excel"></i></div>
+          purchaseList.length
+            ? showExport
+              ? <div className="export-select">从
+                  <div className="time" onClick={() => this.openTimeSelect('fromDate')}>
+                    <Moment format="YYYY-MM-DD">{fromDate}</Moment>
+                  </div>到
+                  <div className="time" onClick={() => this.openTimeSelect('toDate')}>
+                    <Moment format="YYYY-MM-DD">{toDate}</Moment>
+                  </div>
+                  <div className="button cancel" onClick={this.showExportFunc}>取消</div>
+                  <div className="button export" onClick={this.exportExcel}>导出</div>
+                </div>
+              : <div className="export-excel" onClick={this.showExportFunc}>
+                  <div className="time">导出excel文档</div>
+                  <i className="hd-excel"></i>
+                </div>
+            : null
         }
         <Modal ref="modal" content={content} title={title} button={button}/> {
           purchaseList.map((item, i) => (<div className="purchase" key={i} onClick={() => this.showPurchaseDetail(item)}>
@@ -241,10 +335,10 @@ export default class AddPurchasePage extends React.Component {
           </div>))
         }
       </div>
+
+      <DatePicker theme="ios" value={this.state.time} isOpen={this.state.isOpen} onSelect={this.handleSelect} onCancel={this.handleCancel}/>
     </Refresher>;
-    let tools = purchaseDetail && purchaseDetail.code
-      ? <div onClick={this.savePurchase}>保存</div>
-      : <div onClick={this.addPurchase}>新增</div>;
+    let tools = <div onClick={this.addPurchase}>新增</div>;
     let header = <Header back="" title={purchaseOrder.name
         ? purchaseOrder.name
         : "添加采购项目"} tools={tools}/>

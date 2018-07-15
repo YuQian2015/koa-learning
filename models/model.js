@@ -125,6 +125,18 @@ class Model {
     })
   }
 
+  findOneAndRemove(conditions) {
+      return new Promise((resolve, reject) => {
+          this.model.findOneAndRemove(conditions, (err, doc) => {
+            if (err) {
+                // console.log(err);
+                reject(err);
+            } else {
+              resolve(doc);
+            }
+        });
+      })
+  }
 }
 
 module.exports = Model;

@@ -52,6 +52,11 @@ const validation = {
       purchaseOrderId: Joi.string().required() // 采购单ID
     })
   },
+  deletePurchase: {
+      body: Joi.object({
+        id: Joi.string().required(), // 采购id
+      })
+  },
   exportPurchase: {
     body: Joi.object({
       fromDate: Joi.date(), // 开始时间
@@ -87,6 +92,17 @@ class Purchase extends Route {
       let reqBody = ctx.request.body;
       ctx.body = await purchase.updatePurchase(reqBody.id, reqBody);
     });
+  }
+
+  @request('post', '/purchase/delete')
+  @summary('删除采购项目')
+  @tags(['采购'])
+  @body(convert2json(validation.deletePurchase))
+  deletePurchase() {
+      router.post('/delete', validate(validation.deletePurchase), async (ctx, next) => {
+        let reqBody = ctx.request.body;
+        ctx.body = await purchase.deletePurchase(reqBody.id);
+      });
   }
 
   @request('get', '/purchase/')

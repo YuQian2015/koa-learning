@@ -13,10 +13,13 @@ class PurchaseService {
     HttpService.get(`${CONFIG.apiUrl}/purchase/`, params, success, error);
   }
 
-
   // 修改采购
   edit(params, success, error) {
     HttpService.post(`${CONFIG.apiUrl}/purchase/edit`, params, success, error);
+  }
+  // 删除采购
+  delete(params, success, error) {
+    HttpService.post(`${CONFIG.apiUrl}/purchase/delete`, params, success, error);
   }
 
   // 导出采购列表

@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from "react-router-dom";
 
-import SignaturePad from 'react-signature-pad-wrapper'
+import SignaturePad from 'react-signature-pad-wrapper';
+
+import Swipeout from 'rc-swipeout';
+import 'rc-swipeout/assets/index.css';
 
 import DatePicker from 'react-mobile-datepicker';
 import InputNumber from 'rc-input-number';
@@ -141,14 +144,16 @@ class PurchaseCard extends React.Component {
             maxWidth: 3,
             dotSize: 2,
             penColor: 'rgb(0, 0, 0)'
-          }}/>
-          {
-            data.sign?
-          <div className="sign-tools">
-            <div onClick={this.clearPad}>重写</div>
-            <div onClick={this.clearPad}>签名预览 <img src={data.sign}></img></div>
-          </div>:null
-          }
+          }}/> {
+          data.sign
+            ? <div className="sign-tools">
+                <div onClick={this.clearPad}>重写</div>
+                <div onClick={this.clearPad}>签名预览
+                  <img src={data.sign}></img>
+                </div>
+              </div>
+            : null
+        }
       </div>
 
       <div className="sign">
@@ -157,6 +162,25 @@ class PurchaseCard extends React.Component {
         <input className="list-item-body" type="text" onChange={() => this.handleChange("supplierName")} ref="supplierName" value={data.supplierName} placeholder="供货人"/>
       </div>
 
+      {
+        data._id
+          ? <Swipeout right={[{
+                  text: '删除',
+                  onPress: () => this.props.onDelete(data._id),
+                  style: {
+                    backgroundColor: 'red',
+                    color: 'white'
+                  },
+                  className: 'delete-btn'
+                }
+              ]} onOpen={() => console.log('open')} onClose={() => console.log('close')}>
+              <div className="delete">
+                滑动删除
+              </div>
+            </Swipeout>
+          : null
+      }
+
       <DatePicker theme="ios" value={this.state.time} isOpen={this.state.isOpen} onSelect={this.handleSelect} onCancel={this.handleCancel}/>
     </div>)
   }
@@ -164,6 +188,7 @@ class PurchaseCard extends React.Component {
 
 PurchaseCard.propTypes = {
   onChange: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
   // 一个特定形式的对象
   data: PropTypes.shape({
     "code": PropTypes.number.isRequired,

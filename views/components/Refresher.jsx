@@ -72,7 +72,7 @@ export default class Refresher extends React.Component {
 
   render() {
     let {dir} = this.state;
-    let {hasMore} = this.props;
+    let {hasMore, isEmpty} = this.props;
     return (<PullToRefresh ref="refresher" direction={dir} distanceToRefresh={60} indicator={dir == "down"
         ? this.state.config
         : this.state.loadMoreConfig} refreshing={this.state.refreshing} prefixCls="refresher" onRefresh={() => {
@@ -87,7 +87,9 @@ export default class Refresher extends React.Component {
       {
         hasMore
           ? null
-          : <div className="end-line">没有更多了</div>
+          : isEmpty
+            ? <div className="end-line">没有数据</div>
+            : <div className="end-line">没有更多了</div>
       }
     </PullToRefresh>)
   }
