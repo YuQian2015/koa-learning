@@ -8,6 +8,26 @@ import 'rc-swipeout/assets/index.css';
 export default class HomePage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      icons: [
+        {
+          name: "食材入库",
+          icon: "hd-mail-fill",
+          className: "material-in",
+          goToPage: ""
+        }, {
+          name: "菜单管理",
+          icon: "hd-dish",
+          className: "dish",
+          goToPage: ""
+        }, {
+          name: "食材管理",
+          icon: "hd-material",
+          className: "material",
+          goToPage: "/material"
+        }
+      ]
+    }
     this.addDiet = this.addDiet.bind(this);
   }
   addDiet() {
@@ -17,32 +37,26 @@ export default class HomePage extends React.Component {
     this.props.history.push(page);
   }
   render() {
+    let {icons} = this.state;
     let body = <div className="HomePage">
       {/* <div className="todo">
         <div className="todo-title">
           <i className="hd-mail-fill"></i>
         </div>
         <div className="todo-content">今日待办今日待办今日待办</div>
-      </div> */}
+      </div> */
+      }
       <div className="menu">
-        <div className="menu-item">
-          <i className="hd-mail-fill material-in"></i>
-          <p>食材入库</p>
-        </div>
-        <div className="menu-item">
-          <i className="hd-mail-fill"></i>
-          <p>库存查询</p>
-        </div>
-        <div className="menu-item">
-          <i className="hd-mail-fill"></i>
-          <p>菜单管理</p>
-        </div>
-        <div className="menu-item" onClick={() => {
-            this.goToPage("/material")
-          }}>
-          <i className="hd-mail-fill"></i>
-          <p>食材管理</p>
-        </div>
+        {
+          icons.map((item, i) => <div key={i} className="menu-item" onClick={() => {
+              this.goToPage(item.goToPage)
+            }}>
+            <div className={`icon-bg ${item.className}`}>
+              <i className={`${item.icon}`}></i>
+            </div>
+            <p>{item.name}</p>
+          </div>)
+        }
       </div>
       <div className="today-menu">
         <p>今日配菜</p>

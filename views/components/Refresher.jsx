@@ -54,9 +54,9 @@ export default class Refresher extends React.Component {
     const child = node.children[0];
     if (node) {
       node.addEventListener('scroll', () => {
-        console.log(child.offsetHeight == node.offsetHeight + node.scrollTop);
-        console.log(child);
-        if (node.scrollTop) {
+        // console.log(child.offsetHeight == node.offsetHeight + node.scrollTop);
+        // console.log(child);
+        if (node.scrollTop && this.props.hasMore) {
           this.setState({dir: "up"})
         } else {
           this.setState({dir: "down"})
@@ -72,6 +72,7 @@ export default class Refresher extends React.Component {
 
   render() {
     let {dir} = this.state;
+    let {hasMore} = this.props;
     return (<PullToRefresh ref="refresher" direction={dir} distanceToRefresh={60} indicator={dir == "down"
         ? this.state.config
         : this.state.loadMoreConfig} refreshing={this.state.refreshing} prefixCls="refresher" onRefresh={() => {
@@ -83,6 +84,11 @@ export default class Refresher extends React.Component {
       }}>
 
       {this.props.children}
+      {
+        hasMore
+          ? null
+          : <div className="end-line">没有更多了</div>
+      }
     </PullToRefresh>)
   }
 }

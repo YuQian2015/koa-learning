@@ -34,17 +34,37 @@
       padding: 0.8rem 0;
       text-align: center;
 
-      i {
-        font-size: 4.4rem;
+      .icon-bg {
+        width: 4.4rem;
+        height: 4.4rem;
+        background: @color-common;
+        color: @color-white;
+        border-radius: 50%;
+        display: inline-block;
+        text-align: center;
+        margin: .5rem;
+
+        &.material-in {
+          background: @color-green;
+        }
+
+        &.material {
+          background: @color-element;
+        }
+
+        &.dish {
+          background: @color-dark-line;
+        }
+
+        i {
+          line-height: 4.4rem;
+          font-size: 3rem;
+        }
       }
 
       p {
         color: @color-darker;
         font-size: @font-normal;
-      }
-
-      .material-in {
-        color: @color-green;
       }
     }
   }
