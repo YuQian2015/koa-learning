@@ -40,6 +40,13 @@ const bodyParser = require('koa-bodyparser');
 const cors = require('koa-cors');
 
 db.connect();
+
+//
+app.use( async (ctx, next) => {
+  const encrypted = ctx.request.headers["rsa-encrypted"];
+  console.log(ctx);
+  await next();
+});
 app.use(logger());
 // https://github.com/brunoyang/blog/issues/11
 // 需要了解 XMLHttpRequest.withCredentials  https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/withCredentials

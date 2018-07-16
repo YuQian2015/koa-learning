@@ -98,6 +98,17 @@ import mime from 'mime-types';
 
 import {toast} from 'react-toastify';
 
+import cryptoRandomString from 'crypto-random-string';
+import NodeRSA from 'node-rsa';
+
+const publicKey = "-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKj6s31yMIo8sgfiSGZ0hYIL7NamlF6voHcBbsP16yICn5i+a/W6kTRNhVorfD7GDZVxHWAyk7VAmaTH6yjfgoUCAwEAAQ==-----END PUBLIC KEY-----";
+const pubkeyR = new NodeRSA(publicKey,'pkcs8-public');//导入公钥
+
+
+var AES = require("crypto-js/aes");
+var UTF8 = require("crypto-js/enc-utf8");
+
+
 class HttpService {
   constructor() {}
   get(url, params, successCallback, errorCallback) {
@@ -151,6 +162,11 @@ class HttpService {
 
   post(url, params, successCallback, errorCallback) {
 
+    const randomString = cryptoRandomString(20);
+    const encrypted = pubkeyR.encrypt(randomString, 'base64'); // 公钥加密(返回密文):
+    console.log(randomString);
+    console.log("密文："+encrypted);
+
     let Authorization = "";
     const user = userCollection.query({});
     if (user.length) {
@@ -182,10 +198,21 @@ class HttpService {
     request.open("POST", url, true);
     request.withCredentials = true;
     request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader("Rsa-Encrypted", encrypted);
     if (Authorization) {
       request.setRequestHeader("Authorization", "Bearer " + Authorization);
     }
-    request.send(JSON.stringify(params));
+
+
+    // Encrypt
+    var ciphertext = AES.encrypt(JSON.stringify(params), randomString);
+    console.log(ciphertext.toString());
+    // Decrypt
+    var bytes  = AES.decrypt(ciphertext.toString(), randomString);
+    var plaintext = bytes.toString(UTF8);
+
+    console.log(plaintext);
+    request.send(ciphertext.toString());
   }
 
   // 下载文件，默认是excel
