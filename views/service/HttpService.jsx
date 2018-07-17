@@ -90,6 +90,7 @@
 //     }
 // }
 
+import {CONFIG} from '../utils/Config.jsx';
 import LocalDB from 'local-db';
 const userCollection = new LocalDB('user');
 
@@ -101,8 +102,7 @@ import {toast} from 'react-toastify';
 import cryptoRandomString from 'crypto-random-string';
 import NodeRSA from 'node-rsa';
 
-const publicKey = "-----BEGIN PUBLIC KEY-----MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKj6s31yMIo8sgfiSGZ0hYIL7NamlF6voHcBbsP16yICn5i+a/W6kTRNhVorfD7GDZVxHWAyk7VAmaTH6yjfgoUCAwEAAQ==-----END PUBLIC KEY-----";
-const pubkeyR = new NodeRSA(publicKey,'pkcs8-public');//导入公钥
+const pubkeyR = new NodeRSA(CONFIG.publicKey,'pkcs8-public');//导入公钥
 
 
 var AES = require("crypto-js/aes");
@@ -205,14 +205,14 @@ class HttpService {
 
 
     // Encrypt
-    var ciphertext = AES.encrypt(JSON.stringify(params), randomString);
-    console.log(ciphertext.toString());
+    const ciphertext = AES.encrypt(JSON.stringify(params), randomString).toString();
+    console.log(ciphertext);
     // Decrypt
-    var bytes  = AES.decrypt(ciphertext.toString(), randomString);
+    var bytes  = AES.decrypt(ciphertext, randomString);
     var plaintext = bytes.toString(UTF8);
 
     console.log(plaintext);
-    request.send(ciphertext.toString());
+    request.send(JSON.stringify({data:ciphertext}));
   }
 
   // 下载文件，默认是excel
