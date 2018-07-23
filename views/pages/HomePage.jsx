@@ -16,10 +16,10 @@ export default class HomePage extends React.Component {
           className: "material-in",
           goToPage: ""
         }, {
-          name: "菜单管理",
+          name: "菜谱管理",
           icon: "hd-dish",
           className: "dish",
-          goToPage: ""
+          goToPage: "/cookbook"
         }, {
           name: "食材管理",
           icon: "hd-material",

@@ -488,7 +488,11 @@ app.use(routes.routes()).use(routes.allowedMethods());
 
 ### 安装MongoDB
 
-下载MongoDB安装文件：mongodb-win32-x86_64-2008plus-ssl-3.4.5-signed.msi，双击执行安装。安装完成之后可以在安装目录找到，我的安装目录“C:\Program Files\MongoDB\Server\3.4\bin”，为了方便在命令行执行 `mongod` 、`mongo` , 将这个路径添加到系统环境变量。接下来可以在命令行执行：
+下载MongoDB安装文件，这里给出一个下载地址http://dl.mongodb.org/dl/win32/x86_64 ， 可以从其中选择需要的版本，以我的为例：mongodb-win32-x86_64-2008plus-ssl-3.4.5-signed.msi。下载完成后之后，双击执行安装，安装过程不再描述。
+
+安装完成之后可以在安装目录找到，我的安装目录“C:\Program Files\MongoDB\Server\3.4\bin”，为了方便在命令行执行 `mongod` 、`mongo` , 将这个路径添加到系统环境变量。
+
+在计算机-属性-高级系统设置-环境变量，找到path，双击编辑，在里面添加上面的安装目录，添加完成后可以在命令行执行：
 
 ```shell
 mongod
@@ -496,15 +500,36 @@ mongod
 
 ![02](koa/02.jpg)
 
-证明我们的环境变量添加成功，在系统磁盘新建数据库存放目录，以本机为例：G:\MongoDB，G:\MongoDB\db  ，G:\MongoDB\log，以管理员身份在命令行执行：
+证明我们的环境变量添加成功。
+
+### 设置数据库
+
+#### 指定数据库位置
+
+在系统磁盘新建数据库存放文件夹，以本机为例：G:\MongoDB，G:\MongoDB\db  ，G:\MongoDB\log。
+
+打开命令面板（快捷键win+r输入cmd回车），注意，需要命令以管理员身份在命令行执行：
 
 ```shell
 mongod --bind_ip 127.0.0.1 --logpath "G:\MongoDB\log\mongod.log" --logappend --dbpath "G:\MongoDB\db" --port 3001 --serviceName "koa-learning" --serviceDisplayName "koa-learning" --install
 ```
 
-> 以上命令的描述 补充
+上面的命令实际上是对MongoDB数据库进行了设置：
 
-或者，我们新建一个 G:\MongoDB\mongod.cfg 文件，内容为：
+- bind_ip绑定了IP地址，这里的127.0.0.1是指只有本机可以访问。
+- logpath指定了MongoDB的日志记录文件的位置。
+- logappend指定日志的记录形式为追加形式。
+- dbpath则指定了数据库的位置（注意，这不是我们安装MongoDB的位置，而是指我们真正存放数据文档的位置）。
+- port指定了我们的数据库跑在哪个端口，以本机的例子则是跑在3001端口。
+- 而后面的--serviceName "koa-learning" --serviceDisplayName "koa-learning" --install是将我们的这个命令安装成Windows的服务，注意做可以在我们启动Windows系统的时候就启动这个服务，当然我们可以选择去掉这一段，那么我们以后需要启动服务器都要执行
+
+```shell
+mongod --bind_ip 127.0.0.1 --logpath "G:\MongoDB\log\mongod.log" --logappend --dbpath "G:\MongoDB\db" --port 3001 
+```
+
+#### 使用配置文件
+
+我们为了方便，并且有效可靠的记住服务器的配置，可以写一个配置文件，我们新建一个G:\MongoDB\mongod.cfg 文件，内容为：
 
 ```
 systemLog:
@@ -522,17 +547,23 @@ storage:
 mongod --config "G:\MongoDB\mongod.cfg" --serviceName "koa-learning" --serviceDisplayName "koa-learning" --install
 ```
 
-这样我们就对数据库进行了设置，并且安装到了Windows的service，如果发生如下[问题](https://stackoverflow.com/questions/37352869/why-am-i-getting-a-parser-error-on-my-yaml-config-in-mongodb-install)：
+这样我们就对数据库进行了设置，并且安装到了Windows的service，实际效果是和上面介绍的方式是一样的。
+
+#### 踩坑问题处理
+
+如果发生如下[问题](https://stackoverflow.com/questions/37352869/why-am-i-getting-a-parser-error-on-my-yaml-config-in-mongodb-install)：
 
 ```shell
 Error parsing YAML config file: YAML-cpp: error at line 2, column 13 : illegal map value
 ```
 
-使用空格代替tab，在“:”之后也使用一个空格
+可以使用使用空格代替tab，在“:”之后也使用一个空格
 
 > YAML doesn't really satisfy with tabs, then, use space instead before destination and storage. Don't forget to add a space after every ":" even in the lines systemLog and storage Finally, use quotes to enclose your pathes and double backslashes in these pathes.
 
-执行成功之后，我们可以看到log目录下面生成了一个log文件
+#### 查看数据库配置是否成功
+
+执行上面的成功之后，我们可以看到log目录下面生成了一个log文件
 
 ![05](koa/05.jpg)
 
@@ -544,7 +575,7 @@ Error parsing YAML config file: YAML-cpp: error at line 2, column 13 : illegal m
 2018-05-15T09:30:29.580-0700 I CONTROL  [main] Service can be started from the command line with 'net start koa-learning'
 ```
 
-然后以管理员身份执行：
+上面的log中说明可以通过net start koa-learning启动服务器，我们来试试，以管理员身份在命令行执行：
 
 ```shell
 net start koa-learning
@@ -567,7 +598,9 @@ net start koa-learning
 ……
 ```
 
-执行以下命令即可连接到数据库：
+#### 在命令行连接数据库
+
+新开一个命令行，执行以下命令即可连接到数据库：
 
 ```shell
 mongo mongodb://127.0.0.1:3001
@@ -577,32 +610,44 @@ mongo -port 3001
 
 ![08](koa/08.jpg)
 
-我们看到数据库是没有访问控制的，数据库的读写权限不受控制的。关于 MongoDB 访问权限的设置这里有 [`详细介绍`](https://docs.mongodb.com/master/tutorial/enable-authentication/) 。
+我们看到数据库是没有访问控制的，数据库的读写权限不受控制的。关于 MongoDB 访问权限的设置这里有 [`详细介绍`](https://docs.mongodb.com/master/tutorial/enable-authentication/) ，接下来便开始介绍。
 
 
 
 ### MongoDB的用户创建更新及删除
 
-从上面的提示结果看到我们的数据库是没有访问控制的，因此这里我们来创建权限和用户。
+前面提到，我们的数据库是没有访问控制的，因此这里我们来创建权限和用户。
 
 > Enabling access control on a MongoDB deployment enforces authentication, requiring users to identify themselves. When accessing a MongoDB deployment that has access control enabled, users can only perform actions as determined by their roles.
 
+> 
+>
+> 
+>
 > 关于 admin 数据库 补充
 
-要使用访问控制，我们先确保有一个超级用户，这个用户在`admin` 数据库且拥有 [`userAdmin`](https://docs.mongodb.com/master/reference/built-in-roles/#userAdmin) 或者[`userAdminAnyDatabase`](https://docs.mongodb.com/master/reference/built-in-roles/#userAdminAnyDatabase) 的权限，超级用户可以创建用户、授权或者删除用户权限、自定义的权限。
-
-我们可以在启动授权控制之前就创建超级用户，因为MongoDB提供了一个 [localhost exception](https://docs.mongodb.com/master/core/security-users/#localhost-exception)  来创建超级用户搭到 `admin` 数据库，一旦被创建了，我们需要验证登录这个用户来创建更多用户。
 
 
+#### 在admin数据库创建管理员
 
-前面我们已经通过非授权的方式启动并且已经连接到数据库, 接下来就是创建超级用户:
+要使用访问控制，我们先确保有一个超级用户，这个用户在`admin` 数据库里面创建，并且拥有 [`userAdmin`](https://docs.mongodb.com/master/reference/built-in-roles/#userAdmin) 或者[`userAdminAnyDatabase`](https://docs.mongodb.com/master/reference/built-in-roles/#userAdminAnyDatabase) 的权限，整改超级用户可以创建用户、授权或者删除用户权限、自定义的权限。
+
+在前面的介绍中我们启动的数据库是没有开启访问控制的，不过即使这样，我们也可以在启动授权控制之前就创建超级用户，因为MongoDB提供了一个 [localhost exception](https://docs.mongodb.com/master/core/security-users/#localhost-exception)  来创建超级用户搭到 `admin` 数据库。
+
+一旦超级用户被创建了，我们需要验证登录这个用户来创建更多用户，下面来看具体操作。
+
+
+
+如果是紧接前面的操作，我们是已经通过非授权的方式启动并且已经连接到数据库的, 接下来就是创建超级用户:
 
 ```shell
 > use admin
 switched to db admin
 ```
 
-> 命令的描述 补充
+上面的这个命令use admin，能够切换到admin数据库，执行成功之后，我们就可以在admin数据库进行操作了。
+
+那么首先来创建一个管理员用户，这个用户具有创建管理其他用户的权限：
 
 ```shell
 > db.createUser(
@@ -623,11 +668,19 @@ Successfully added user: {
 }
 ```
 
-> 命令的描述 补充
+上面的命令的点点点我们可以理解为换行，如果在一些命令行面板里面不能数据换行，可以复制上面的命令，把换行删掉，整理成一行来执行。如：
 
-超级用户可以访问所有数据库，这个用户是被创建在 admin 管理数据库，db 指定数据库。
+```shell
+db.createUser( { user: "admin",pwd: "admin", roles: [ { role: "userAdminAnyDatabase", db: "admin" } ]} )
+```
 
-我们删掉之前安装的 Windows service , 以管理员身份执行 `sc delete koa-learning` ：
+这其中需要注意的是user指的是我们的用户名，pwd是密码，而roles里面配置的正是这个用户的权限了。userAdminAnyDatabase就是一个具有在其他数据库增删和管理用户的权限，db指定了创建的这个管理员用户所在的数据库是在admin。
+
+**注意：超级用户可以访问所有数据库，这个用户是被创建在 admin 管理数据库，db 指定数据库。**
+
+#### 访问控制方式启动数据库
+
+既然之前的启动数据库的方式并不是访问控制的，我们删掉之前安装的 Windows service , 以管理员身份执行 `sc delete koa-learning` ：
 
 ```shell
 $ sc delete koa-learning
@@ -644,15 +697,17 @@ mongod --config "G:\MongoDB\mongod.cfg" --serviceName "koa-learning" --serviceDi
 net start koa-learning
 ```
 
+可以看到这种启动方式比之前多了一个`--auth`。
 
+#### 在对应数据库创建用户
 
-我们先连接数据库：
+既然超级用户已经被我们创建好了，这个超级用户是在admin数据库，那么我们先连接数据库：
 
 ```shell
 mongo -port 3001
 ```
 
-执行 `use healthyDiet` 使用 `healthyDiet`  数据库。我们可以执行 `db` 查看当前的数据库。先来插入一条数据试试：
+我们先不登录这个超级用户，而且切换到一个数据库healthyDiet， 执行 `use healthyDiet` 使用 `healthyDiet`  数据库。我们可以执行 `db` 查看当前的数据库。先来插入一条数据试试：
 
 ```shell
 > db.healthyDiet.insert({name:'Yuu'})
@@ -661,6 +716,8 @@ mongo -port 3001
 ![13](koa/13.jpg)
 
 我们看到“not authorized on healthyDiet to execute command” ，这就是说, 我们没有权限操作。
+
+不能插入数据正是我们想要的结果，但是为了能够在这个数据库插入数据，我们就需要去创建有权限的用户了，
 
 因此我们切换到admin数据库去登录账号：
 
@@ -672,6 +729,12 @@ admin
 > db.auth("admin", "admin")
 1 // 返回1 授权成功, 否则返回0, 并提示失败
 ```
+
+上面的命令执行完毕之后，我们就算是真正的登录数据库了。
+
+
+
+先来看看怎么创建用户：
 
 使用 [`db.createUser()`](https://docs.mongodb.com/master/reference/method/db.createUser/#db.createUser) 添加用户，以及用户的 [内置权限](https://docs.mongodb.com/master/core/security-built-in-roles/) 或 [用户定义权限](https://docs.mongodb.com/master/core/security-user-defined-roles/) 。
 
@@ -706,16 +769,18 @@ Successfully added user: {
 }
 ```
 
-上面的示例中，我们切换到 healthyDiet 上创建用户， 因为只有在这里创建的用户才是这个数据库的用户， 才能在这里完成授权，但是创建用户的信息存放在 admin 库中。接着换到 admin 库，看一下我们创建的用户：
+上面的示例中，我们切换到 healthyDiet 上创建用户， 因为只有在这里创建的用户才是这个数据库的用户， 才能在这里完成授权。
+
+但是需要注意的是，我们刚刚创建的这个用户的信息是存放在 admin 库中的，为了验证，我们接着换到 admin 库，看一下刚刚创建的用户，首先切换到admin数据库肯定要先 use admin ，接着执行下面的命令查找用户：
 
 ```js
 > db.system.users.find({user:'Yuu'})
 { "_id" : "healthyDiet.Yuu", "user" : "Yuu", "db" : "healthyDiet", "credentials" : { "SCRAM-SHA-1" : { "iterationCount" : 10000, "salt" : "sd/AMDmlYvPnYjWWdabk6A==", "storedKey" : "zBQcQxRNSp8E3h0SdPcMrfFhDAE=", "serverKey" : "WaFuxva6hsmn1NkMBFjFltO9hWk=" } }, "roles" : [ { "role" : "readWrite", "db" : "healthyDiet" } ] }
 ```
 
+#### 使用创建的用户来新增数据
 
-
-然后我们现在用新增的用户来连接数据库，下面的命令是在连接数据库时就进行验证，和上面的先连接数据库再验证是一样的：
+我们现在用新增的用户来连接数据库，为了演示不同的方式启动和连接数据库，我们使用下面的命令，是在连接数据库时就进行验证，和上面的admin用户登录的方式一样，上面的方式是先连接数据库再验证：
 
 ```shell
 mongo --port 3001 -u Yuu -p 123456 --authenticationDatabase healthyDiet
@@ -723,7 +788,7 @@ mongo --port 3001 -u Yuu -p 123456 --authenticationDatabase healthyDiet
 
 ![09](koa/09.jpg)
 
-既然已经验证成功，我们就可以尝试着来写入数据了。
+既然已经验证成功，我们就可以尝试着来写入数据了，首先还是要切换到healthyDiet数据库，我们的用户是在这个数据库创建的，接着我们来执行插入数据。
 
 ```shell
 > use healthyDiet
@@ -733,6 +798,8 @@ WriteResult({ "nInserted" : 1 })
 ```
 
 OK！
+
+**注意：登录一个用户的时候，要切换到该数据库**
 
 
 
@@ -2642,6 +2709,131 @@ module.exports = router;
 
 
 ### 修改和删除
+
+
+
+### 文档的关联
+
+https://stackoverflow.com/questions/21142524/mongodb-mongoose-how-to-find-subdocument-in-found-document
+
+MongoDB, Mongoose: How to find subdocument in found document
+
+I'm stuck on trying to get subdocument by `_id` in found document.
+
+Example Schema
+
+```
+var User = mongoose.Schema({
+        name:       String,
+        photos:    [{src: String, title: String}]
+    });
+var Team = db.model('Team', Team);
+```
+
+Now I'm getting one user:
+
+```
+myUser = User.findOne(...)...
+```
+
+How can I get now `src` of his photo by it's `_id` (or `title`)?
+
+Something like:
+
+```
+myUser.photos.findOne({'_id': myId})
+```
+
+You need to either create a NEW Schema for your embedded documents, or leave the type declaration as a blank array so `mongoose` interprets as a `Mixed` type.
+
+```
+var userSchema = new mongoose.Schema({
+  name: String,
+  photos: []
+});
+var User = mongoose.model('User', userSchema);
+```
+
+### -- OR --
+
+```
+var userSchema = new mongoose.Schema({
+  name: String,
+  photos: [photoSchema]
+});
+
+var photoSchema = new mongoose.Schema({
+  src: String,
+  title: String
+});
+
+var User = mongoose.model('User', userSchema);
+```
+
+And then you can save thusly:
+
+```
+var user = new User({
+  name: 'Bob',
+  photos: [ { src: '/path/to/photo.png' }, { src: '/path/to/other/photo.png' } ]
+});
+
+user.save();
+```
+
+From here, you can simply use array primitives to find your embedded docs:
+
+```
+User.findOne({name: 'Bob'}, function (err, user) {
+
+  var photo = user.photos.filter(function (photo) {
+    return photo.title === 'My awesome photo';
+  }).pop();
+
+  console.log(photo); //logs { src: '/path/to/photo.png', title: 'My awesome photo' }
+});
+```
+
+### -- OR --
+
+You can use the special `id()` method in embedded docs to look up by id:
+
+```
+User.findOne({name: 'Bob'}, function (err, user) {
+    user.photos.id(photo._id);
+});
+```
+
+You can read more here: <http://mongoosejs.com/docs/subdocs.html>
+
+Make sure you **DON'T** register the schema with mongoose, otherwise it will create a new collection. Also keep in mind that if the child documents are searched for often, it would be a good idea to use refs and population like below. Even though it hits the DB twice, its much faster because of indexing. Also, `mongoose` will bonk on double nesting docs (i.e. The children have children docs as well)
+
+```
+var user = mongoose.Schema({
+  name: String,
+  photos: [{ type: Schema.Types.ObjectId, ref: 'Photo' }]
+});
+
+var photo = mongoose.Schema({
+  src: String,
+  title: String
+});
+
+User
+  .findOne({ name: 'foo' })
+  .populate('photos')
+  .exec(function (err, user) {
+    console.log(user.photos[0].src);
+  });
+```
+
+Relevant docs can be found here <http://mongoosejs.com/docs/populate.html>
+
+
+
+### http://mongoosejs.com/docs/populate.html
+
+
 
 
 
