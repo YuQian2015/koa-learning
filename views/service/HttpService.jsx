@@ -104,9 +104,8 @@ import NodeRSA from 'node-rsa';
 
 const pubkeyR = new NodeRSA(CONFIG.publicKey,'pkcs8-public');//导入公钥
 
-
-var AES = require("crypto-js/aes");
-var UTF8 = require("crypto-js/enc-utf8");
+import AES from "crypto-js/aes";
+import UTF8 from "crypto-js/enc-utf8";
 
 
 class HttpService {
@@ -208,8 +207,8 @@ class HttpService {
     const ciphertext = AES.encrypt(JSON.stringify(params), randomString).toString();
     console.log(ciphertext);
     // Decrypt
-    var bytes  = AES.decrypt(ciphertext, randomString);
-    var plaintext = bytes.toString(UTF8);
+    const bytes  = AES.decrypt(ciphertext, randomString);
+    const plaintext = bytes.toString(UTF8);
 
     console.log(plaintext);
     request.send(JSON.stringify({data:ciphertext}));

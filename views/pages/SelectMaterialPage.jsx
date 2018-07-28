@@ -41,11 +41,22 @@ export default class SelectMaterialPage extends React.Component {
     this.setTag = this.setTag.bind(this);
   }
   componentWillMount() {
-    // if (materialCollection.read().length) {
-    //   console.log(materialCollection.read());
-    //   this.setState({materialList: materialCollection.read()});
-    //   return
-    // }
+
+    console.log(this.props.location.state);
+    let urlData = {};
+    if (this.props.location.search) {
+      let search = decodeURI(this.props.location.search);
+      urlData = JSON.parse(search.split("?")[1]);
+    }
+    this.setState({
+      isMultiple: urlData.isMultiple
+    })
+
+    if (materialCollection.read().length) {
+      console.log(materialCollection.read());
+      this.setState({materialList: materialCollection.read()});
+      return
+    }
     this.fetchData();
   }
 
@@ -157,7 +168,7 @@ export default class SelectMaterialPage extends React.Component {
   }
 
   render() {
-    const {materialList, icons, tags, tagIndex} = this.state;
+    const {materialList, icons, tags, tagIndex, isMultiple} = this.state;
     let body = <Refresher onRefresh={this.handleRefresh}>
       <SearchInput className="search-box" onChange={this.searchChange} placeholder="输入食材名称" throttle={400}/>
       <div>
@@ -177,8 +188,8 @@ export default class SelectMaterialPage extends React.Component {
             <div className="price">{material.price}元/{material.unit}</div>
             <div className="select">{
                 material.select
-                  ? <i className="hd-radio-fill"></i>
-                  : <i className="hd-radio"></i>
+                  ? isMultiple?<i className="hd-plus-fill"></i>:<i className="hd-radio-fill"></i>
+                  : isMultiple?<i className="hd-plus"></i>:<i className="hd-radio"></i>
               }</div>
           </div>))
         }

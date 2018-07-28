@@ -13,6 +13,8 @@ import UserService from '../service/UserService.jsx';
 
 import {form} from '../utils/Form.jsx';
 
+import MD5 from "crypto-js/md5";
+
 let result = verification.create();
 
 class RegisterPage extends React.Component {
@@ -86,7 +88,7 @@ class RegisterPage extends React.Component {
     if (isSignIn) {
       UserService.signIn({
         "email": regForm.email.trim(),
-        "password": regForm.pwd.trim()
+        "password": MD5(regForm.pwd.trim()).toString()
       }, (res) => {
         if (res.error) {
           this.showAlert(res.msg);
@@ -105,7 +107,7 @@ class RegisterPage extends React.Component {
     }
     UserService.register({
       "email": regForm.email.trim(),
-      "password": regForm.pwd.trim(),
+      "password": MD5(regForm.pwd.trim()).toString(),
       "name": regForm.name.trim()
     }, (res) => {
       if (res.error) {

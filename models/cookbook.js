@@ -2,15 +2,15 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const Model = require('./model');
 const cookbookSchema = new Schema({
-  code: {
-    type: Number,
-    default: 1
-  }, // 食材编号
   name: String, // 名称
+  materials: [{ type: Schema.Types.ObjectId, ref: 'Material' }], // 使用的材料
   createDate: Date, // 创建时间
   updateDate: Date // 修改时间
 });
 
+cookbookSchema.pre('find', function() {
+  this.populate('materials', 'name price type');
+});
 
 class Cookbook extends Model {
   constructor() {
