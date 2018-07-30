@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const Model = require('./model');
 const exportExcel = require('../files/exportExcel');
 const fs = require('fs');
+const qiniuUpload = require('../utils/qiniuUploader');
 const purchaseSchema = new Schema({
   code: Number, // 食材编号
   purchasingDate: Date, // 采购日期
@@ -39,7 +40,9 @@ class Purchase extends Model {
           } else {
             exportExcel.exportPurchase(dataArr.fileName, docs).then(path => {
               console.log(path);
+              console.log(dataArr.fileName);
               let result = fs.createReadStream(path);
+              qiniuUpload(`${dataArr.fileName + new Date().getTime()}.xlsx`, path);
               //将数据转为二进制输出
               // let result = fs.readFileSync(path, {encoding:'binary'});
         			// let dataBuffer = new Buffer.from(result,'binary');
