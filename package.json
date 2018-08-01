@@ -34,6 +34,7 @@
     "koa-router": "^7.4.0",
     "koa-swagger-decorator": "^1.4.3",
     "koa2-validation": "^0.1.0",
+    "lodash": "^4.17.10",
     "log4js": "^2.6.1",
     "mime-types": "^2.1.18",
     "moment": "^2.22.2",
