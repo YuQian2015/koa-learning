@@ -4,6 +4,8 @@ const Model = require('./model');
 const exportExcel = require('../files/exportExcel');
 const fs = require('fs');
 const qiniuUpload = require('../utils/qiniuUploader');
+const _ = require('lodash');
+const moment = require('moment');
 const purchaseSchema = new Schema({
   code: Number, // 食材编号
   purchasingDate: Date, // 采购日期
@@ -33,11 +35,16 @@ class Purchase extends Model {
     const form = dataArr.fromDate?dataArr.fromDate:new Date(0);
     const to = dataArr.toDate?dataArr.toDate:new Date();
     return new Promise((resolve, reject) => {
-      this.model.find({...dataArr,fileName:undefined,fromDate:undefined,toDate:undefined}).where('createDate').gte(form).lte(to).exec((err, docs) => {
+      this.model.find({...dataArr,fileName:undefined,fromDate:undefined,toDate:undefined}).where('createDate').gte(form).lte(to).lean().exec((err, docs) => {
           if (err) {
             console.log(err);
             reject(err);
           } else {
+            _.forEach(docs, doc => {
+              doc.purchasingDate = moment(doc.purchasingDate).format("YYYY年MM月DD日");
+              doc.qualityPeriod = moment(doc.qualityPeriod).format("YYYY年MM月DD日");
+              doc.manufactureDate = moment(doc.manufactureDate).format("YYYY年MM月DD日");
+            });
             exportExcel.exportPurchase(dataArr.fileName, docs).then(path => {
               console.log(path);
               console.log(dataArr.fileName);

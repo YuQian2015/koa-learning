@@ -127,12 +127,16 @@ export default class SelectMaterialPage extends React.Component {
     });
   }
   handleChose(material) {
-    let {materialList} = this.state;
-    for (let item of materialList) {
-      if (item.code == material.code) {
-        item.select = true;
-      } else {
-        item.select = false;
+    let {materialList, isMultiple} = this.state;
+    if(isMultiple) {
+      material.select = !material.select;
+    } else {
+      for (let item of materialList) {
+        if (item.code == material.code) {
+          item.select = true;
+        } else {
+          item.select = false;
+        }
       }
     }
     this.setState({materialList})
@@ -149,11 +153,11 @@ export default class SelectMaterialPage extends React.Component {
   }
 
   handleClick() {
+    materialSelectCollection.drop();
     let {materialList} = this.state;
     materialList.map(item => {
       if (item.select) {
         console.log(item);
-        materialSelectCollection.drop();
         materialSelectCollection.insert({
           name: item.name,
           price: item.price,

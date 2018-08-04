@@ -1,0 +1,33 @@
+.AddCookbookPage {
+  .add {
+    margin: 1rem auto;
+    width: 10rem;
+    height: 10rem;
+    border-radius: 5rem;
+    background: @color-common;
+    color: @color-white;
+    line-height: 10rem;
+    text-align: center;
+    font-size: @font-large;
+    box-shadow: 0 0.5rem 0.5rem 0 @color-gray;
+  }
+  .needMaterial {
+    padding: .5rem 1rem;
+    border-bottom: solid 1px @color-common;
+    font-size: @font-normal;
+    color: @color-darker;
+  }
+  .material {
+    height: 5rem;
+    line-height: 5rem;
+    font-size: @font-normal;
+    color: @color-darkest;
+    border-bottom: solid 1px @color-gray;
+    padding: 0 1rem;
+    .mixin-flex;
+    .mixin-flex-center;
+    .name {
+      .mixin-flex-1;
+    }
+  }
+}

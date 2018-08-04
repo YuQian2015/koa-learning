@@ -3238,6 +3238,50 @@ Now that we've covered `populate()`, let's take a look at [discriminators](http:
 
 
 
+# [Why can't you modify the data returned by a Mongoose Query (ex: findById)](https://stackoverflow.com/questions/14504385/why-cant-you-modify-the-data-returned-by-a-mongoose-query-ex-findbyid)
+
+When I try to change any part of the data returned by a Mongoose Query it has no effect.
+
+I was trying to figure this out for about 2 hours yesterday, with all kinds of `_.clone()`s, using temporary storage variables, etc. Finally, just when I though I was going crazy, I found a solution. So I figured somebody in the future (fyuuuture!) might have the save issue.
+
+```
+Survey.findById(req.params.id, function(err, data){
+    var len = data.survey_questions.length;
+    var counter = 0;
+
+    _.each(data.survey_questions, function(sq){
+        Question.findById(sq.question, function(err, q){
+            sq.question = q; //has no effect
+
+            if(++counter == len) {
+                res.send(data);
+            }
+        });
+    });
+});
+```
+
+For cases like this where you want a plain JS object instead of a full model instance, you can call [`lean()`](http://mongoosejs.com/docs/api.html#query_Query-lean) on the query chain like so:
+
+```
+Survey.findById(req.params.id).lean().exec(function(err, data){
+    var len = data.survey_questions.length;
+    var counter = 0;
+
+    _.each(data.survey_questions, function(sq){
+        Question.findById(sq.question, function(err, q){
+            sq.question = q;
+
+            if(++counter == len) {
+                res.send(data);
+            }
+        });
+    });
+});
+```
+
+This way `data` is already a plain JS object you can manipulate as you need to.
+
 
 
 
