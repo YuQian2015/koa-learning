@@ -8,8 +8,8 @@ class CookbookService {
     HttpService.post(`${CONFIG.apiUrl}/cookbook/add`, params, success, error);
   }
 
-  find(params, success, error) {
-    HttpService.get(`${CONFIG.apiUrl}/cookbook`, params, success, error);
+  find(params) {
+    return HttpService.get(`${CONFIG.apiUrl}/cookbook`, params);
   }
 
 }

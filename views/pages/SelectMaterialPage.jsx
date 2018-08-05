@@ -48,9 +48,7 @@ export default class SelectMaterialPage extends React.Component {
       let search = decodeURI(this.props.location.search);
       urlData = JSON.parse(search.split("?")[1]);
     }
-    this.setState({
-      isMultiple: urlData.isMultiple
-    })
+    this.setState({isMultiple: urlData.isMultiple})
 
     if (materialCollection.read().length) {
       console.log(materialCollection.read());
@@ -67,7 +65,7 @@ export default class SelectMaterialPage extends React.Component {
     if (this.state.tagIndex) {
       params.type = this.state.tagIndex;
     }
-    MaterialService.find(params, (res) => {
+    MaterialService.find(params).then(res => {
       if (res.error) {
         console.log(res.msg);
         return
@@ -77,7 +75,7 @@ export default class SelectMaterialPage extends React.Component {
       res.data.map(item => {
         materialCollection.insert(item);
       })
-    }, (error) => {
+    }).catch(error => {
       console.log(error);
     })
   }
@@ -109,26 +107,21 @@ export default class SelectMaterialPage extends React.Component {
     if (this.state.tagIndex) {
       params.type = this.state.tagIndex;
     }
-    return new Promise((resolve, reject) => {
-      MaterialService.find(params, (data) => {
-        if (data.error) {
-          reject();
-          return
-        }
-        this.setState({materialList: data.data});
-        materialCollection.drop();
-        data.data.map(item => {
-          materialCollection.insert(item);
-        });
-        resolve();
-      }, (error) => {
+    MaterialService.find(params).then(data => {
+      if (data.error) {
         reject();
-      })
-    });
+        return
+      }
+      this.setState({materialList: data.data});
+      materialCollection.drop();
+      data.data.map(item => {
+        materialCollection.insert(item);
+      });
+    }).catch(error => {})
   }
   handleChose(material) {
     let {materialList, isMultiple} = this.state;
-    if(isMultiple) {
+    if (isMultiple) {
       material.select = !material.select;
     } else {
       for (let item of materialList) {
@@ -192,8 +185,12 @@ export default class SelectMaterialPage extends React.Component {
             <div className="price">{material.price}元/{material.unit}</div>
             <div className="select">{
                 material.select
-                  ? isMultiple?<i className="hd-minus-fill"></i>:<i className="hd-radio-fill"></i>
-                  : isMultiple?<i className="hd-plus"></i>:<i className="hd-radio"></i>
+                  ? isMultiple
+                    ? <i className="hd-minus-fill"></i>
+                    : <i className="hd-radio-fill"></i>
+                  : isMultiple
+                    ? <i className="hd-plus"></i>
+                    : <i className="hd-radio"></i>
               }</div>
           </div>))
         }

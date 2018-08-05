@@ -10,7 +10,7 @@ class PurchaseService {
 
   // 查询采购列表
   find(params, success, error) {
-    HttpService.get(`${CONFIG.apiUrl}/purchase/`, params, success, error);
+    return HttpService.get(`${CONFIG.apiUrl}/purchase/`, params);
   }
 
   // 修改采购
@@ -28,8 +28,8 @@ class PurchaseService {
   }
 
   // 获得采购单
-  findOrder(params, success, error) {
-    HttpService.get(`${CONFIG.apiUrl}/purchase-order/`, params, success, error);
+  findOrder(params) {
+    return HttpService.get(`${CONFIG.apiUrl}/purchase-order/`, params);
   }
   // 添加采购单
   addOrder(params, success, error) {

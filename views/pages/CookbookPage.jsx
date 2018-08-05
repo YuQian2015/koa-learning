@@ -37,8 +37,7 @@ export default class CookbookPage extends React.Component {
     this.fetchData();
   }
 
-  fetchData() {
-
+  getQuery() {
     let {pageSize, page, name} = this.state;
     let params = {
       pageSize,
@@ -47,7 +46,10 @@ export default class CookbookPage extends React.Component {
     if (name) {
       params.name = name;
     }
-    CookbookService.find(params, (res) => {
+    return params;
+  }
+  fetchData() {
+    return CookbookService.find(this.getQuery()).then(res => {
       if (res.error) {
         console.log(res.msg);
         return
@@ -57,7 +59,7 @@ export default class CookbookPage extends React.Component {
       res.data.map(item => {
         cookbookCollection.insert(item);
       })
-    }, (error) => {
+    }).catch(error => {
       console.log(error);
     })
   }

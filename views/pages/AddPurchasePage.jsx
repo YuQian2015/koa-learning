@@ -43,7 +43,7 @@ export default class AddPurchasePage extends React.Component {
     this.savePurchase = this.savePurchase.bind(this);
     this.addPurchase = this.addPurchase.bind(this);
     this.showPurchaseDetail = this.showPurchaseDetail.bind(this);
-    this.handleRefresh = this.handleRefresh.bind(this);
+    this.fetchData = this.fetchData.bind(this);
     this.selectMaterial = this.selectMaterial.bind(this);
     this.exportExcel = this.exportExcel.bind(this);
     this.showExportFunc = this.showExportFunc.bind(this);
@@ -90,7 +90,7 @@ export default class AddPurchasePage extends React.Component {
   }
 
   fetchData(params = {}) {
-    PurchaseService.find(params, (res) => {
+    return PurchaseService.find(params).then(res => {
       if (res.error) {
         console.log(res.msg);
         return
@@ -100,31 +100,11 @@ export default class AddPurchasePage extends React.Component {
       res.data.map(item => {
         materialListCollection.insert(item);
       })
-    }, (error) => {
+    }).catch(error => {
       console.log(error);
     })
   }
 
-  handleRefresh(params = {}) {
-    return new Promise((resolve, reject) => {
-      PurchaseService.find(params, (res) => {
-        if (res.error) {
-          console.log(res.msg);
-          reject();
-          return
-        }
-        this.setState({purchaseList: res.data});
-        materialListCollection.drop();
-        res.data.map(item => {
-          materialListCollection.insert(item);
-        })
-        resolve();
-      }, (error) => {
-        console.log(error);
-        reject();
-      })
-    });
-  }
 
   exportExcel() {
     let {purchaseOrder, fromDate, toDate} = this.state;
@@ -301,7 +281,7 @@ export default class AddPurchasePage extends React.Component {
       text: "保存",
       callback: this.savePurchase
     }
-    let body = <Refresher onRefresh={() => this.handleRefresh({purchaseOrderId: purchaseOrder.id})}>
+    let body = <Refresher onRefresh={() => this.fetchData({purchaseOrderId: purchaseOrder.id})}>
 
       <div className="AddPurchasePage">
         {

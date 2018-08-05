@@ -9,7 +9,7 @@ class MaterialService {
   }
 
   find(params, success, error) {
-    HttpService.get(`${CONFIG.apiUrl}/material`, params, success, error);
+    return HttpService.get(`${CONFIG.apiUrl}/material`, params);
   }
 
   search(params, success, error) {

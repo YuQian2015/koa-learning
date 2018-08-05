@@ -102,61 +102,73 @@ import {toast} from 'react-toastify';
 import cryptoRandomString from 'crypto-random-string';
 import NodeRSA from 'node-rsa';
 
-const pubkeyR = new NodeRSA(CONFIG.publicKey,'pkcs8-public');//导入公钥
-
+const pubkeyR = new NodeRSA(CONFIG.publicKey, 'pkcs8-public'); //导入公钥
 
 import AES from "crypto-js/aes";
 import UTF8 from "crypto-js/enc-utf8";
 
 class HttpService {
-  constructor() {}
-  get(url, params, successCallback, errorCallback) {
+  Authorization: "";
+  constructor() {
+    this.getUserToekn();
+  }
 
-    let Authorization = "";
+  getUserToekn() {
     const user = userCollection.query({});
     if (user.length) {
-      Authorization = user[0].token;
+      this.Authorization = user[0].token;
     }
-    let request = new XMLHttpRequest();
-    request.onreadystatechange = function() {
-      if (request.readyState == 4) {
-        const status = request.status;
-        if (status >= 200 && status < 300) {
-          try {
-            const res = JSON.parse(request.responseText);
-            successCallback && successCallback(res);
-          } catch (e) {
-            console.error(e);
-          }
-          return
-        }
-        if (status == 401) {
-          window.location.replace("#/register");
-          return
-        }
-        if (status == 400) {
-          const error = JSON.parse(request.responseText);
-          toast(error.msg, {
-            position: toast.POSITION.BOTTOM_CENTER,
-            closeButton: false
-          });
-        }
-        errorCallback && errorCallback(status);
-      }
-    };
+  }
+
+  getQueryString(params) {
     let query = [];
-    for (var key in params) {
+    for (let key in params) {
       query.push(key + "=" + params[key]);
     }
-    if (query) {
-      url += "?" + query.join("&");
-    }
-    request.open("GET", url, true);
-    request.withCredentials = true;
-    if (Authorization) {
-      request.setRequestHeader("Authorization", "Bearer " + Authorization);
-    }
-    request.send();
+    return query.join("&");
+  }
+
+  get(url, params) {
+    this.getUserToekn();
+    return new Promise((resolve, reject) => {
+      let request = new XMLHttpRequest();
+      const query = this.getQueryString(params);
+      if (query) {
+        url += "?" + query;
+      }
+      request.open("GET", url, true);
+      request.withCredentials = true;
+      if (this.Authorization) {
+        request.setRequestHeader("Authorization", "Bearer " + this.Authorization);
+      }
+      request.send();
+      request.onreadystatechange = () => {
+        if (request.readyState == 4) {
+          const status = request.status;
+          if (status >= 200 && status < 300) {
+            try {
+              const res = JSON.parse(request.responseText);
+              resolve(res);
+            } catch (e) {
+              console.error(e);
+            }
+            return
+          }
+          if (status == 401) {
+            window.location.replace("#/register");
+            return
+          }
+          if (status == 400) {
+            const error = JSON.parse(request.responseText);
+            toast(error.msg, {
+              position: toast.POSITION.BOTTOM_CENTER,
+              closeButton: false
+            });
+          }
+          reject(error)
+        }
+      };
+    });
   }
 
   post(url, params, successCallback, errorCallback) {
@@ -164,7 +176,7 @@ class HttpService {
     const randomString = cryptoRandomString(20);
     const encrypted = pubkeyR.encrypt(randomString, 'base64'); // 公钥加密(返回密文):
     console.log(randomString);
-    console.log("密文："+encrypted);
+    console.log("密文：" + encrypted);
 
     let Authorization = "";
     const user = userCollection.query({});
@@ -202,16 +214,15 @@ class HttpService {
       request.setRequestHeader("Authorization", "Bearer " + Authorization);
     }
 
-
     // Encrypt
     const ciphertext = AES.encrypt(JSON.stringify(params), randomString).toString();
     console.log(ciphertext);
     // Decrypt
-    const bytes  = AES.decrypt(ciphertext, randomString);
+    const bytes = AES.decrypt(ciphertext, randomString);
     const plaintext = bytes.toString(UTF8);
 
     console.log(plaintext);
-    request.send(JSON.stringify({data:ciphertext}));
+    request.send(JSON.stringify({data: ciphertext}));
   }
 
   // 下载文件，默认是excel
@@ -235,8 +246,12 @@ class HttpService {
       if (request.readyState == 4) {
         const status = request.status;
         if (status >= 200 && status < 300) {
-          const extensions = mime.extensions[fileType?fileType:"application/vnd.ms-excel"];
-          FileSaver.saveAs(request.response, params.fileName+'.'+[extensions]);
+          const extensions = mime.extensions[
+            fileType
+              ? fileType
+              : "application/vnd.ms-excel"
+          ];
+          FileSaver.saveAs(request.response, params.fileName + '.' + [extensions]);
 
           successCallback && successCallback();
           return

@@ -55,7 +55,8 @@ export default class MaterialPage extends React.Component {
     if (this.state.tagIndex) {
       params.type = tagIndex;
     }
-    MaterialService.find(params, (res) => {
+    MaterialService.find(params).then(res => {
+      debugger;
       if (res.error) {
         console.log(res.msg);
         return
@@ -65,7 +66,7 @@ export default class MaterialPage extends React.Component {
       res.data.map(item => {
         materialCollection.insert(item);
       })
-    }, (error) => {
+    }).catch(error => {
       console.log(error);
     })
   }
@@ -102,27 +103,21 @@ export default class MaterialPage extends React.Component {
     if (this.state.tagIndex) {
       params.type = tagIndex;
     }
-    return new Promise((resolve, reject) => {
-      MaterialService.find(params, (res) => {
-        if (res.error) {
-          reject();
-          return
-        }
-        if (res.data.length < pageSize) {
-          this.setState({hasMore: false});
-        } else {
-          this.setState({hasMore: true});
-        }
-        this.setState({materialList: res.data});
-        materialCollection.drop();
-        res.data.map(item => {
-          materialCollection.insert(item);
-        })
-        resolve();
-      }, (error) => {
-        reject();
+    return MaterialService.find(params).then(res => {
+      if (res.error) {
+        return
+      }
+      if (res.data.length < pageSize) {
+        this.setState({hasMore: false});
+      } else {
+        this.setState({hasMore: true});
+      }
+      this.setState({materialList: res.data});
+      materialCollection.drop();
+      res.data.map(item => {
+        materialCollection.insert(item);
       })
-    });
+    }).catch(error => {})
   }
 
   handleLoadMore() {
@@ -137,27 +132,22 @@ export default class MaterialPage extends React.Component {
       params.type = tagIndex;
     }
 
-    return new Promise((resolve, reject) => {
-      MaterialService.find(params, (res) => {
-        if (res.error) {
-          reject();
-          return
-        }
-        materialList = materialList.concat(res.data);
-        if (res.data.length < pageSize) {
-          this.setState({hasMore: false});
-        } else {
-          this.setState({hasMore: true});
-        }
-        this.setState({materialList});
-        res.data.map(item => {
-          materialCollection.insert(item);
-        })
-        resolve();
-      }, (error) => {
+    return MaterialService.find(params).then(res => {
+      if (res.error) {
         reject();
+        return
+      }
+      materialList = materialList.concat(res.data);
+      if (res.data.length < pageSize) {
+        this.setState({hasMore: false});
+      } else {
+        this.setState({hasMore: true});
+      }
+      this.setState({materialList});
+      res.data.map(item => {
+        materialCollection.insert(item);
       })
-    });
+    }).catch(error => {})
   }
 
   setTag(idnex) {

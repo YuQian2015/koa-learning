@@ -19,12 +19,12 @@ export default class PurchasePage extends React.Component {
       showAdd: false,
       inputName: ""
     }
-    this.handleRefresh = this.handleRefresh.bind(this);
     this.handleAdd = this.handleAdd.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.addOrder = this.addOrder.bind(this);
     this.toDetail = this.toDetail.bind(this);
+    this.fetchData = this.fetchData.bind(this);
   }
 
   componentWillMount() {
@@ -37,7 +37,7 @@ export default class PurchasePage extends React.Component {
   }
 
   fetchData() {
-    PurchaseService.findOrder({}, (res) => {
+    return PurchaseService.findOrder({}).then(res => {
       if (res.error) {
         console.log(res.msg);
         return
@@ -47,7 +47,7 @@ export default class PurchasePage extends React.Component {
       res.data.map(item => {
         materialOrderCollection.insert(item);
       })
-    }, (error) => {
+    }).catch(error => {
       console.log(error);
     })
   }
@@ -70,26 +70,6 @@ export default class PurchasePage extends React.Component {
     })
   }
 
-  handleRefresh() {
-    return new Promise((resolve, reject) => {
-      PurchaseService.findOrder({}, (res) => {
-        if (res.error) {
-          reject();
-          return
-        }
-        console.log(res);
-        this.setState({materialOrder: res.data});
-        materialOrderCollection.drop();
-        res.data.map(item => {
-          materialOrderCollection.insert(item);
-        })
-        resolve();
-      }, (error) => {
-        reject();
-      })
-    });
-  }
-
   handleAdd() {
     this.setState({showAdd: true})
   }
@@ -110,7 +90,7 @@ export default class PurchasePage extends React.Component {
   }
   render() {
     const {materialOrder, showAdd, inputName} = this.state;
-    let body = <Refresher onRefresh={this.handleRefresh}>
+    let body = <Refresher onRefresh={this.fetchData}>
       <div className="PurchasePage">
         {
           showAdd
@@ -138,7 +118,7 @@ export default class PurchasePage extends React.Component {
       </div>
     </Refresher>;
     let footer = <Tabs/>;
-    let header = <Header title="采购单" />
+    let header = <Header title="采购单"/>
     return <PageContainer body={body} footer={footer} header={header}/>
   }
 }
