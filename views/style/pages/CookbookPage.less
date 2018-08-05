@@ -4,6 +4,7 @@
     display: inline-block;
     padding: 1rem;
     box-sizing: border-box;
+    position: relative;
 
     .cookbook {
       border-radius: 1rem;
@@ -13,6 +14,23 @@
       color: @color-darkest;
       border: solid 1px @color-gray;
       border-radius: 1rem;
+
+      &.active {
+        border: solid 1px @color-common;
+        box-shadow: 0 .5rem 1rem @color-gray;
+      }
+    }
+
+    .icon {
+      position: absolute;
+      right: 0;
+      top: 0;
+      color: @color-common;
+      font-size: 2rem;
+
+      &.hd-minus-fill {
+        color: @color-text-dark;
+      }
     }
   }
 }

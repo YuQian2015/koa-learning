@@ -192,7 +192,7 @@ export default class SelectMaterialPage extends React.Component {
             <div className="price">{material.price}元/{material.unit}</div>
             <div className="select">{
                 material.select
-                  ? isMultiple?<i className="hd-plus-fill"></i>:<i className="hd-radio-fill"></i>
+                  ? isMultiple?<i className="hd-minus-fill"></i>:<i className="hd-radio-fill"></i>
                   : isMultiple?<i className="hd-plus"></i>:<i className="hd-radio"></i>
               }</div>
           </div>))

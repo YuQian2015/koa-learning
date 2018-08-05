@@ -1,4 +1,28 @@
 .AddCookbookPage {
+  .input-box.dish-name {
+    margin-bottom: 0;
+  }
+
+  .dish-type {
+    height: 4rem;
+    line-height: 4rem;
+    .mixin-flex;
+
+    > div {
+      .mixin-flex-1;
+      text-align: center;
+      font-size: @font-normal;
+      border-bottom: solid 1px @color-gray;
+      color: @color-dark;
+
+      &.active {
+        font-weight: bold;
+        color: @color-common;
+        border-bottom: solid 1px @color-common;
+      }
+    }
+  }
+
   .add {
     margin: 1rem auto;
     width: 10rem;
@@ -11,12 +35,15 @@
     font-size: @font-large;
     box-shadow: 0 0.5rem 0.5rem 0 @color-gray;
   }
+
   .needMaterial {
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     border-bottom: solid 1px @color-common;
     font-size: @font-normal;
     color: @color-darker;
+    background: @color-light;
   }
+
   .material {
     height: 5rem;
     line-height: 5rem;
@@ -26,8 +53,15 @@
     padding: 0 1rem;
     .mixin-flex;
     .mixin-flex-center;
+
     .name {
       .mixin-flex-1;
+    }
+
+    .delete-material {
+      color: @color-red;
+      font-size: 2rem;
+      margin-left: 1rem;
     }
   }
 }
