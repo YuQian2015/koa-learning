@@ -84,7 +84,7 @@ export default class SelectMaterialPage extends React.Component {
       this.fetchData();
       return
     }
-    MaterialService.search({
+    return MaterialService.search({
       keyword: keyword
     }, (res) => {
       if (res.error) {
@@ -107,7 +107,7 @@ export default class SelectMaterialPage extends React.Component {
     if (this.state.tagIndex) {
       params.type = this.state.tagIndex;
     }
-    MaterialService.find(params).then(data => {
+    return MaterialService.find(params).then(data => {
       if (data.error) {
         reject();
         return
