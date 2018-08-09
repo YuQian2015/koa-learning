@@ -39,9 +39,9 @@ const prikeyR = new NodeRSA(prikey,'pkcs8-private');//导入私钥
 const routes = require('./routes');
 const db = require('./config/dbConfig');
 const logger = require('./middleware/logger');
+// const acl = require('./middleware/acl');
 const bodyParser = require('koa-bodyparser');
 const cors = require('koa-cors');
-
 db.connect();
 
 app.use(logger());
@@ -86,6 +86,7 @@ app.use( async (ctx, next) => {
 // });
 
 app.use(routes.routes()).use(routes.allowedMethods());
+// app.use(acl());
 
 app.listen(appConfig.port, appConfig.ip, () => {
   console.log('Server running');
