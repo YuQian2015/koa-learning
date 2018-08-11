@@ -21,7 +21,7 @@ const materialSchema = new Schema({
 
 class Material extends Model {
   constructor() {
-    materialSchema.pre('save', async function(next) {
+    materialSchema.pre('save', async (next) => {
       try {
         if(this.code == 1) { // 对于已有ID的数据不做自增
           let counter = await Counters.findByIdAndUpdate('materialId');

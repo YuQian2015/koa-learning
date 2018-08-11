@@ -37,12 +37,17 @@ class UserController {
       let respon = {};
 
       let userToken = {
-        email: result.email
+        // email: result.email,
+        // name: result.name,
+        group: 'member',
+        id: result._id
       }
       const token = jwt.sign(userToken, jwtSecret, {expiresIn: '3h'}) //token签名 有效期为3小时
       const res = {
         result: '登录成功！',
-        token: token
+        token: token,
+        name: result.name,
+        id: result._id
       }
       respon = response({data: res});
 

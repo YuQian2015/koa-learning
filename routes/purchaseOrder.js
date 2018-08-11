@@ -37,6 +37,8 @@ class PurchaseOrder extends Route {
   addPurchaseOrder() {
     router.post('/add', validate(validation.addPurchaseOrder), async (ctx, next) => {
       let reqBody = ctx.request.body;
+      reqBody.creatorId = ctx.request.decoded.id;
+      reqBody.creator = ctx.request.decoded.id;
       ctx.body = await purchaseOrder.addPurchaseOrder(reqBody);
     });
   }
@@ -48,6 +50,7 @@ class PurchaseOrder extends Route {
   findPurchaseOrder() {
     router.get('/', validate(validation.findPurchaseOrder), async (ctx, next) => {
       let reqParams = ctx.query;
+      reqParams.creatorId = ctx.request.decoded.id;
       ctx.body = await purchaseOrder.findPurchaseOrder(reqParams);
     });
   }

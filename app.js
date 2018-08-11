@@ -39,7 +39,8 @@ const prikeyR = new NodeRSA(prikey,'pkcs8-private');//导入私钥
 const routes = require('./routes');
 const db = require('./config/dbConfig');
 const logger = require('./middleware/logger');
-// const acl = require('./middleware/acl');
+const acl = require('./middleware/acl');
+const jwtVerify = require('./middleware/jwtVerify');
 const bodyParser = require('koa-bodyparser');
 const cors = require('koa-cors');
 db.connect();
@@ -84,9 +85,9 @@ app.use( async (ctx, next) => {
 //   ctx.response.type = 'html';
 //   ctx.body = await readPage(url);
 // });
-
+app.use(jwtVerify());
+app.use(acl());
 app.use(routes.routes()).use(routes.allowedMethods());
-// app.use(acl());
 
 app.listen(appConfig.port, appConfig.ip, () => {
   console.log('Server running');

@@ -107,8 +107,15 @@ export default class PurchasePage extends React.Component {
         <div className="list-box">
           {
             materialOrder.map((item, i) => <div className="list-item" onClick={() => this.toDetail(item)} key={i}>
-              <div className="list-item-header">{item.name}</div>
-              <div className="list-item-body"></div>
+              <div className="list-item-header">
+                {item.name}
+              </div>
+              <div className="list-item-body">
+                {
+                  item.creator
+                    ? item.creator.name
+                    : ""
+                }</div>
               <div className="list-item-footer">
                 <i className="hd-enter"></i>
               </div>
