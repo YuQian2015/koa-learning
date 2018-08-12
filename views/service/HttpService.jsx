@@ -156,6 +156,7 @@ class HttpService {
           }
           if (status == 401) {
             window.location.replace("#/register");
+            userCollection.drop();
             return
           }
           if (status == 400) {
@@ -194,6 +195,7 @@ class HttpService {
         }
         if (status == 401) {
           window.location.replace("#/register");
+          userCollection.drop();
           return
         }
         if (status == 400) {
@@ -258,6 +260,7 @@ class HttpService {
         }
         if (status == 401) {
           window.location.replace("#/register");
+          userCollection.drop();
           return
         }
         if (status == 400) {
