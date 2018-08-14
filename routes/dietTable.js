@@ -18,7 +18,7 @@ const validation = {
   addDietTable: {
     body: Joi.object({
       name: Joi.string().required(), // 名称
-      materials: Joi.array().required(), // 使用的材料
+      type: Joi.string(), // 类型
     })
   },
   findDietTable: {
@@ -53,6 +53,8 @@ class DietTable extends Route {
   addDietTable() {
     router.post('/add', validate(validation.addDietTable), async (ctx, next) => {
       let reqBody = ctx.request.body;
+      reqBody.creatorId = ctx.request.decoded.id;
+      reqBody.creator = ctx.request.decoded.id;
       ctx.body = await dietTable.addDietTable(reqBody);
     });
   }

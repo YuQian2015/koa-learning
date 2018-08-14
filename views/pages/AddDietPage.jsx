@@ -15,6 +15,7 @@ export default class AddDietPage extends React.Component {
     }
     this.saveDiet = this.saveDiet.bind(this);
     this.addDiet = this.addDiet.bind(this);
+    this.selectDietTable = this.selectDietTable.bind(this);
   }
 
   componentWillMount() {
@@ -37,6 +38,16 @@ export default class AddDietPage extends React.Component {
     });
   }
 
+  selectDietTable() {
+    this.props.history.push({
+      pathname: '/diet-table',
+      state: {
+        isSelect: true,
+        fromState: '/add-diet'
+      }
+    });
+  }
+
   render() {
     const {selectedDiet} = this.state;
     let materials = [];
@@ -44,17 +55,56 @@ export default class AddDietPage extends React.Component {
       materials = materials.concat(diet.materials)
     }
     materials = _.uniqBy(materials, '_id');
+    console.log(selectedDiet);
+    console.log(materials);
 
     let body = <div className="AddDietPage">
-      <div>今天要吃的菜</div>
-      {selectedDiet.map(item => <div key={item._id}>{item.name}</div>)}
-      <button className="block" onClick={this.addDiet}>
-        点击添加菜品
+      <div className="hint">今天要吃的菜</div>
+      <div className="list-box" onClick={this.selectDietTable}>
+        <div className="list-item">
+          <div className="list-item-header">
+            选择公示表
+          </div>
+          <div className="list-item-body">123123</div>
+          <div className="list-item-footer">
+            <i className="hd-enter"></i>
+          </div>
+        </div>
+      </div>
+      {
+        selectedDiet.length
+          ? <div className="hint">
+              已选择
+            </div>
+          : null
+      }
+      <div className="food">
+        {
+          selectedDiet.map(item => <div className="item" key={item._id}>{item.name}</div>)
+        }
+      </div>
+      {
+        selectedDiet.length
+          ? <div className="hint">
+              所需材料
+            </div>
+          : null
+      }
+      <div className="list-box">
+        {
+          materials.map(material => <div className="list-item" key={material._id}>
+            <div className="list-item-heade">{material.name}</div>
+            <div className="list-item-body">{material.name}</div>
+            <div className="list-item-footer">
+            </div>
+          </div>)
+        }
+      </div>
+      <button className="block" onClick={this.saveDiet}>
+        保存
       </button>
-      <div>所需材料</div>
-      {materials.map(material => <div key={material._id}>{material.name}</div>)}
     </div>;
-    let tools = <div onClick={this.saveDiet}>保存</div>;
+    let tools = <div onClick={this.addDiet}>加菜</div>;
     let header = <Header back="" title="今日配菜" tools={tools}/>
     return <PageContainer body={body} header={header}/>
   }

@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 const Model = require('./model');
 const dietTableSchema = new Schema({
   name: String, // 名称
+  type: String, // 类型
   creator: { type: Schema.Types.ObjectId, ref: 'User' }, // 创建者
   creatorId: String, // 创建者Id
   createDate: Date, // 创建时间
