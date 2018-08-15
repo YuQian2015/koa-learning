@@ -8,6 +8,7 @@ import DietTableService from '../service/DietTableService.jsx';
 
 import LocalDB from 'local-db';
 const dietTableCollection = new LocalDB('dietTable');
+const selectedDietTableCollection = new LocalDB('selectedDietTable');
 
 export default class DietTablePage extends React.Component {
   constructor(props) {
@@ -22,6 +23,7 @@ export default class DietTablePage extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.addTable = this.addTable.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.toDetail = this.toDetail.bind(this);
   }
 
   componentWillMount() {
@@ -72,6 +74,18 @@ export default class DietTablePage extends React.Component {
       console.log(error);
     })
   }
+
+
+  toDetail(item) {
+    // this.props.history.push({
+    //   pathname: '/add-purchase',
+    //   search: JSON.stringify({id: item._id, name: item.name}),
+    //   state: item
+    // });
+    selectedDietTableCollection.drop();
+    selectedDietTableCollection.insert({dietTableId: item._id, name: item.name});
+    this.props.history.goBack();
+  }
   render() {
     const {dietTable, showAdd, inputName} = this.state;
     let body = <Refresher onRefresh={this.fetchData}>
@@ -87,24 +101,24 @@ export default class DietTablePage extends React.Component {
               </div>
             : <div className="add-cookbook" onClick={this.handleAdd}>添加公示表</div>
         }
-                <div className="list-box">
-                  {
-                    dietTable.map((item, i) => <div className="list-item" onClick={() => this.toDetail(item)} key={i}>
-                      <div className="list-item-header">
-                        {item.name}
-                      </div>
-                      <div className="list-item-body">
-                        {
-                          item.creator
-                            ? item.creator.name
-                            : ""
-                        }</div>
-                      <div className="list-item-footer">
-                        <i className="hd-enter"></i>
-                      </div>
-                    </div>)
-                  }
-                </div>
+        <div className="list-box">
+          {
+            dietTable.map((item, i) => <div className="list-item" onClick={() => this.toDetail(item)} key={i}>
+              <div className="list-item-header">
+                {item.name}
+              </div>
+              <div className="list-item-body">
+                {
+                  item.creator
+                    ? item.creator.name
+                    : ""
+                }</div>
+              <div className="list-item-footer">
+                <i className="hd-enter"></i>
+              </div>
+            </div>)
+          }
+        </div>
       </div>
     </Refresher>;
     let tools = <div onClick={this.addDiet}>确定</div>;

@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "pm2 start process.yml",
+    "dev": "node app.js",
     "db": "net start koa-learning",
     "views": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build --open",
     "build": "webpack",

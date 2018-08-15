@@ -12,14 +12,13 @@ const verify = () => {
         ctx.request.decoded = jwt.verify(codeStr, jwtSecret);
         await next();
       } catch (err) {
-        console.log("-----------------------------------");
-        console.log(err);
-        ctx.status = 401;
-        if (err.name == 'TokenExpiredError') {
-          ctx.body = response({errorCode: '004'})
-        } else {
-          ctx.body = response({errorCode: '003'})
-        }
+        // ctx.status = 401;
+        // if (err.name == 'TokenExpiredError') {
+        //   ctx.body = response({errorCode: '004'})
+        // } else {
+        //   ctx.body = response({errorCode: '003'})
+        // }
+        throw err;
       }
       return;
     }

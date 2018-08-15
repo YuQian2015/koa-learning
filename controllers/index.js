@@ -4,6 +4,7 @@ const purchase = require('./purchase');
 const purchaseOrder = require('./purchaseOrder');
 const cookbook = require('./cookbook');
 const dietTable = require('./dietTable');
+const dailyDiet = require('./dailyDiet');
 
 module.exports = {
   user,
@@ -11,5 +12,6 @@ module.exports = {
   purchase,
   purchaseOrder,
   cookbook,
-  dietTable
+  dietTable,
+  dailyDiet
 };

@@ -10,6 +10,7 @@ const purchase = require('./purchase');
 const purchaseOrder = require('./purchaseOrder');
 const cookbook = require('./cookbook');
 const dietTable = require('./dietTable');
+const dailyDiet = require('./dailyDiet');
 const publicRouter = require('./public');
 const {wrapper} = require('koa-swagger-decorator');
 const routeConfig = [
@@ -31,6 +32,9 @@ const routeConfig = [
   }, {
     path: '/diet-table',
     route: dietTable
+  }, {
+    path: '/daily-diet',
+    route: dailyDiet
   }
 ]
 const publicRouteConfig = [

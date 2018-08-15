@@ -16,7 +16,7 @@ dietTableSchema.pre('find', function() {
 
 class DietTable extends Model {
   constructor() {
-    super('Diettable', dietTableSchema);
+    super('DietTable', dietTableSchema);
   }
 }
 

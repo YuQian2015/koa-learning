@@ -9,7 +9,7 @@ const cookbookSchema = new Schema({
 });
 
 cookbookSchema.pre('find', function() {
-  this.populate('materials', 'name price type');
+  this.populate('materials', 'name price type unit');
 });
 
 class Cookbook extends Model {
