@@ -19,8 +19,10 @@ import AddPurchasePage from './pages/AddPurchasePage.jsx';
 import MaterialPage from './pages/MaterialPage.jsx';
 import CookbookPage from './pages/CookbookPage.jsx';
 import DietTablePage from './pages/DietTablePage.jsx';
+import DietTableDetailPage from './pages/DietTableDetailPage.jsx';
 import AddCookbookPage from './pages/AddCookbookPage.jsx';
 import SelectMaterialPage from './pages/SelectMaterialPage.jsx';
+
 
 
 
@@ -41,6 +43,7 @@ export default class App extends React.Component {
           <Route exact path="/material" component={MaterialPage}/>
           <Route exact path="/cookbook" component={CookbookPage}/>
           <Route exact path="/diet-table" component={DietTablePage}/>
+          <Route exact path="/diet-table-detail" component={DietTableDetailPage}/>
           <Route exact path="/add-cookbook" component={AddCookbookPage}/>
           <Route exact path="/select-material" component={SelectMaterialPage}/>
           <Route path="/setting" component={SettingPage}/>

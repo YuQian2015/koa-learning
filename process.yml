@@ -3,8 +3,9 @@ apps:
     name     : 'mongodb'
   - script   : app.js
     name     : 'koa'
-    instances: 0
+    instances: 1
     exec_mode: cluster
+    ignore_watch : ["node_modules", "logs", "pages", "build", "develop-doc", "views"]
     watch  : true
     log_type: "json"
     env    :

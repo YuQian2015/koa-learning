@@ -16,7 +16,8 @@ export default class DietTablePage extends React.Component {
     this.state = {
       showAdd: false,
       inputName: "",
-      dietTable: []
+      dietTable: [],
+      isSelect: false
     }
     this.handleAdd = this.handleAdd.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -28,6 +29,10 @@ export default class DietTablePage extends React.Component {
 
   componentWillMount() {
     let state = this.props.location.state;
+    if (state) {
+      let isSelect = state.isSelect;
+      this.setState({isSelect})
+    }
     this.fetchData();
   }
 
@@ -75,19 +80,22 @@ export default class DietTablePage extends React.Component {
     })
   }
 
-
   toDetail(item) {
-    // this.props.history.push({
-    //   pathname: '/add-purchase',
-    //   search: JSON.stringify({id: item._id, name: item.name}),
-    //   state: item
-    // });
-    selectedDietTableCollection.drop();
-    selectedDietTableCollection.insert({dietTableId: item._id, name: item.name});
-    this.props.history.goBack();
+    const {isSelect} = this.state;
+    if(isSelect) {
+      selectedDietTableCollection.drop();
+      selectedDietTableCollection.insert({dietTableId: item._id, name: item.name});
+      this.props.history.goBack();
+      return
+    }
+    this.props.history.push({
+      pathname: '/diet-table-detail',
+      search: JSON.stringify({id: item._id, name: item.name}),
+      state: item
+    });
   }
   render() {
-    const {dietTable, showAdd, inputName} = this.state;
+    const {dietTable, showAdd, inputName, isSelect} = this.state;
     let body = <Refresher onRefresh={this.fetchData}>
       <div className="DietTablePage">
         {
@@ -114,7 +122,11 @@ export default class DietTablePage extends React.Component {
                     : ""
                 }</div>
               <div className="list-item-footer">
-                <i className="hd-enter"></i>
+                {
+                  isSelect
+                    ? <i className="hd-radio"></i>
+                    : <i className="hd-enter"></i>
+                }
               </div>
             </div>)
           }
@@ -122,7 +134,11 @@ export default class DietTablePage extends React.Component {
       </div>
     </Refresher>;
     let tools = <div onClick={this.addDiet}>确定</div>;
-    let header = <Header back="" title="选择菜品" tools={tools}/>
+    let header = <Header back="" title={isSelect
+        ? "选择公示表"
+        : "查看公示表"} tools={isSelect
+        ? tools
+        : null}/>
     return <PageContainer body={body} header={header}/>
   }
 }

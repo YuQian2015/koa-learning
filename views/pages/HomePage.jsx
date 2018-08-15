@@ -11,10 +11,10 @@ export default class HomePage extends React.Component {
     this.state = {
       icons: [
         {
-          name: "食材入库",
+          name: "食谱公示",
           icon: "hd-mail-fill",
           className: "material-in",
-          goToPage: ""
+          goToPage: "/diet-table"
         }, {
           name: "菜谱管理",
           icon: "hd-dish",
