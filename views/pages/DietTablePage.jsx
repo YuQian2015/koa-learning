@@ -117,7 +117,7 @@ export default class DietTablePage extends React.Component {
               </div>
               <div className="list-item-body">
                 {
-                  item.creator
+                  item.creator && !isSelect
                     ? item.creator.name
                     : ""
                 }</div>

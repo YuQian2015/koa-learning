@@ -11,9 +11,6 @@ import PageContainer from '../container/PageContainer.jsx';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 import welcome1 from '../assest/images/welcome/welcome1.jpg';
-import welcome2 from '../assest/images/welcome/welcome2.jpg';
-import welcome3 from '../assest/images/welcome/welcome3.jpg';
-import welcome4 from '../assest/images/welcome/welcome4.jpg';
 
 // 滚动图片
 // https://www.npmjs.com/package/react-responsive-carousel
@@ -26,19 +23,8 @@ class ImageCarousel extends React.Component {
     return (<Carousel showArrows={false} showStatus={false} showThumbs={false}>
       <div>
         <img src={welcome1}></img>
-        <p className="legend">1</p>
-      </div>
-      <div>
-        <img src={welcome2}></img>
-        <p className="legend">2</p>
-      </div>
-      <div>
-        <img src={welcome3}></img>
-        <p className="legend">3</p>
-      </div>
-      <div>
-        <img src={welcome4}></img>
-        <p className="legend">4</p>
+        <div className="get-start" onClick={this.props.start}>立即进入</div>
+        {/* <p className="legend">1</p> */}
       </div>
     </Carousel>);
   }
@@ -50,6 +36,7 @@ class WelcomePage extends React.Component {
     this.state = {
       show: false
     }
+    this.start = this.start.bind(this);
   }
 
   componentWillMount() {}
@@ -65,12 +52,16 @@ class WelcomePage extends React.Component {
     this.setState({show: true});
   }
 
+  start() {
+    this.props.history.replace("/home");
+  }
+
   render() {
     let {show} = this.state;
     let welcome = (<div className="WelcomePage">
       {
         show
-          ? <ImageCarousel/>
+          ? <ImageCarousel start={this.start}/>
           : null
       }
     </div>);

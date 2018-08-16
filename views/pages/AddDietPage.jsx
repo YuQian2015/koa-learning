@@ -120,11 +120,27 @@ export default class AddDietPage extends React.Component {
     this.setState({materials})
   }
 
+  deleteDiet(item) {
+    let { selectedDiet } = this.state;
+    _.remove(selectedDiet, diet => item.id === diet.id);
+    selectedDietCollection.delete({id:item.id});
+    this.setState({
+      selectedDiet
+    },() => {
+      this.getMaterials();
+    })
+  }
+  deleteMaterial(material) {
+    console.log(material);
+    let { materials } = this.state;
+    _.remove(materials, item => item._id === material._id);
+    this.setState({
+      materials
+    })
+  }
+
   render() {
     const {selectedDiet, selectedDietTable, materials} = this.state;
-    console.log(selectedDiet);
-    console.log(materials);
-    console.log(selectedDietTable);
 
     let body = <div className="AddDietPage">
       <div className="hint">今天要吃的菜</div>
@@ -151,7 +167,7 @@ export default class AddDietPage extends React.Component {
           : null
       }
       <div className="food">
-        {selectedDiet.map(item => <div className="item" key={item._id}>{item.name}</div>)}
+        {selectedDiet.map(item => <div className="item" key={item._id}>{item.name} <i onClick={() => this.deleteDiet(item)} className="delete-diet hd-close"></i></div>)}
       </div>
       {
         selectedDiet.length
@@ -173,7 +189,7 @@ export default class AddDietPage extends React.Component {
             }} min={0} onChange={number => {
               this.changeAmount(material, number)
             }} value={material.quantity} placeholder="数量"/>{material.unit}&nbsp;&nbsp;</div>
-            <div className="list-item-footer"></div>
+            <div className="list-item-footer"><i onClick={() => this.deleteMaterial(material)} className="delete-material hd-close"></i></div>
           </div>)
         }
       </div>
@@ -181,7 +197,7 @@ export default class AddDietPage extends React.Component {
         保存
       </button>
     </div>;
-    let tools = <div onClick={this.addDiet}>加菜</div>;
+    let tools = <div onClick={this.addDiet}>选菜</div>;
     let header = <Header back="" title="今日配菜" tools={tools}/>
     return <PageContainer body={body} header={header}/>
   }

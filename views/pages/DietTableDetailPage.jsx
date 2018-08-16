@@ -6,6 +6,10 @@ import Moment from 'react-moment';
 
 import DietTableService from '../service/DietTableService.jsx';
 
+import LocalDB from 'local-db';
+const selectedDietTableCollection = new LocalDB('selectedDietTable');
+const selectedDietCollection = new LocalDB('selectedDiet');
+
 export default class DietTablePage extends React.Component {
   constructor(props) {
     super(props);
@@ -39,8 +43,15 @@ export default class DietTablePage extends React.Component {
       console.log(error);
     })
   }
-  addDiet() {
-    this.props.history.push("/add-diet");
+  addDiet(isNew) {
+    if (isNew) {
+      const {dietTable} = this.state;
+      selectedDietTableCollection.drop();
+      selectedDietCollection.drop();
+      selectedDietTableCollection.insert({dietTableId: dietTable.id, name: dietTable.name});
+      this.props.history.push("/add-diet");
+      return
+    }
   }
   render() {
     let {dietTable, detailList} = this.state;
@@ -56,7 +67,7 @@ export default class DietTablePage extends React.Component {
         }
       </div>
     </div>
-    let tools = <div>确定</div>;
+    let tools = <div onClick={() => this.addDiet(true)}>新增</div>;
     let header = <Header back="" title={dietTable.name
         ? dietTable.name
         : "公示表详情"} tools={tools}/>

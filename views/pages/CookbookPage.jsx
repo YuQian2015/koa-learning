@@ -3,6 +3,7 @@ import React from 'react';
 import PageContainer from '../container/PageContainer.jsx';
 import Header from '../components/Header.jsx';
 
+import _ from 'lodash';
 import CookbookService from '../service/CookbookService.jsx';
 
 const cookbookCollection = new LocalDB('cookbook');
@@ -13,7 +14,7 @@ export default class CookbookPage extends React.Component {
     super(props);
     this.state = {
       cookbookList: [],
-      pageSize: 10,
+      pageSize: 20,
       page: 1,
       name: "",
       isSelect: false,
@@ -29,12 +30,19 @@ export default class CookbookPage extends React.Component {
       this.setState({
         ...state
       });
-    }
-    if (cookbookCollection.read().length) {
+      if (state.isSelect) {
+        let list = _.uniqBy([
+          ...selectedDietCollection.read(),
+          ...cookbookCollection.read()
+        ], '_id');
+        console.log(list);
+        this.setState({cookbookList: list})
+      }
+    } else if (cookbookCollection.read().length) {
       this.setState({cookbookList: cookbookCollection.read()})
-      return
+    } else {
+      this.fetchData();
     }
-    this.fetchData();
   }
 
   getQuery() {
@@ -82,7 +90,7 @@ export default class CookbookPage extends React.Component {
     for (let cookbook of cookbookList) {
       if (cookbook.selected) {
         console.log(cookbook);
-        selectedDietCollection.insert({materials: cookbook.materials, name: cookbook.name, _id: cookbook._id});
+        selectedDietCollection.insert({materials: cookbook.materials, name: cookbook.name, _id: cookbook._id, selected: true});
       }
     }
     this.props.history.goBack();

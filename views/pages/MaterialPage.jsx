@@ -56,7 +56,6 @@ export default class MaterialPage extends React.Component {
       params.type = tagIndex;
     }
     MaterialService.find(params).then(res => {
-      debugger;
       if (res.error) {
         console.log(res.msg);
         return
