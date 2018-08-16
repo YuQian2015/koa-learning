@@ -8,6 +8,10 @@ class DietTableService {
     HttpService.post(`${CONFIG.apiUrl}/daily-diet/add`, params, success, error);
   }
 
+  findDailyDiet(params) {
+    return HttpService.get(`${CONFIG.apiUrl}/daily-diet`, params);
+  }
+
   addTable(params, success, error) {
     HttpService.post(`${CONFIG.apiUrl}/diet-table/add`, params, success, error);
   }

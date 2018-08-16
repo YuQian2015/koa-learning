@@ -35,7 +35,7 @@ const validation = {
     query: Joi.object({
       page: Joi.number(), // 页码
       pageSize: Joi.number(), // 页数
-      name: Joi.string() // 材料名
+      dietTableId: Joi.string()
     })
   },
 }
@@ -52,6 +52,7 @@ class DailyDiet extends Route {
   findDailyDiet() {
     router.get('/', validate(validation.findDailyDiet), async (ctx, next) => {
       let reqParams = ctx.query;
+      console.log("+++++++++++++++++++");
       ctx.body = await dailyDiet.findDailyDiet(reqParams);
     });
   }
