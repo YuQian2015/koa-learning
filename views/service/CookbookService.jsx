@@ -12,6 +12,9 @@ class CookbookService {
     return HttpService.get(`${CONFIG.apiUrl}/cookbook`, params);
   }
 
+  search(params, success, error) {
+    HttpService.post(`${CONFIG.apiUrl}/cookbook/search`, params, success, error);
+  }
 }
 
 const Cookbook = new CookbookService();

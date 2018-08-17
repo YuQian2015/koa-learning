@@ -34,36 +34,35 @@ class CookbookController {
   //
   // }
 
-
-    // 查询食谱
-    async findCookbook(reqParams) {
-      try {
-        let respon = {};
-        let result = await cookbook.find(reqParams);
-        respon = response({data: result});
-        return respon;
-      } catch (err) {
-        console.log(err)
-        throw new Error(err);
-        return err;
-      }
-
+  // 查询食谱
+  async findCookbook(reqParams) {
+    try {
+      let respon = {};
+      let result = await cookbook.find(reqParams);
+      respon = response({data: result});
+      return respon;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
     }
 
-    // 搜索材料
-    // async searchMaterial(reqParams) {
-    //   try {
-    //     let respon = {};
-    //     let result = await material.search('name',reqParams);
-    //     respon = response({data: result});
-    //     return respon;
-    //   } catch (err) {
-    //     console.log(err)
-    //     throw new Error(err);
-    //     return err;
-    //   }
-    //
-    // }
+  }
+
+  // 搜索食谱
+  async searchCookbook(reqParams) {
+    try {
+      let respon = {};
+      let result = await cookbook.search('name', reqParams);
+      respon = response({data: result});
+      return respon;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
+    }
+
+  }
 }
 
 const cookbookController = new CookbookController();

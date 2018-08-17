@@ -41,21 +41,23 @@ export default class SelectMaterialPage extends React.Component {
     this.setTag = this.setTag.bind(this);
   }
   componentWillMount() {
-
     console.log(this.props.location.state);
     let urlData = {};
     if (this.props.location.search) {
       let search = decodeURI(this.props.location.search);
       urlData = JSON.parse(search.split("?")[1]);
-    }
-    this.setState({isMultiple: urlData.isMultiple})
-
-    if (materialCollection.read().length) {
+      this.setState({isMultiple: urlData.isMultiple})
+      let list = _.uniqBy([
+        ...materialSelectCollection.read(),
+        ...materialCollection.read()
+      ], '_id');
+      this.setState({materialList: list});
+    } else if (materialCollection.read().length) {
       console.log(materialCollection.read());
       this.setState({materialList: materialCollection.read()});
-      return
+    } else {
+      this.fetchData();
     }
-    this.fetchData();
   }
 
   fetchData() {
@@ -157,7 +159,8 @@ export default class SelectMaterialPage extends React.Component {
           unit: item.unit,
           code: item.code,
           type: item.type,
-          _id: item._id
+          _id: item._id,
+          select: true
         });
       }
     });

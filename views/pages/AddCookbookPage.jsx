@@ -5,6 +5,7 @@ import Header from '../components/Header.jsx';
 import CookbookService from '../service/CookbookService.jsx';
 import {toast} from 'react-toastify';
 const materialSelectCollection = new LocalDB('materialSelect');
+const addCookbookCollection = new LocalDB('addCookbook');
 
 import _ from 'lodash';
 
@@ -41,12 +42,20 @@ export default class AddCookbookPage extends React.Component {
   }
 
   componentWillMount() {
-    let list = materialSelectCollection.read();
+    const list = materialSelectCollection.read();
+    const cookbook = addCookbookCollection.read();
     if (list.length) {
       this.setState({materialList: list});
     }
+    if (cookbook.length) {
+      const {dishName, activeCode} = cookbook[0];
+      this.setState({dishName, activeCode});
+    }
   }
   selectMaterial() {
+    let {dishName, activeCode} = this.state;
+    addCookbookCollection.drop();
+    addCookbookCollection.insert({dishName, activeCode})
     this.props.history.push({
       pathname: '/select-material',
       search: JSON.stringify({isMultiple: true}),
@@ -98,9 +107,7 @@ export default class AddCookbookPage extends React.Component {
   }
 
   handleType(type) {
-    this.setState({
-      activeCode: type
-    })
+    this.setState({activeCode: type})
   }
 
   render() {

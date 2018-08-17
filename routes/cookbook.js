@@ -1,7 +1,7 @@
 const validate = require('koa2-validation');
 const Joi = require('joi');
 const router = require('koa-router')();
-const { cookbook } = require('../controllers');
+const {cookbook} = require('../controllers');
 
 const Route = require('./route');
 const convert2json = require('../utils/joi2json');
@@ -23,7 +23,7 @@ const validation = {
   },
   // getMaterial: {
   //   params: Joi.object({
-  //     code: Joi.string().required(), // 食材编号
+  //     code: Joi.string().required(),  食材编号
   //   })
   // },
   findCookbook: {
@@ -33,14 +33,12 @@ const validation = {
       name: Joi.string() // 材料名
     })
   },
-  // searchMaterial: {
-  //   body: Joi.object({
-  //     keyword: Joi.string().required(), // 关键词
-  //     filter: Joi.object({
-  //
-  //     })
-  //   })
-  // }
+  searchCookbook: {
+    body: Joi.object({
+      keyword: Joi.string().required(), // 关键词
+      filter: Joi.object({})
+    })
+  }
 }
 
 class Cookbook extends Route {
@@ -81,16 +79,16 @@ class Cookbook extends Route {
   //   });
   // }
   //
-  // @request('post', '/material/search')
-  // @summary('搜索食材')
-  // @tags(['食材'])
-  // @body(convert2json(validation.searchMaterial))
-  // searchMaterial() {
-  //   router.post('/search', validate(validation.searchMaterial), async (ctx, next) => {
-  //     let reqBody = ctx.request.body;
-  //     ctx.body = await material.searchMaterial(reqBody);
-  //   });
-  // }
+  @request('post', '/cookbook/search')
+  @summary('搜索食谱')
+  @tags(['食谱'])
+  @body(convert2json(validation.searchCookbook))
+  searchCookbook() {
+    router.post('/search', validate(validation.searchCookbook), async (ctx, next) => {
+      let reqBody = ctx.request.body;
+      ctx.body = await cookbook.searchCookbook(reqBody);
+    });
+  }
 }
 
 new Cookbook().route();
