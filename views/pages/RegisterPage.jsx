@@ -95,10 +95,12 @@ class RegisterPage extends React.Component {
           return;
         }
         if (res.data) {
+          console.log(res.data);
           userCollection.drop();
           userCollection.insert({
             time: new Date().getTime(),
-            token:res.data.token
+            token: res.data.token,
+            name: res.data.name
           })
           this.props.history.push("/home");
         }

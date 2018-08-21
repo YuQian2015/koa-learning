@@ -4,10 +4,13 @@ import PageContainer from '../container/PageContainer.jsx';
 import Header from '../components/Header.jsx';
 
 import InputNumber from 'rc-input-number';
+import Moment from 'react-moment';
+import DatePicker from 'react-mobile-datepicker';
 
 import LocalDB from 'local-db';
 const selectedDietCollection = new LocalDB('selectedDiet');
 const selectedDietTableCollection = new LocalDB('selectedDietTable');
+const userCollection = new LocalDB('user');
 
 import {toast} from 'react-toastify';
 
@@ -22,12 +25,25 @@ export default class AddDietPage extends React.Component {
       selectedDiet: [],
       selectedDietTable: {},
       materials: [],
-      cookbook: []
+      cookbook: [],
+      user: {},
+      date: new Date(),
+      totalPrice: 0,
+      totalCount: 0, // 总就餐人数
+      actualCount: 0, // 实际就餐人数
+      averagePrice: 0,
+      isOpen: false
     }
     this.saveDiet = this.saveDiet.bind(this);
     this.addDiet = this.addDiet.bind(this);
     this.selectDietTable = this.selectDietTable.bind(this);
     this.changeAmount = this.changeAmount.bind(this);
+    this.handleSelect = this.handleSelect.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+    this.handleNameChange = this.handleNameChange.bind(this);
+    this.doCount = this.doCount.bind(this);
+    this.changeCount = this.changeCount.bind(this);
+    this.open = this.open.bind(this);
     this.changePrice = this.changePrice.bind(this);
   }
 
@@ -45,14 +61,29 @@ export default class AddDietPage extends React.Component {
         selectedDietTable: selectedDietTableCollection.read()[0]
       })
     }
+    if (userCollection.read().length) {
+      this.setState({
+        user: userCollection.read()[0]
+      })
+    }
   }
   saveDiet() {
-    let {selectedDietTable, materials, cookbook} = this.state;
+
+    let {
+      selectedDietTable,
+      materials,
+      date,
+      cookbook,
+      totalCount,
+      actualCount
+    } = this.state;
     let params = {
       ...selectedDietTable,
       materials,
+      date,
       cookbook,
-      date: new Date()
+      totalCount,
+      actualCount
     }
     console.log(params);
     DietTableService.addDailyDiet(params, (res) => {
@@ -89,7 +120,11 @@ export default class AddDietPage extends React.Component {
       materials = materials.concat(diet.materials)
     }
     materials = _.uniqBy(materials, '_id');
-    this.setState({materials})
+    this.setState({
+      materials
+    }, () => {
+      this.doCount();
+    })
   }
   getCookbookId() {
     const {selectedDiet} = this.state;
@@ -116,34 +151,102 @@ export default class AddDietPage extends React.Component {
   }
   changeAmount(material, number) {
     let {materials} = this.state;
+    material.totalPrice = number * material.price;
     material.quantity = number;
-    this.setState({materials})
+    this.setState({
+      materials
+    }, () => {
+      this.doCount();
+    });
   }
 
   deleteDiet(item) {
-    let { selectedDiet } = this.state;
+    let {selectedDiet} = this.state;
     _.remove(selectedDiet, diet => item.id === diet.id);
-    selectedDietCollection.delete({id:item.id});
+    selectedDietCollection.delete({id: item.id});
     this.setState({
       selectedDiet
-    },() => {
+    }, () => {
       this.getMaterials();
     })
   }
   deleteMaterial(material) {
     console.log(material);
-    let { materials } = this.state;
+    let {materials} = this.state;
     _.remove(materials, item => item._id === material._id);
     this.setState({
       materials
+    }, () => {
+      this.doCount();
     })
   }
 
+  handleNameChange() {
+    let {user} = this.state;
+    user.name = this.refs.name.value;
+    this.setState({user})
+  }
+
+  changeCount(number, type) {
+    this.setState({
+      [type]: number
+    }, () => {
+      this.doCount();
+    });
+  }
+  doCount() {
+    let {materials} = this.state;
+    let totalPrice = 0;
+    _.forEach(materials, item => {
+      totalPrice += item.totalPrice
+        ? item.totalPrice
+        : 0
+    });
+    const averagePrice = this.state.totalCount
+      ? (totalPrice / this.state.totalCount).toFixed(2)
+      : 0;
+    this.setState({averagePrice, totalPrice});
+  }
+
+  handleSelect(date) {
+    this.setState({date, isOpen: false});
+  }
+  handleCancel() {
+    this.setState({isOpen: false});
+  }
+  open() {
+    this.setState({isOpen: true});
+  }
   render() {
-    const {selectedDiet, selectedDietTable, materials} = this.state;
+    const {
+      selectedDiet,
+      selectedDietTable,
+      materials,
+      date,
+      user,
+      totalPrice,
+      totalCount,
+      actualCount,
+      averagePrice
+    } = this.state;
 
     let body = <div className="AddDietPage">
-      <div className="hint">今天要吃的菜</div>
+      <DatePicker theme="ios" value={this.state.date} isOpen={this.state.isOpen} onSelect={this.handleSelect} onCancel={this.handleCancel}/>
+      <div className="hint">统计员和统计时间设置</div>
+      <div className="list-box">
+        <div className="list-item">
+          <div className="list-item-header">
+            <input type="text" readOnly onChange={this.handleNameChange} ref="name" value={user.name}/>
+          </div>
+          <div className="list-item-body">
+            <Moment onClick={this.open} format="YYYY-MM-DD">{date}</Moment>
+          </div>
+          <div className="list-item-footer">
+            <i className="hd-enter"></i>
+          </div>
+        </div>
+      </div>
+      <div className="hint">选择所属的公示表</div>
       <div className="list-box" onClick={this.selectDietTable}>
         <div className="list-item">
           <div className="list-item-header">
@@ -162,17 +265,22 @@ export default class AddDietPage extends React.Component {
       {
         selectedDiet.length
           ? <div className="hint">
-              已选择
+              食谱公式
             </div>
           : null
       }
       <div className="food">
-        {selectedDiet.map(item => <div className="item" key={item._id}>{item.name} <i onClick={() => this.deleteDiet(item)} className="delete-diet hd-close"></i></div>)}
+        {
+          selectedDiet.map(item => <div className="item" key={item._id}>{item.name}
+            <i onClick={() => this.deleteDiet(item)} className="delete-diet hd-close"></i>
+          </div>)
+        }
       </div>
       {
         selectedDiet.length
           ? <div className="hint">
-              所需材料
+              配餐公示 合计：{totalPrice}
+              元
             </div>
           : null
       }
@@ -184,18 +292,36 @@ export default class AddDietPage extends React.Component {
               width: 60
             }} min={0} onChange={number => {
               this.changePrice(material, number)
-            }} value={material.price} placeholder="单价"/>元&nbsp;&nbsp;&nbsp;&nbsp; <InputNumber style={{
-              width: 60
-            }} min={0} onChange={number => {
-              this.changeAmount(material, number)
-            }} value={material.quantity} placeholder="数量"/>{material.unit}&nbsp;&nbsp;</div>
-            <div className="list-item-footer"><i onClick={() => this.deleteMaterial(material)} className="delete-material hd-close"></i></div>
+            }} value={material.price} placeholder="单价"/>元&nbsp;&nbsp;&nbsp;&nbsp;
+              <InputNumber style={{
+                  width: 60
+                }} min={0} onChange={number => {
+                  this.changeAmount(material, number)
+                }} value={material.quantity} placeholder="数量"/>{material.unit}&nbsp;&nbsp;</div>
+            <div className="list-item-footer">
+              <i onClick={() => this.deleteMaterial(material)} className="delete-material hd-close"></i>
+            </div>
           </div>)
         }
       </div>
-      <button className="block" onClick={this.saveDiet}>
-        保存
-      </button>
+      <div className="hint">就餐人数</div>
+      <div className="count">
+        实际就餐人数&nbsp;&nbsp;<InputNumber style={{
+        width: 60
+      }} min={0} onChange={number => {
+        this.changeCount(number, 'actualCount')
+      }} value={actualCount} placeholder="实际就餐人数"/>&nbsp;&nbsp;&nbsp;&nbsp; 应就餐人数&nbsp;&nbsp;<InputNumber style={{
+        width: 60
+      }} min={0} onChange={number => {
+        this.changeCount(number, 'totalCount')
+      }} value={totalCount} placeholder="应就餐人数"/>&nbsp;&nbsp;&nbsp;&nbsp; 人均 {averagePrice}
+        元
+      </div>
+      <div className="submit-btn">
+        <button className="block" onClick={this.saveDiet}>
+          保存
+        </button>
+      </div>
     </div>;
     let tools = <div onClick={this.addDiet}>选菜</div>;
     let header = <Header back="" title="今日配菜" tools={tools}/>
