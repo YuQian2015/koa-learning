@@ -32,6 +32,19 @@ class DailyDietController {
     }
 
   }
+
+  // 导出excel
+  async exportDailyDiet(reqParams) {
+    try {
+      let result = await dailyDiet.exportExcel(reqParams);
+      return result;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
+    }
+
+  }
 }
 
 const dailyDietController = new DailyDietController();

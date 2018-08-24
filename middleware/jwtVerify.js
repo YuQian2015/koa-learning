@@ -5,16 +5,14 @@ const jwtSecret = config.get('Token.jwtSecret');
 const verify = () => {
   return async (ctx, next) => {
     const token = ctx.request.header.authorization;
-    console.log("-------------------------------------------");
     if (token) {
       let codeStr = token.split(" ")[1];
-      console.log(codeStr);
+      console.log(`-------------------获得请求的token------------------${codeStr}`);
       try {
         ctx.request.decoded = jwt.verify(codeStr, jwtSecret);
-        console.log(ctx.request.decoded);
         await next();
       } catch (err) {
-        console.log("-------------------------------------------");
+        console.log("-------------------解析请求token失败------------------");
         console.log(err);
         if (err.name == 'TokenExpiredError') {
           ctx.status = 401;
@@ -27,6 +25,7 @@ const verify = () => {
       }
       return;
     }
+    console.log("-------------------没有token------------------");
     await next();
   }
 }

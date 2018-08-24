@@ -12,12 +12,23 @@ const material = new Schema({
 
 const dailyDietSchema = new Schema({
   name: String, // 所属公示表名称
-  dietTable: { type: Schema.Types.ObjectId, ref: 'DietTable' }, // 所属公示表
+  dietTable: {
+    type: Schema.Types.ObjectId,
+    ref: 'DietTable'
+  }, // 所属公示表
   dietTableId: String, // 所属公示表ID
   date: Date, // 日期
   materials: [material],
-  cookbook: [{ type: Schema.Types.ObjectId, ref: 'Cookbook' }], // 食谱
-  creator: { type: Schema.Types.ObjectId, ref: 'User' }, // 创建者
+  cookbook: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Cookbook'
+    }
+  ], // 食谱
+  creator: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  }, // 创建者
   totalCount: Number, // 总就餐人数
   actualCount: Number, // 实际就餐人数
   totalPrice: Number, // 总计
@@ -35,6 +46,32 @@ dailyDietSchema.pre('find', function() {
 class DailyDiet extends Model {
   constructor() {
     super('DailyDiet', dailyDietSchema);
+  }
+
+  exportExcel(dataArr = {}) {
+    return new Promise((resolve, reject) => {
+      this.model.find({
+        _id: dataArr.id,
+        fileName: undefined,
+      }).lean().exec((err, docs) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          console.log(docs);
+          // exportExcel.exportPurchase(dataArr.fileName, docs).then(path => {
+          //   console.log(path);
+          //   console.log(dataArr.fileName);
+          //   let result = fs.createReadStream(path);
+          //   qiniuUpload(`${dataArr.fileName + new Date().getTime()}.xlsx`, path);
+          //   //将数据转为二进制输出
+          //   // let result = fs.readFileSync(path, {encoding:'binary'});
+          //   // let dataBuffer = new Buffer.from(result,'binary');
+          //   resolve(result);
+          // });
+        }
+      })
+    })
   }
 }
 

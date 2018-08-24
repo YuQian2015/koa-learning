@@ -41,8 +41,10 @@ const aclMiddleware = () => {
     let result = await aclFunc.areAnyRolesAllowed(aclInstence, group, url, method); // 根据角色来判断
     // let result = await aclFunc.isAllowed(aclInstence, user, url, method); // 根据用户来判断
     if (result) {
+      console.log("--------------有权限访问");
       await next();
     } else {
+      console.log("--------------没权限访问");
       ctx.status = 403;
       ctx.body = response({errorCode: '005'});
       console.log(ctx.response);

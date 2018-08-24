@@ -60,7 +60,8 @@
     "react-virtualized": "^9.19.1",
     "request": "^2.87.0",
     "rmc-dialog": "^1.1.1",
-    "rmc-pull-to-refresh": "^1.0.11"
+    "rmc-pull-to-refresh": "^1.0.11",
+    "webpack-visualizer-plugin": "^0.1.11"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

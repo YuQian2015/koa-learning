@@ -32,30 +32,39 @@ class Purchase extends Model {
   }
 
   exportExcel(dataArr = {}) {
-    const form = dataArr.fromDate?dataArr.fromDate:new Date(0);
-    const to = dataArr.toDate?dataArr.toDate:new Date();
+    const form = dataArr.fromDate
+      ? dataArr.fromDate
+      : new Date(0);
+    const to = dataArr.toDate
+      ? dataArr.toDate
+      : new Date();
     return new Promise((resolve, reject) => {
-      this.model.find({...dataArr,fileName:undefined,fromDate:undefined,toDate:undefined}).where('createDate').gte(form).lte(to).lean().exec((err, docs) => {
-          if (err) {
-            console.log(err);
-            reject(err);
-          } else {
-            _.forEach(docs, doc => {
-              doc.purchasingDate = moment(doc.purchasingDate).format("YYYY年MM月DD日");
-              doc.qualityPeriod = moment(doc.qualityPeriod).format("YYYY年MM月DD日");
-              doc.manufactureDate = moment(doc.manufactureDate).format("YYYY年MM月DD日");
-            });
-            exportExcel.exportPurchase(dataArr.fileName, docs).then(path => {
-              console.log(path);
-              console.log(dataArr.fileName);
-              let result = fs.createReadStream(path);
-              qiniuUpload(`${dataArr.fileName + new Date().getTime()}.xlsx`, path);
-              //将数据转为二进制输出
-              // let result = fs.readFileSync(path, {encoding:'binary'});
-        			// let dataBuffer = new Buffer.from(result,'binary');
-              resolve(result);
-            });
-          }
+      this.model.find({
+        ...dataArr,
+        fileName: undefined,
+        fromDate: undefined,
+        toDate: undefined
+      }).where('createDate').gte(form).lte(to).lean().exec((err, docs) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          _.forEach(docs, doc => {
+            doc.purchasingDate = moment(doc.purchasingDate).format("YYYY年MM月DD日");
+            doc.qualityPeriod = moment(doc.qualityPeriod).format("YYYY年MM月DD日");
+            doc.manufactureDate = moment(doc.manufactureDate).format("YYYY年MM月DD日");
+          });
+          exportExcel.exportPurchase(dataArr.fileName, docs).then(path => {
+            console.log(path);
+            console.log(dataArr.fileName);
+            let result = fs.createReadStream(path);
+            qiniuUpload(`${dataArr.fileName + new Date().getTime()}.xlsx`, path);
+            //将数据转为二进制输出
+            // let result = fs.readFileSync(path, {encoding:'binary'});
+            // let dataBuffer = new Buffer.from(result,'binary');
+            resolve(result);
+          });
+        }
       })
     })
   }

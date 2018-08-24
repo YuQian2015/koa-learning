@@ -1,7 +1,7 @@
 const validate = require('koa2-validation');
 const Joi = require('joi');
 const router = require('koa-router')();
-const { dailyDiet } = require('../controllers');
+const {dailyDiet} = require('../controllers');
 
 const Route = require('./route');
 const convert2json = require('../utils/joi2json');
@@ -18,10 +18,10 @@ const validation = {
   addDailyDiet: {
     body: Joi.object({
       name: Joi.string().required(), // 所属公示表名称
-      dietTableId:  Joi.string().required(), // 所属公示表Id
+      dietTableId: Joi.string().required(), // 所属公示表Id
       date: Joi.date().required(), // 日期
       materials: Joi.array().items(Joi.object({
-        name:  Joi.string().required(), // 名称
+        name: Joi.string().required(), // 名称
         quantity: Joi.number().required(), // 数量
         unit: Joi.string().required(), // 单位
         price: Joi.number().required(), // 单价
@@ -38,6 +38,12 @@ const validation = {
       dietTableId: Joi.string()
     })
   },
+  exportDailyDiet: {
+    body: Joi.object({
+      id: Joi.string().required(), // id
+      fileName: Joi.string().required(), // 文件名
+    })
+  }
 }
 
 class DailyDiet extends Route {
@@ -67,6 +73,18 @@ class DailyDiet extends Route {
       reqBody.creatorId = ctx.request.decoded.id;
       reqBody.creator = ctx.request.decoded.id;
       ctx.body = await dailyDiet.addDailyDiet(reqBody);
+    });
+  }
+
+  @request('post', '/daily-diet/export')
+  @summary('导出每日饮食')
+  @tags(['每日饮食'])
+  @body(convert2json(validation.exportDailyDiet))
+  exportDailyDiet() {
+    router.post('/export', validate(validation.exportDailyDiet), async (ctx, next) => {
+      let reqParams = ctx.request.body;
+      ctx.body = await dailyDiet.exportDailyDiet(reqParams);
+      ctx.set({'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Content-Disposition': `attachment; filename=${reqParams.fileName}.xlsx`});
     });
   }
 }

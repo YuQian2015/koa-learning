@@ -7,6 +7,7 @@ const node_modules = path.resolve(__dirname, 'node_modules');
 const pathToReact = path.resolve(node_modules, 'react/dist/react.min.js');
 
 const CompressionPlugin = require("compression-webpack-plugin")
+const Visualizer = require('webpack-visualizer-plugin');
 
 
 
@@ -109,6 +110,7 @@ module.exports = {
         test: /\.js$|\.css$|\.html$/,
         threshold: 10240,
         minRatio: 0.8
-    })
+    }),
+    new Visualizer()
   ]
 };

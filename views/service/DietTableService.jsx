@@ -12,6 +12,10 @@ class DietTableService {
     return HttpService.get(`${CONFIG.apiUrl}/daily-diet`, params);
   }
 
+  exportExcel(params, success, error) {
+    HttpService.post(`${CONFIG.apiUrl}/daily-diet/export`, params, success, error);
+  }
+
   addTable(params, success, error) {
     HttpService.post(`${CONFIG.apiUrl}/diet-table/add`, params, success, error);
   }

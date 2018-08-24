@@ -43,7 +43,8 @@ export default class DietTablePage extends React.Component {
       console.log(error);
     })
   }
-  addDiet(isNew) {
+  addDiet(isNew, id) {
+    console.log(isNew);
     if (isNew) {
       const {dietTable} = this.state;
       selectedDietTableCollection.drop();
@@ -52,13 +53,23 @@ export default class DietTablePage extends React.Component {
       this.props.history.push("/add-diet");
       return
     }
+    DietTableService.exportExcel({
+      id: id,
+      fileName: "12313"
+    }, (res) => {
+      console.log(res);
+    }, (error) => {
+      console.log(error);
+    })
   }
   render() {
     let {dietTable, detailList} = this.state;
     let body = <div className="DietTableDetailPage">
       <div className="list-box">
         {
-          detailList.map(detail => <div className="list-item" key={detail._id} onClick={this.addDiet}>
+          detailList.map(detail => <div className="list-item" key={detail._id} onClick={() => {
+              this.addDiet(false, detail._id)
+            }}>
             <div className="list-item-header">
               <Moment format="YYYY-MM-DD  HH:mm">{detail.date}</Moment>
             </div>
