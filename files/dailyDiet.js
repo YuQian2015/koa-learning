@@ -5,7 +5,6 @@ const path = require('path');
 
 const workbook = new Excel.Workbook();
 const exlBuf = fs.readFileSync("./files/purchase.xlsx");
-const dailyDietBuf = fs.readFileSync("./files/dailyDiet.xlsx");
 class ExportExcel {
   constructor() {}
   exportPurchase(name, data) {
@@ -57,30 +56,6 @@ class ExportExcel {
         }).catch(err => {
           reject(err);
         });
-      }).catch(err => {
-        reject(err);
-      });
-    });
-  }
-
-
-  exportDailyDiet(name, data) {
-    return new Promise((resolve, reject) => {
-      // const newData = [
-      //   [
-      //     {
-      //       "name": name,
-      //       "creator": data.creator
-      //     }
-      //   ],
-      //   data
-      // ];
-
-      const newData = data;
-      console.log(newData);
-
-      ejsexcel.renderExcel(dailyDietBuf, newData).then(dailyDietBuf2 => {
-        fs.writeFileSync(path.resolve('./files/test.xlsx'), dailyDietBuf2);
       }).catch(err => {
         reject(err);
       });

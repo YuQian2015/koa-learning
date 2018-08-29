@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
+const exportExcel = require('../files/exportExcel');
+const qiniuUpload = require('../utils/qiniuUploader');
 const Schema = mongoose.Schema;
+const moment = require('moment');
 const Model = require('./model');
 
 const material = new Schema({
@@ -38,7 +41,7 @@ const dailyDietSchema = new Schema({
   updateDate: Date // 修改时间
 });
 
-dailyDietSchema.pre('find', function() {
+dailyDietSchema.pre('findOne', function() {
   this.populate('cookbook', 'name');
   this.populate('creator', 'name');
 });
@@ -50,25 +53,23 @@ class DailyDiet extends Model {
 
   exportExcel(dataArr = {}) {
     return new Promise((resolve, reject) => {
-      this.model.find({
+      this.model.findOne({
         _id: dataArr.id,
         fileName: undefined,
-      }).lean().exec((err, docs) => {
+      }).lean().exec((err, doc) => {
         if (err) {
           console.log(err);
           reject(err);
         } else {
-          console.log(docs);
-          // exportExcel.exportPurchase(dataArr.fileName, docs).then(path => {
-          //   console.log(path);
-          //   console.log(dataArr.fileName);
-          //   let result = fs.createReadStream(path);
-          //   qiniuUpload(`${dataArr.fileName + new Date().getTime()}.xlsx`, path);
-          //   //将数据转为二进制输出
-          //   // let result = fs.readFileSync(path, {encoding:'binary'});
-          //   // let dataBuffer = new Buffer.from(result,'binary');
-          //   resolve(result);
-          // });
+          console.log(dataArr.fileName);
+          doc.date = moment(doc.date).format("YYYY年MM月DD日");
+          exportExcel.exportDailyDiet(dataArr.fileName, doc).then(path => {
+            console.log(path);
+            console.log(dataArr.fileName);
+            let result = fs.createReadStream(path);
+            qiniuUpload(`${dataArr.fileName + new Date().getTime()}.xlsx`, path);
+            resolve(result);
+          });
         }
       })
     })

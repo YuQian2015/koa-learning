@@ -336,12 +336,57 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h2 id="jwt-token&#x9A8C;&#x8BC1;">JWT-token&#x9A8C;&#x8BC1;</h2>
-<p>JWT&#xFF08;JSON Web Tokens&#xFF09; &#x662F;&#x4E00;&#x4E2A;&#x65B9;&#x4FBF;&#x7684;&#x4E00;&#x79CD;&#x5B9E;&#x73B0;&#x670D;&#x52A1;&#x5668;&#x4E0E;&#x5BA2;&#x670D;&#x7AEF;&#x5B89;&#x5168;&#x901A;&#x8BAF;&#x7684;&#x4E00;&#x79CD;&#x89C4;&#x8303;&#x3002;</p>
-<h3 id="jwt">JWT</h3>
-<blockquote>
-<p>&#x8865;&#x5145;</p>
-</blockquote>
+                                <h2 id="jwt-token&#x9A8C;&#x8BC1;">JWT token&#x9A8C;&#x8BC1;</h2>
+<p>JWT&#xFF08;JSON Web Tokens&#xFF09; &#x662F;&#x4E00;&#x4E2A;&#x65B9;&#x4FBF;&#x7684;&#x4E00;&#x79CD;&#x5B9E;&#x73B0;&#x670D;&#x52A1;&#x5668;&#x4E0E;&#x5BA2;&#x670D;&#x7AEF;&#x5B89;&#x5168;&#x901A;&#x8BAF;&#x7684;&#x4E00;&#x79CD;&#x89C4;&#x8303;&#xFF0C;&#x662F;&#x76EE;&#x524D;&#x6700;&#x6D41;&#x884C;&#x7684;&#x8DE8;&#x57DF;&#x8BA4;&#x8BC1;&#x89E3;&#x51B3;&#x65B9;&#x6848;&#x3002;</p>
+<h3 id="jwt-&#x7B80;&#x4ECB;&#x3001;&#x7ED3;&#x6784;&#x548C;&#x539F;&#x7406;">JWT &#x7B80;&#x4ECB;&#x3001;&#x7ED3;&#x6784;&#x548C;&#x539F;&#x7406;</h3>
+<h4 id="jwt-&#x7B80;&#x4ECB;">JWT &#x7B80;&#x4ECB;</h4>
+<p>&#x5728;&#x4E92;&#x8054;&#x7F51;&#x670D;&#x52A1;&#x4E2D;&#x79BB;&#x4E0D;&#x5F00;&#x7528;&#x6237;&#x8BA4;&#x8BC1;&#xFF0C;&#x5982;&#x679C;&#x4F7F;&#x7528;session&#x548C;cookie&#x505A;&#x7528;&#x6237;&#x9A8C;&#x8BC1;&#x7684;&#x8BDD;&#xFF0C;&#x6D41;&#x7A0B;&#x4E00;&#x822C;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ol>
+<li>&#x670D;&#x52A1;&#x5668;&#x9A8C;&#x8BC1;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x9001;&#x7684;&#x7528;&#x6237;&#x540D;&#x548C;&#x5BC6;&#x7801;&#x540E;&#xFF0C;&#x5728;&#x5F53;&#x524D;&#x5BF9;&#x8BDD;&#xFF08;session&#xFF09;&#x4FDD;&#x5B58;&#x7528;&#x6237;&#x4FE1;&#x606F;&#x76F8;&#x5173;&#x6570;&#x636E;&#x5E76;&#x8FD4;&#x56DE;&#x4E00;&#x4E2A; session_id&#x7ED9;&#x7528;&#x6237;&#xFF0C;&#x5199;&#x5165;&#x7528;&#x6237; Cookie&#x3002;</li>
+<li>&#x4E4B;&#x540E;&#x7528;&#x6237;&#x7684;&#x6BCF;&#x6B21;&#x8BF7;&#x6C42;&#x90FD;&#x4F1A;&#x901A;&#x8FC7; Cookie &#x5C06; session_id &#x4F20;&#x56DE;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x6536;&#x5230; session_id&#xFF0C;&#x627E;&#x5230;&#x4E4B;&#x524D;&#x4FDD;&#x5B58;&#x7684;&#x6570;&#x636E;&#x5E76;&#x83B7;&#x5F97;&#x7528;&#x6237;&#x4FE1;&#x606F;</li>
+</ol>
+<p>&#x5982;&#x679C;&#x50CF;&#x4E0A;&#x9762;&#x8FD9;&#x79CD;&#x65B9;&#x5F0F;&#xFF0C;session &#x6570;&#x636E;&#x5171;&#x4EAB;&#x4E0D;&#x65B9;&#x4FBF;&#xFF0C;&#x4E0D;&#x597D;&#x5B9E;&#x73B0;&#x8DE8;&#x57DF;&#x670D;&#x52A1;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x670D;&#x52A1;&#x5668;&#x96C6;&#x7FA4;&#xFF0C;&#x9700;&#x8981;&#x5B9E;&#x73B0;session&#x5171;&#x4EAB;&#x624D;&#x80FD;&#x8BA9;&#x6BCF;&#x53F0;&#x670D;&#x52A1;&#x5668;&#x90FD;&#x80FD;&#x591F;&#x8FDB;&#x884C;&#x7528;&#x6237;&#x9A8C;&#x8BC1;&#x3002;</p>
+<p>&#x4F7F;&#x7528;JWT&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x8BA4;&#x8BC1;&#x7528;&#x6237;&#x4E4B;&#x540E;&#xFF0C;&#x4F1A;&#x751F;&#x6210;&#x4E00;&#x4E2A;JSON&#x5BF9;&#x8C61;&#x53D1;&#x56DE;&#x7ED9;&#x7528;&#x6237;&#xFF0C;&#x5982;&#xFF1A;</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;Yuu&quot;</span>,
+  <span class="hljs-string">&quot;role&quot;</span>: <span class="hljs-string">&quot;admin&quot;</span>
+}
+</code></pre>
+<p>&#x7136;&#x540E;&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x670D;&#x52A1;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x90FD;&#x8981;&#x53D1;&#x56DE;&#x4E0A;&#x9762;&#x7684;JSON&#x5BF9;&#x8C61;&#x4EE5;&#x63D0;&#x4F9B;&#x7ED9;&#x670D;&#x52A1;&#x7AEF;&#x505A;&#x9A8C;&#x8BC1;&#x3002;&#x670D;&#x52A1;&#x5668;&#x8FD8;&#x4F1A;&#x4E3A;&#x8FD9;&#x4E2A;JSON&#x6DFB;&#x52A0;&#x7B7E;&#x540D;&#x4EE5;&#x9632;&#x6B62;&#x7528;&#x6237;&#x7BE1;&#x6539;&#x6570;&#x636E;&#x3002;&#x901A;&#x8FC7;&#x4F7F;&#x7528;JWT&#xFF0C;&#x670D;&#x52A1;&#x7AEF;&#x4E0D;&#x518D;&#x4FDD;&#x5B58;session&#x6570;&#x636E;&#xFF0C;&#x66F4;&#x52A0;&#x5BB9;&#x6613;&#x5B9E;&#x73B0;&#x6269;&#x5C55;&#x3002;</p>
+<h4 id="jwt-&#x7ED3;&#x6784;">JWT &#x7ED3;&#x6784;</h4>
+<p>JWT&#x662F;&#x4E00;&#x884C;&#x4F7F;&#x7528; &#x201C;.&#x201D; &#x5206;&#x5272;&#x6210;&#x4E09;&#x4E2A;&#x90E8;&#x5206;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x8FD9;&#x88AB;&#x5206;&#x9694;&#x7684;&#x4E09;&#x4E2A;&#x90E8;&#x5206;&#x5206;&#x522B;&#x662F;&#xFF1A;Header&#xFF08;&#x5934;&#x90E8;&#xFF09;&#x3001;Payload&#xFF08;&#x8D1F;&#x8F7D;&#xFF09;&#x3001;Signature&#xFF08;&#x7B7E;&#x540D;&#xFF09;&#xFF0C;&#x8BBF;&#x95EE; <a href="https://jwt.io/" target="_blank">https://jwt.io/</a>  &#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4FEE;&#x6539;&#x7B97;&#x6CD5;&#x67E5;&#x770B;&#x7B7E;&#x540D;&#x7684;&#x8BA1;&#x7B97;&#x516C;&#x5F0F;&#x4EE5;&#x53CA;&#x7ED3;&#x7B97;&#x7ED3;&#x679C;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x770B;&#x5230;JWT&#x7684;&#x4E3B;&#x8981;&#x7ED3;&#x6784;&#xFF1A;</p>
+<p><img src="jwt.jpg" alt="jwt"></p>
+<p>&#x4E0A;&#x56FE;&#x4E2D;&#x7B2C;&#x4E00;&#x90E8;&#x5206;&#xFF08;header&#xFF09;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4E00;&#x4E2A;JSON&#x5BF9;&#x8C61;&#xFF0C;&#x662F;&#x63CF;&#x8FF0;JWT&#x7684;&#x5143;&#x6570;&#x636E;&#xFF1A;</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;alg&quot;</span>: <span class="hljs-string">&quot;HS256&quot;</span>, <span class="hljs-comment">// &#x8868;&#x793A;&#x7684;&#x662F;&#x7B7E;&#x540D;&#x7684;&#x7B97;&#x6CD5;&#xFF0C;&#x9ED8;&#x8BA4;HS256</span>
+  <span class="hljs-string">&quot;typ&quot;</span>: <span class="hljs-string">&quot;JWT&quot;</span> <span class="hljs-comment">// &#x8868;&#x793A;token&#x7684;&#x7C7B;&#x578B;&#x662F;JWT</span>
+}
+</code></pre>
+<p>&#x7B2C;&#x4E8C;&#x90E8;&#x5206;&#xFF08;Payload&#xFF09;&#x5C31;&#x662F;&#x4E0A;&#x9762;&#x7B80;&#x4ECB;&#x4E2D;&#x63D0;&#x5230;&#x7684;JSON&#x6570;&#x636E;&#xFF0C;&#x662F;&#x6211;&#x4EEC;&#x5E0C;&#x671B;&#x901A;&#x8FC7;&#x670D;&#x52A1;&#x5668;&#x53D1;&#x9001;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x7528;&#x6237;&#x4FE1;&#x606F;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x8FD9;&#x4E2A;JSON&#x91CC;&#x9762;&#x5B9A;&#x4E49;&#x9700;&#x8981;&#x53D1;&#x9001;&#x7684;&#x5B57;&#x6BB5;&#xFF1A;</p>
+<pre><code class="lang-json">{
+  <span class="hljs-string">&quot;sub&quot;</span>: <span class="hljs-string">&quot;1234567890&quot;</span>,
+  <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;John Doe&quot;</span>,
+  <span class="hljs-string">&quot;iat&quot;</span>: <span class="hljs-number">1516239022</span>
+}
+</code></pre>
+<p>&#x5F53;&#x7136;&#xFF0C;JWT&#x5B98;&#x65B9;&#x63D0;&#x4F9B;&#x4E86;7&#x4E2A;&#x5B57;&#x6BB5;&#x4EE5;&#x4F9B;&#x9009;&#x7528;&#xFF1A;</p>
+<ul>
+<li>iss (issuer)&#xFF1A;&#x7B7E;&#x53D1;&#x4EBA;</li>
+<li>exp (expiration time)&#xFF1A;&#x8FC7;&#x671F;&#x65F6;&#x95F4;</li>
+<li>sub (subject)&#xFF1A;&#x4E3B;&#x9898;</li>
+<li>aud (audience)&#xFF1A;&#x53D7;&#x4F17;</li>
+<li>nbf (Not Before)&#xFF1A;&#x751F;&#x6548;&#x65F6;&#x95F4;</li>
+<li>iat (Issued At)&#xFF1A;&#x7B7E;&#x53D1;&#x65F6;&#x95F4;</li>
+<li>jti (JWT ID)&#xFF1A;&#x7F16;&#x53F7;</li>
+</ul>
+<p>&#x7B2C;&#x4E09;&#x90E8;&#x5206;&#xFF08;Signature&#xFF09;&#x7528;&#x6765;&#x5BF9;&#x4E0A;&#x9762;&#x4E24;&#x90E8;&#x5206;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x7B7E;&#x540D;&#xFF0C;&#x4ECE;&#x800C;&#x9632;&#x6B62;&#x6570;&#x636E;&#x7BE1;&#x6539;&#xFF0C;&#x8FD9;&#x4E2A;Signature&#x9700;&#x8981;&#x5236;&#x5B9A;&#x4E00;&#x4E2A;&#x79D8;&#x94A5;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;header&#x91CC;&#x9762;&#x5236;&#x5B9A;&#x7684;&#x7B97;&#x6CD5;&#x6765;&#x4EA7;&#x751F;&#x7B7E;&#x540D;&#x3002;&#x4EA7;&#x751F;&#x7B7E;&#x540D;&#x7684;&#x7B97;&#x6CD5;&#x4E5F;&#x53EF;&#x4EE5;&#x5728;&#x4E0A;&#x56FE;&#x770B;&#x5230;&#xFF0C;&#x7B97;&#x6CD5;&#x5982;&#x4E0B;&#xFF1A;</p>
+<pre><code class="lang-js">HMACSHA256(
+  base64UrlEncode(header) + <span class="hljs-string">&quot;.&quot;</span> +
+  base64UrlEncode(payload),
+  your<span class="hljs-number">-256</span>-bit-secret
+)
+</code></pre>
+<p>&#x6700;&#x7EC8;&#x901A;&#x8FC7;&#x628A;&#x4E0A;&#x9762;&#x4E09;&#x4E2A;&#x90E8;&#x5206;&#x7EC4;&#x5408;&#x6210; Header.Payload.Signature &#x7684;&#x5F62;&#x5F0F;&#x8FD4;&#x56DE;&#x7ED9;&#x7528;&#x6237;&#x3002;</p>
 <h3 id="&#x5B89;&#x88C5;&#x548C;&#x4F7F;&#x7528;">&#x5B89;&#x88C5;&#x548C;&#x4F7F;&#x7528;</h3>
 <p> &#x4E3A;&#x4E86;&#x80FD;&#x591F;&#x5BF9;&#x7528;&#x6237;&#x767B;&#x5F55;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528; JWT &#x6765;&#x505A;&#x6821;&#x9A8C;&#xFF0C;&#x9996;&#x5148;&#x9700;&#x8981;&#x5B89;&#x88C5; <a href="https://github.com/koajs/jwt" target="_blank">koa-jwt</a> &#x4E2D;&#x95F4;&#x4EF6;&#x3002;</p>
 <pre><code class="lang-shell">npm install koa-jwt
@@ -589,7 +634,7 @@ router.post(<span class="hljs-string">&apos;/signin&apos;</span>, <span class="h
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"第八章 JWT token验证","level":"2.8","depth":1,"next":{"title":"第九章 数据验证","level":"2.9","depth":1,"path":"chapter-9/chapter-9.md","ref":"chapter-9/chapter-9.md","articles":[]},"previous":{"title":"第七章 RESTful API","level":"2.7","depth":1,"path":"chapter-7/chapter-7.md","ref":"chapter-7/chapter-7.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"chapter-8/chapter-8.md","mtime":"2018-08-29T00:21:17.186Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-08-29T00:33:50.048Z"},"basePath":"..","book":{"language":""}});
+            gitbook.page.hasChanged({"page":{"title":"第八章 JWT token验证","level":"2.8","depth":1,"next":{"title":"第九章 数据验证","level":"2.9","depth":1,"path":"chapter-9/chapter-9.md","ref":"chapter-9/chapter-9.md","articles":[]},"previous":{"title":"第七章 RESTful API","level":"2.7","depth":1,"path":"chapter-7/chapter-7.md","ref":"chapter-7/chapter-7.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"chapter-8/chapter-8.md","mtime":"2018-08-29T01:57:52.867Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-08-29T01:58:03.430Z"},"basePath":"..","book":{"language":""}});
         });
     </script>
 </div>

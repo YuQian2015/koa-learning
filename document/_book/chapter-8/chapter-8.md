@@ -1,10 +1,75 @@
-## JWT-token验证
+## JWT token验证
 
-JWT（JSON Web Tokens） 是一个方便的一种实现服务器与客服端安全通讯的一种规范。
+JWT（JSON Web Tokens） 是一个方便的一种实现服务器与客服端安全通讯的一种规范，是目前最流行的跨域认证解决方案。
 
-### JWT
+### JWT 简介、结构和原理
 
-> 补充
+#### JWT 简介
+
+在互联网服务中离不开用户认证，如果使用session和cookie做用户验证的话，流程一般如下：
+
+1. 服务器验证客户端发送的用户名和密码后，在当前对话（session）保存用户信息相关数据并返回一个 session_id给用户，写入用户 Cookie。
+2. 之后用户的每次请求都会通过 Cookie 将 session_id 传回服务器，服务器收到 session_id，找到之前保存的数据并获得用户信息
+
+如果像上面这种方式，session 数据共享不方便，不好实现跨域服务，如果是服务器集群，需要实现session共享才能让每台服务器都能够进行用户验证。
+
+使用JWT，服务器认证用户之后，会生成一个JSON对象发回给用户，如：
+
+```json
+{
+  "name": "Yuu",
+  "role": "admin"
+}
+```
+
+然后客户端请求服务的时候，都要发回上面的JSON对象以提供给服务端做验证。服务器还会为这个JSON添加签名以防止用户篡改数据。通过使用JWT，服务端不再保存session数据，更加容易实现扩展。
+
+#### JWT 结构
+
+JWT是一行使用 “.” 分割成三个部分的字符串，这被分隔的三个部分分别是：Header（头部）、Payload（负载）、Signature（签名），访问 https://jwt.io/  ，可以通过修改算法查看签名的计算公式以及结算结果，我们可以看到JWT的主要结构：
+
+![jwt](jwt.jpg)
+
+上图中第一部分（header）实际上是一个JSON对象，是描述JWT的元数据：
+
+```json
+{
+  "alg": "HS256", // 表示的是签名的算法，默认HS256
+  "typ": "JWT" // 表示token的类型是JWT
+}
+```
+
+第二部分（Payload）就是上面简介中提到的JSON数据，是我们希望通过服务器发送给客户端的用户信息，我们可以在这个JSON里面定义需要发送的字段：
+
+```json
+{
+  "sub": "1234567890",
+  "name": "John Doe",
+  "iat": 1516239022
+}
+```
+
+当然，JWT官方提供了7个字段以供选用：
+
+- iss (issuer)：签发人
+- exp (expiration time)：过期时间
+- sub (subject)：主题
+- aud (audience)：受众
+- nbf (Not Before)：生效时间
+- iat (Issued At)：签发时间
+- jti (JWT ID)：编号
+
+第三部分（Signature）用来对上面两部分的数据进行签名，从而防止数据篡改，这个Signature需要制定一个秘钥，然后通过header里面制定的算法来产生签名。产生签名的算法也可以在上图看到，算法如下：
+
+```js
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  your-256-bit-secret
+)
+```
+
+最终通过把上面三个部分组合成 Header.Payload.Signature 的形式返回给用户。
 
 ### 安装和使用
 
