@@ -1,0 +1,649 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第七章 RESTful API · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../chapter-8/chapter-8.html" />
+    
+    
+    <link rel="prev" href="../chapter-6/chapter-6.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../chapter-1/chapter-1.html">
+            
+                <a href="../chapter-1/chapter-1.html">
+            
+                    
+                    第一章 初识KOA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../chapter-2/chapter-2.html">
+            
+                <a href="../chapter-2/chapter-2.html">
+            
+                    
+                    第二章 路由
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../chapter-3/chapter-3.html">
+            
+                <a href="../chapter-3/chapter-3.html">
+            
+                    
+                    第三章 Logs 日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../chapter-4/chapter-4.html">
+            
+                <a href="../chapter-4/chapter-4.html">
+            
+                    
+                    第四章 MongoDB 数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../chapter-5/chapter-5.html">
+            
+                <a href="../chapter-5/chapter-5.html">
+            
+                    
+                    第五章 Config 项目设置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="../chapter-6/chapter-6.html">
+            
+                <a href="../chapter-6/chapter-6.html">
+            
+                    
+                    第六章 Mongoose 管理数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.7" data-path="chapter-7.html">
+            
+                <a href="chapter-7.html">
+            
+                    
+                    第七章 RESTful API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="../chapter-8/chapter-8.html">
+            
+                <a href="../chapter-8/chapter-8.html">
+            
+                    
+                    第八章 JWT token验证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="../chapter-9/chapter-9.html">
+            
+                <a href="../chapter-9/chapter-9.html">
+            
+                    
+                    第九章 数据验证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.10" data-path="../chapter-10/chapter-10.html">
+            
+                <a href="../chapter-10/chapter-10.html">
+            
+                    
+                    第十章 数据操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11" data-path="../note-1/note-1.html">
+            
+                <a href="../note-1/note-1.html">
+            
+                    
+                    笔记一 application.js
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.12" data-path="../note-2/note-2.html">
+            
+                <a href="../note-2/note-2.html">
+            
+                    
+                    笔记二 context.js
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.13" data-path="../note-3/note-3.html">
+            
+                <a href="../note-3/note-3.html">
+            
+                    
+                    笔记三 request.js
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.14" data-path="../note-4/note-4.html">
+            
+                <a href="../note-4/note-4.html">
+            
+                    
+                    笔记四 response.js
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >第七章 RESTful API</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="restful-api">RESTful API</h2>
+<h3 id="&#x54CD;&#x5E94;">&#x54CD;&#x5E94;</h3>
+<blockquote>
+<p>&#x76EE;&#x7684; &#x63CF;&#x8FF0;</p>
+</blockquote>
+<p>&#x5728; utils &#x76EE;&#x5F55;&#x65B0;&#x5EFA; response.js &#xFF0C;&#x5728; config &#x76EE;&#x5F55;&#x65B0;&#x5EFA; errorCode.json&#x3002;</p>
+<p>utils/response.js</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> errorCode = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./errorCode&apos;</span>);
+<span class="hljs-comment">// &#x5BF9;&#x54CD;&#x5E94;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x89C4;&#x8303;&#xFF0C;&#x5982;&#x679C;&#x4F20;&#x9012;&#x7684;&#x5BF9;&#x8C61;&#x6709;errorCode&#xFF0C;&#x8FD4;&#x56DE;&#x62A5;&#x9519;&#x4FE1;&#x606F;</span>
+<span class="hljs-built_in">module</span>.exports = (response) =&gt; {
+  <span class="hljs-keyword">const</span> {errorCode, data, msg} = response;
+  <span class="hljs-keyword">if</span> (errorCode) {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-string">&quot;error&quot;</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-string">&quot;msg&quot;</span>: msg
+        ? msg
+        : errorCode[response.errorCode],
+      <span class="hljs-string">&quot;data&quot;</span>: {},
+      <span class="hljs-string">&quot;errorCode&quot;</span>: errorCode
+    }
+  }
+  <span class="hljs-keyword">if</span> (data) {
+    <span class="hljs-keyword">return</span> {
+      <span class="hljs-string">&quot;error&quot;</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-string">&quot;msg&quot;</span>: msg
+        ? msg
+        : <span class="hljs-string">&quot;&quot;</span>,
+      <span class="hljs-string">&quot;data&quot;</span>: data,
+      <span class="hljs-string">&quot;errorCode&quot;</span>: <span class="hljs-string">&quot;&quot;</span>
+    }
+  }
+};
+</code></pre>
+<p>config/errorCode.json</p>
+<pre><code class="lang-js">{
+    <span class="hljs-string">&quot;000&quot;</span>:<span class="hljs-string">&quot;&#x7CFB;&#x7EDF;&#x9519;&#x8BEF;&#xFF0C;&#x8BF7;&#x8054;&#x7CFB;&#x7BA1;&#x7406;&#x5458;&#x3002;&quot;</span>,
+    <span class="hljs-string">&quot;001&quot;</span>:<span class="hljs-string">&quot;&#x8BF7;&#x5148;&#x767B;&#x5F55;&#x8D26;&#x6237;&#x767B;&#x5F55;&#x3002;&quot;</span>,
+    <span class="hljs-string">&quot;002&quot;</span>:<span class="hljs-string">&quot;&#x8BE5;&#x90AE;&#x7BB1;&#x5DF2;&#x7ECF;&#x6CE8;&#x518C;&#x8FC7;&#xFF0C;&#x8BF7;&#x66F4;&#x6362;&#x90AE;&#x7BB1;&#x3002;&quot;</span>,
+    <span class="hljs-string">&quot;003&quot;</span>:<span class="hljs-string">&quot;&#x7528;&#x6237;&#x767B;&#x5F55;&#x9A8C;&#x8BC1;&#x5931;&#x8D25;&#xFF0C;&#x8BF7;&#x5C1D;&#x8BD5;&#x91CD;&#x65B0;&#x767B;&#x5F55;&#x3002;&quot;</span>,
+    <span class="hljs-comment">// &#x7701;&#x7565;</span>
+}
+</code></pre>
+<h3 id="&#x6CE8;&#x518C;&#x63A5;&#x53E3;">&#x6CE8;&#x518C;&#x63A5;&#x53E3;</h3>
+<p>&#x4E3A;&#x4E86;&#x5B9E;&#x73B0;&#x7528;&#x6237;&#x6CE8;&#x518C;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x7528;&#x6237; model &#xFF0C;&#x5728; models &#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x589E;&#x4E00;&#x4E2A; user.js &#xFF0C;&#x5E76;&#x4E14;&#x5728; model &#x7684;index.js &#x5F15;&#x5165;&#x3002;</p>
+<p>models/user.js</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;mongoose&apos;</span>);
+<span class="hljs-keyword">const</span> Schema = mongoose.Schema;
+
+<span class="hljs-comment">// &#x521B;&#x5EFA;&#x4E00;&#x4E2A;User model&#xFF0C;&#x5305;&#x542B;&#x7528;&#x6237;&#x65B0;&#x589E;&#x7684;&#x5B57;&#x6BB5;&#x5B9A;&#x4E49;</span>
+<span class="hljs-keyword">let</span> userModel = mongoose.model(<span class="hljs-string">&apos;User&apos;</span>, <span class="hljs-keyword">new</span> Schema({
+  userNo: <span class="hljs-built_in">String</span>,
+  email: <span class="hljs-built_in">String</span>,
+  password: <span class="hljs-built_in">String</span>,
+  name: <span class="hljs-built_in">String</span>,
+  sex: <span class="hljs-built_in">Number</span>,
+  userType: <span class="hljs-built_in">String</span>,
+  avatar: <span class="hljs-built_in">String</span>,
+  createDate: <span class="hljs-built_in">Date</span>
+}));
+
+<span class="hljs-comment">// &#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x7528;&#x6237;class</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {
+    <span class="hljs-keyword">this</span>.users = userModel;
+    <span class="hljs-keyword">this</span>.find = <span class="hljs-keyword">this</span>.find.bind(<span class="hljs-keyword">this</span>); <span class="hljs-comment">// &#x7ED1;&#x5B9A;&#x4E0A;&#x4E0B;&#x6587;</span>
+    <span class="hljs-keyword">this</span>.create = <span class="hljs-keyword">this</span>.create.bind(<span class="hljs-keyword">this</span>);
+  }
+
+  <span class="hljs-comment">// &#x67E5;&#x8BE2;&#x7528;&#x6237;</span>
+  find(dataArr = {}) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+
+      <span class="hljs-comment">// &#x4E0A;&#x9762;&#x7ED1;&#x5B9A;&#x4E86;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;this.users</span>
+      <span class="hljs-keyword">this</span>.users.find(dataArr, (err, docs) =&gt; { <span class="hljs-comment">// &#x67E5;&#x8BE2;</span>
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-built_in">console</span>.log(err);
+          reject(err);
+        } <span class="hljs-keyword">else</span> {
+          resolve(docs);
+        }
+      })
+    })
+  }
+
+  <span class="hljs-comment">// &#x521B;&#x5EFA;&#x7528;&#x6237;</span>
+  create(dataArr) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+      <span class="hljs-keyword">let</span> users = <span class="hljs-keyword">new</span> <span class="hljs-keyword">this</span>.users(dataArr);
+      users.save((err, data) =&gt; {
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-built_in">console</span>.log(err)
+          reject(err);
+          <span class="hljs-keyword">return</span>
+        }
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;&#x521B;&#x5EFA;&#x7528;&#x6237;&#x6210;&#x529F;&apos;</span>);
+        resolve(data)
+      });
+    })
+  }
+}
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">new</span> User()
+
+<span class="hljs-built_in">module</span>.exports = user;
+</code></pre>
+<p>&#x7136;&#x540E;&#x5728;models/index.js &#x5F15;&#x5165;user model</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> material = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./material&apos;</span>);
+<span class="hljs-keyword">const</span> user = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./user&apos;</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+  material,
+  user
+};
+</code></pre>
+<p>&#x4E3A;&#x4E86;&#x4FBF;&#x4E8E;&#x903B;&#x8F91;&#x63A7;&#x5236;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x6CE8;&#x518C;&#x7528;&#x6237;&#x7684;&#x64CD;&#x4F5C;&#x653E;&#x5230;&#x5355;&#x72EC;&#x7684;&#x6587;&#x4EF6;&#x4E2D;&#x8FDB;&#x884C;&#xFF0C;&#x65B0;&#x589E;&#x76EE;&#x5F55; controllers &#xFF0C;&#x5E76;&#x5728;&#x5176;&#x4E2D;&#x65B0;&#x589E; index.js &#x6587;&#x4EF6;&#x548C; user.js &#x6587;&#x4EF6;&#x3002;</p>
+<p>controllers/user.js</p>
+<pre><code class="lang-js">&#x2026;&#x2026;
+<span class="hljs-keyword">const</span> response = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;../utils/response&apos;</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserController</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {}
+  <span class="hljs-comment">// &#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x4E00;&#x90E8;&#x51FD;&#x6570;register&#x7528;&#x6765;&#x6CE8;&#x518C;&#x7528;&#x6237;&#xFF0C;&#x63A5;&#x6536;&#x8BF7;&#x6C42;&#x4F20;&#x8FC7;&#x6765;&#x7684;body</span>
+  <span class="hljs-keyword">async</span> register(reqBody) {
+    <span class="hljs-keyword">let</span> dataArr = { <span class="hljs-comment">// &#x5C55;&#x5F00;&#x8FD0;&#x7B97;&#xFF0C;&#x5E76;&#x6DFB;&#x52A0;&#x521B;&#x5EFA;&#x65F6;&#x95F4;</span>
+      ...reqBody,
+      createDate: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()
+    }
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">let</span> list = <span class="hljs-keyword">await</span> user.find({email: dataArr.email}); <span class="hljs-comment">// &#x5148;&#x67E5;&#x8BE2;&#x662F;&#x5426;&#x5B58;&#x5728;&#x8BE5;&#x7528;&#x6237;</span>
+      <span class="hljs-keyword">let</span> respon = {};
+      <span class="hljs-keyword">if</span> (list &amp;&amp; list.length &gt; <span class="hljs-number">0</span>) {
+        respon = response({errorCode: <span class="hljs-string">&apos;002&apos;</span>});
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">let</span> newUser = <span class="hljs-keyword">await</span> user.create(dataArr); <span class="hljs-comment">// &#x5982;&#x679C;&#x6CA1;&#x6709;&#x6CE8;&#x518C;&#x8FC7;&#x5C31;&#x8FDB;&#x884C;&#x6CE8;&#x518C;</span>
+        respon = response({data: newUser});
+      }
+      <span class="hljs-keyword">return</span> respon;
+    } <span class="hljs-keyword">catch</span> (err) {
+      <span class="hljs-built_in">console</span>.log(err)
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(err);
+      <span class="hljs-keyword">return</span> err;
+    }
+  }
+}
+
+<span class="hljs-keyword">const</span> userController = <span class="hljs-keyword">new</span> UserController();
+
+<span class="hljs-built_in">module</span>.exports = userController;
+</code></pre>
+<p>&#x6211;&#x4EEC;&#x4E5F;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A; controllers/index.js &#x6765;&#x5F15;&#x5165;&#x8981;&#x7528;&#x7684; controller&#xFF1A;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> user = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./user&apos;</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+  user
+};
+</code></pre>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x9700;&#x8981;&#x5728;&#x8DEF;&#x7531;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x8BF7;&#x6C42;&#x63A5;&#x53E3;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x4E4B;&#x524D;&#x7684; routes\users.js &#x8FDB;&#x884C;&#x4EE5;&#x4E0B;&#x4FEE;&#x6539;&#xFF1A;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> router = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;koa-router&apos;</span>)();
+<span class="hljs-keyword">const</span> {user} = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;../controllers&apos;</span>);
+
+router.get(<span class="hljs-string">&apos;/&apos;</span>, (ctx, next) =&gt; {
+  ctx.response.body = <span class="hljs-string">&apos;users&apos;</span>;
+});
+
+<span class="hljs-comment">// &#x65B0;&#x589E;&#x4E00;&#x4E2A;post&#x8DEF;&#x7531;&#xFF0C;&#x7528;&#x6765;&#x63A5;&#x6536;post&#x8BF7;&#x6C42;</span>
+router.post(<span class="hljs-string">&apos;/register&apos;</span>, <span class="hljs-keyword">async</span> (ctx, next) =&gt; {
+  <span class="hljs-comment">// &#x63A5;&#x6536;&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x4F20;&#x9012;&#x7684;&#x6570;&#x636E;</span>
+  <span class="hljs-keyword">let</span> reqBody = ctx.request.body;
+  <span class="hljs-built_in">console</span>.log(ctx.request.body);
+  ctx.body = <span class="hljs-keyword">await</span> user.register(reqBody);
+});
+
+<span class="hljs-built_in">module</span>.exports = router;
+</code></pre>
+<p>&#x8FD9;&#x6837;&#x5C31;&#x5B9A;&#x4E49;&#x4E86;&#x4E00;&#x4E2A; RESTful API &#x4E86;&#xFF0C;&#x4E3A;&#x4E86;&#x9A8C;&#x8BC1;&#x80FD;&#x591F;&#x8C03;&#x7528;&#x6210;&#x529F;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528; postman &#x6765;&#x8FDB;&#x884C;&#x8C03;&#x8BD5;&#x3002;</p>
+<h3 id="postman-&#x8C03;&#x7528;&#x63A5;&#x53E3;">postman-&#x8C03;&#x7528;&#x63A5;&#x53E3;</h3>
+<p>&#x5B89;&#x88C5;postman&#xFF0C;&#x6253;&#x5F00;&#x5E76;&#x8FDB;&#x884C;&#x6CE8;&#x518C;&#xFF0C;&#x8FD9;&#x91CC;&#x4E0D;&#x8FDB;&#x884C;&#x63CF;&#x8FF0;&#x3002;&#x6253;&#x5F00;postman&#xFF0C;&#x65B0;&#x589E;&#x914D;&#x7F6E;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#x8C03;&#x7528;&#xFF0C;&#x5982;&#x4E0B;&#x56FE;&#xFF1A;</p>
+<p><img src="01.jpg" alt="01"></p>
+<p>&#x70B9;&#x51FB;send&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x53D1;&#x9001;&#x4E00;&#x4E2A;post&#x8BF7;&#x6C42;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x91C7;&#x7528;JSON&#x683C;&#x5F0F;&#x4F20;&#x9012;&#x6570;&#x636E;&#x3002;&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x64CD;&#x4F5C;&#x6211;&#x4EEC;&#x770B;&#x5230; postman &#x91CC;&#x9762;&#x4EA7;&#x751F;&#x54CD;&#x5E94;&#x6570;&#x636E;&#xFF0C;&#x4F46;&#x662F;&#x5E76;&#x6CA1;&#x6709;&#x6211;&#x6CA1;&#x65B0;&#x5EFA;&#x7684;&#x7528;&#x6237;&#x4FE1;&#x606F;&#xFF0C;&#x6211;&#x4EEC;&#x518D;&#x67E5;&#x770B;&#x6570;&#x636E;&#x5E93;&#x96C6;&#x5408;&#x91CC;&#x9762;&#x591A;&#x4E86;&#x4E00;&#x4E2A;&#x6587;&#x6863;&#xFF0C;&#x4F46;&#x662F;&#x7F3A;&#x5C11;&#x4E86;&#x7528;&#x6237;&#x4FE1;&#x606F;&#x3002;</p>
+<p><img src="02.jpg" alt="02"></p>
+<blockquote>
+<p>&#x63CF;&#x8FF0; &#x8865;&#x5145;</p>
+</blockquote>
+<p>&#x9020;&#x6210;&#x8FD9;&#x4E2A;&#x7ED3;&#x679C;&#x7684;&#x539F;&#x56E0;&#x662F;&#x6211;&#x4EEC;&#x91C7;&#x7528; JSON &#x7C7B;&#x578B;&#x6765;&#x4F20;&#x9012;&#x8BF7;&#x6C42;&#x6570;&#x636E;&#xFF0C;context &#x91CC;&#x9762;&#x83B7;&#x53D6;&#x7684;&#x8BF7;&#x6C42; body &#x4E3A; undefined&#x3002;&#x4E3A;&#x4E86;&#x8BA9; koa &#x80FD;&#x591F;&#x652F;&#x6301; JSON &#x7C7B;&#x578B;&#x7684; body &#x6570;&#x636E;&#xFF0C;&#x6211;&#x4EEC; <a href="https://github.com/koajs/bodyparser" target="_blank">koa-bodyparser</a> &#x6765;&#x5904;&#x7406;,&#xFF0C;koa-bodyparser &#x652F;&#x6301; <code>json</code>, <code>form</code> and <code>text</code> &#x7C7B;&#x578B;&#x7684; body &#x3002;</p>
+<p>&#x5B89;&#x88C5;&#xFF1A;</p>
+<pre><code class="lang-shell">npm install koa-bodyparser
+</code></pre>
+<p>&#x5728; app.js &#x4F7F;&#x7528;&#x8FD9;&#x4E2A;&#x4E2D;&#x95F4;&#x4EF6;&#xFF1A;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> Koa = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;koa&apos;</span>);
+<span class="hljs-keyword">const</span> app = <span class="hljs-keyword">new</span> Koa();
+
+&#x2026;&#x2026;
+<span class="hljs-keyword">const</span> bodyParser = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;koa-bodyparser&apos;</span>);
+
+
+&#x2026;&#x2026;
+app.use(logger());
+app.use(bodyParser());
+app.use(routes.routes()).use(routes.allowedMethods());
+&#x2026;&#x2026;
+</code></pre>
+<p>&#x91CD;&#x542F;&#x670D;&#x52A1;&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x518D;&#x6B21;&#x70B9;&#x51FB;&#x53D1;&#x9001;&#x3002;</p>
+<p><img src="03.jpg" alt="03"></p>
+<h3 id="&#x8DE8;&#x57DF;&#x8BBF;&#x95EE;">&#x8DE8;&#x57DF;&#x8BBF;&#x95EE;</h3>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x5B9E;&#x4F8B;&#xFF0C;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x80FD;&#x591F;&#x7ECF;&#x8FC7; postman &#x8BF7;&#x6C42;&#x63A5;&#x53E3;&#x5E76;&#x5B58;&#x5165;&#x6570;&#x636E;&#x4E86;&#x3002;&#x4E3A;&#x4E86;&#x9A8C;&#x8BC1;&#x63A5;&#x53E3;&#x662F;&#x5426;&#x80FD;&#x591F;&#x5728;&#x524D;&#x7AEF;&#x9879;&#x76EE;&#x91CC;&#x9762;&#x8C03;&#x7528;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x5728;&#x524D;&#x7AEF;&#x9875;&#x9762;&#x4E2D;&#x53BB;&#x8BF7;&#x6C42;&#x8FD9;&#x4E2A;&#x63A5;&#x53E3;&#x3002;&#x524D;&#x7AEF;&#x9879;&#x76EE;&#x5730;&#x5740;&#xFF1A;&#x5F85;&#x8865;&#x5145;</p>
+<p>&#x5728;&#x542F;&#x52A8;&#x9875;&#x9762;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x8F93;&#x5165;&#x5BF9;&#x5E94;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x70B9;&#x51FB;&#x6CE8;&#x518C;&#x3002;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x6D4F;&#x89C8;&#x5668;&#x7684; console &#x91CC;&#x9762;&#x62A5;&#x4E86;&#x4E00;&#x4E2A;&#x9519;&#x8BEF;&#x3002;</p>
+<p>Failed to load <a href="http://localhost:3000/v1/users/register" target="_blank">http://localhost:3000/v1/users/register</a>: Response to preflight request doesn&apos;t pass access control check: No &apos;Access-Control-Allow-Origin&apos; header is present on the requested resource. Origin &apos;<a href="http://localhost:8080" target="_blank">http://localhost:8080</a>&apos; is therefore not allowed access.</p>
+<p>&#x8FD9;&#x6B63;&#x662F;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x7684;&#x63A5;&#x53E3;&#x6CA1;&#x6709;&#x5141;&#x8BB8;&#x8DE8;&#x57DF;&#x8BBF;&#x95EE;&#x8BF7;&#x6C42;&#x5BFC;&#x81F4;&#x7684;&#x3002;</p>
+<p><img src="04.jpg" alt="04"></p>
+<blockquote>
+<p>&#x63CF;&#x8FF0; &#x8865;&#x5145;</p>
+</blockquote>
+<p>&#x4E3A;&#x4E86;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x4EEC;&#x4F7F;&#x7528; <a href="https://www.npmjs.com/package/koa-cors" target="_blank">koa-cors</a> &#x4E2D;&#x95F4;&#x4EF6;&#x6765;&#x5904;&#x7406;&#x8DE8;&#x57DF;&#x8BF7;&#x6C42;&#x3002;</p>
+<pre><code class="lang-shell">npm install koa-cors
+</code></pre>
+<p>app.js</p>
+<pre><code class="lang-js">&#x2026;&#x2026;
+<span class="hljs-keyword">const</span> cors = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;koa-cors&apos;</span>);
+
+&#x2026;&#x2026;
+app.use(logger());
+app.use(cors());
+app.use(bodyParser());
+&#x2026;&#x2026;
+</code></pre>
+<p>&#x91CD;&#x542F;&#x670D;&#x52A1;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x518D;&#x6B21;&#x70B9;&#x51FB;&#x6CE8;&#x518C;&#x3002;</p>
+<p><img src="05.jpg" alt="05"></p>
+<p>&#x6210;&#x529F;&#xFF0C;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x80FD;&#x5728;&#x524D;&#x7AEF;&#x9879;&#x76EE;&#x8C03;&#x7528;&#x6CE8;&#x518C;&#x63A5;&#x53E3;&#x6765;&#x6CE8;&#x518C;&#x7528;&#x6237;&#x4E86;&#x3002;</p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../chapter-6/chapter-6.html" class="navigation navigation-prev " aria-label="Previous page: 第六章 Mongoose 管理数据库">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../chapter-8/chapter-8.html" class="navigation navigation-next " aria-label="Next page: 第八章 JWT token验证">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第七章 RESTful API","level":"2.7","depth":1,"next":{"title":"第八章 JWT token验证","level":"2.8","depth":1,"path":"chapter-8/chapter-8.md","ref":"chapter-8/chapter-8.md","articles":[]},"previous":{"title":"第六章 Mongoose 管理数据库","level":"2.6","depth":1,"path":"chapter-6/chapter-6.md","ref":"chapter-6/chapter-6.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"chapter-7/chapter-7.md","mtime":"2018-08-29T00:20:06.208Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-08-29T00:33:50.048Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+

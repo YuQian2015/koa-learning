@@ -1,0 +1,1369 @@
+
+<!DOCTYPE HTML>
+<html lang="" >
+    <head>
+        <meta charset="UTF-8">
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <title>第十章 数据操作 · GitBook</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="GitBook 3.2.2">
+        
+        
+        
+    
+    <link rel="stylesheet" href="../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../gitbook/gitbook-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../note-1/note-1.html" />
+    
+    
+    <link rel="prev" href="../chapter-9/chapter-9.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="Type to search" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../">
+            
+                <a href="../">
+            
+                    
+                    Introduction
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+        
+        <li class="divider"></li>
+        
+        
+    
+        <li class="chapter " data-level="2.1" data-path="../chapter-1/chapter-1.html">
+            
+                <a href="../chapter-1/chapter-1.html">
+            
+                    
+                    第一章 初识KOA
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.2" data-path="../chapter-2/chapter-2.html">
+            
+                <a href="../chapter-2/chapter-2.html">
+            
+                    
+                    第二章 路由
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.3" data-path="../chapter-3/chapter-3.html">
+            
+                <a href="../chapter-3/chapter-3.html">
+            
+                    
+                    第三章 Logs 日志
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.4" data-path="../chapter-4/chapter-4.html">
+            
+                <a href="../chapter-4/chapter-4.html">
+            
+                    
+                    第四章 MongoDB 数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.5" data-path="../chapter-5/chapter-5.html">
+            
+                <a href="../chapter-5/chapter-5.html">
+            
+                    
+                    第五章 Config 项目设置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.6" data-path="../chapter-6/chapter-6.html">
+            
+                <a href="../chapter-6/chapter-6.html">
+            
+                    
+                    第六章 Mongoose 管理数据库
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.7" data-path="../chapter-7/chapter-7.html">
+            
+                <a href="../chapter-7/chapter-7.html">
+            
+                    
+                    第七章 RESTful API
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.8" data-path="../chapter-8/chapter-8.html">
+            
+                <a href="../chapter-8/chapter-8.html">
+            
+                    
+                    第八章 JWT token验证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.9" data-path="../chapter-9/chapter-9.html">
+            
+                <a href="../chapter-9/chapter-9.html">
+            
+                    
+                    第九章 数据验证
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="2.10" data-path="chapter-10.html">
+            
+                <a href="chapter-10.html">
+            
+                    
+                    第十章 数据操作
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.11" data-path="../note-1/note-1.html">
+            
+                <a href="../note-1/note-1.html">
+            
+                    
+                    笔记一 application.js
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.12" data-path="../note-2/note-2.html">
+            
+                <a href="../note-2/note-2.html">
+            
+                    
+                    笔记二 context.js
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.13" data-path="../note-3/note-3.html">
+            
+                <a href="../note-3/note-3.html">
+            
+                    
+                    笔记三 request.js
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="2.14" data-path="../note-4/note-4.html">
+            
+                <a href="../note-4/note-4.html">
+            
+                    
+                    笔记四 response.js
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://www.gitbook.com" target="blank" class="gitbook-link">
+            Published with GitBook
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href=".." >第十章 数据操作</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="&#x6570;&#x636E;&#x64CD;&#x4F5C;">&#x6570;&#x636E;&#x64CD;&#x4F5C;</h2>
+<h3 id="&#x65B0;&#x589E;&#x548C;&#x67E5;&#x8BE2;">&#x65B0;&#x589E;&#x548C;&#x67E5;&#x8BE2;</h3>
+<p>&#x5728;&#x524D;&#x9762;&#x7684;&#x4ECB;&#x7ECD;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x901A;&#x8FC7;koa2-validation&#x9A8C;&#x8BC1;&#x8BF7;&#x6C42;&#x53C2;&#x6570;&#xFF0C;&#x73B0;&#x5728;&#x8BB2;&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x63D2;&#x5165;&#x548C;&#x67E5;&#x8BE2;&#x3002;&#x4E0B;&#x9762;&#x7684;&#x4ECB;&#x7ECD;&#x5C06;&#x4EE5; material &#x4E3A;&#x4F8B;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x5728; material &#x96C6;&#x5408;&#x91CC;&#x9762;&#x63D2;&#x5165;&#x6587;&#x6863;&#xFF0C;&#x5E76;&#x4E14;&#x901A;&#x8FC7;&#x8BF7;&#x6C42;&#x67E5;&#x8BE2;&#x6587;&#x6863;&#x3002;</p>
+<p>&#x4E3A;&#x4E86;&#x5B9E;&#x73B0;&#x65B0;&#x589E;&#x548C;&#x67E5;&#x8BE2;&#xFF0C;&#x6211;&#x4EEC;&#x5148;&#x6765;&#x6539;&#x9020; material model&#xFF0C;&#x548C;&#x4E4B;&#x524D;&#x7684;user&#x521B;&#x5EFA;&#x4E00;&#x6837;&#xFF0C;&#x6211;&#x4EEC;&#x589E;&#x52A0;&#x67E5;&#x8BE2;&#x548C;&#x5355;&#x4E2A;&#x67E5;&#x8BE2;&#xFF1A;</p>
+<p>models/material.js</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;mongoose&apos;</span>);
+<span class="hljs-keyword">const</span> Schema = mongoose.Schema;
+
+<span class="hljs-keyword">let</span> materialModel = mongoose.model(<span class="hljs-string">&apos;Material&apos;</span>, <span class="hljs-keyword">new</span> Schema({
+  code: <span class="hljs-built_in">String</span>, <span class="hljs-comment">// &#x98DF;&#x6750;&#x7F16;&#x53F7;</span>
+  name: <span class="hljs-built_in">String</span>, <span class="hljs-comment">// &#x540D;&#x79F0;</span>
+  unit: <span class="hljs-built_in">String</span>, <span class="hljs-comment">// &#x5355;&#x4F4D;</span>
+  price: <span class="hljs-built_in">Number</span>, <span class="hljs-comment">// &#x5355;&#x4EF7;</span>
+  type: <span class="hljs-built_in">Number</span>, <span class="hljs-comment">// &#x7C7B;&#x578B;</span>
+  createDate: <span class="hljs-built_in">Date</span> <span class="hljs-comment">// &#x521B;&#x5EFA;&#x65F6;&#x95F4;</span>
+}));
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Material</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {
+    <span class="hljs-keyword">this</span>.material = materialModel;
+    <span class="hljs-keyword">this</span>.create = <span class="hljs-keyword">this</span>.create.bind(<span class="hljs-keyword">this</span>);
+    <span class="hljs-keyword">this</span>.find = <span class="hljs-keyword">this</span>.find.bind(<span class="hljs-keyword">this</span>);
+    <span class="hljs-keyword">this</span>.findOne = <span class="hljs-keyword">this</span>.findOne.bind(<span class="hljs-keyword">this</span>);
+  }
+  create(dataArr) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+      <span class="hljs-keyword">let</span> material = <span class="hljs-keyword">new</span> <span class="hljs-keyword">this</span>.material(dataArr);
+      material.save((err, data) =&gt; {
+
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-built_in">console</span>.log(err)
+          reject(err);
+          <span class="hljs-keyword">return</span>
+        }
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;&#x6DFB;&#x52A0;&#x6210;&#x529F;&apos;</span>);
+        resolve(data)
+      });
+    })
+  }
+
+  <span class="hljs-comment">// &#x67E5;&#x8BE2;&#x6750;&#x6599;</span>
+  find(dataArr = {}) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+
+      <span class="hljs-keyword">this</span>.material.find(dataArr, (err, docs) =&gt; {
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-built_in">console</span>.log(err);
+          reject(err);
+        } <span class="hljs-keyword">else</span> {
+          resolve(docs);
+        }
+      })
+    })
+  }
+
+  <span class="hljs-comment">// &#x67E5;&#x8BE2;&#x4E00;&#x79CD;&#x6750;&#x6599;</span>
+  findOne(reqParams) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+      <span class="hljs-keyword">this</span>.material.findOne(reqParams, (err, docs) =&gt; { <span class="hljs-comment">// &#x67E5;&#x8BE2;</span>
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-built_in">console</span>.log(err);
+          reject(err);
+        } <span class="hljs-keyword">else</span> {
+          resolve(docs);
+        }
+      })
+    })
+  }
+}
+
+<span class="hljs-keyword">const</span> material = <span class="hljs-keyword">new</span> Material()
+
+<span class="hljs-built_in">module</span>.exports = material;
+</code></pre>
+<p>&#x540C;&#x6837;&#x7684;&#xFF0C;&#x4E3A;&#x4E86;&#x64CD;&#x4F5C;&#x65B0;&#x589E;&#x548C;&#x67E5;&#x8BE2;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x9700;&#x8981;&#x4E00;&#x4E2A;controller&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5728; controllers &#x76EE;&#x5F55;&#x65B0;&#x5EFA;  material.js&#xFF1A;</p>
+<p>controllers/material.js</p>
+<pre><code class="lang-js"><span class="hljs-keyword">let</span> {material} = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;../models&apos;</span>);
+<span class="hljs-keyword">const</span> response = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;../utils/response&apos;</span>);
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MaterialController</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {}
+  <span class="hljs-comment">// &#x63A5;&#x6536;&#x8BF7;&#x6C42;&#x4F20;&#x8FC7;&#x6765;&#x7684;body</span>
+  <span class="hljs-keyword">async</span> addMaterial(reqBody) {
+    <span class="hljs-keyword">let</span> dataArr = { <span class="hljs-comment">// &#x6DFB;&#x52A0;&#x521B;&#x5EFA;&#x65F6;&#x95F4;</span>
+      ...reqBody,
+      createDate: <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>()
+    }
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&quot;&#x6DFB;&#x52A0;&#x6750;&#x6599;&quot;</span>);
+      <span class="hljs-keyword">let</span> list = <span class="hljs-keyword">await</span> material.find({name: dataArr.name});   <span class="hljs-comment">// &#x5148;&#x901A;&#x8FC7;&#x6750;&#x6599;&#x540D;&#x9A8C;&#x8BC1;&#x6750;&#x6599;&#x662F;&#x5426;&#x5B58;&#x5728;</span>
+      <span class="hljs-keyword">let</span> respon = {};
+      <span class="hljs-keyword">if</span> (list &amp;&amp; list.length &gt; <span class="hljs-number">0</span>) {
+        respon = response({errorCode: <span class="hljs-string">&apos;010&apos;</span>}); <span class="hljs-comment">// &#x5DF2;&#x7ECF;&#x5B58;&#x5728;&#x7684;&#x6750;&#x6599;&#x63D0;&#x793A;&#x9519;&#x8BEF;</span>
+      } <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">let</span> newMaterial = <span class="hljs-keyword">await</span> material.create(dataArr);
+        respon = response({data: newMaterial});
+      }
+      <span class="hljs-keyword">return</span> respon;
+    } <span class="hljs-keyword">catch</span> (err) {
+      <span class="hljs-built_in">console</span>.log(err)
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(err);
+      <span class="hljs-keyword">return</span> err;
+    }
+  }
+
+  <span class="hljs-comment">// &#x83B7;&#x53D6;&#x6750;&#x6599;</span>
+  <span class="hljs-keyword">async</span> getMaterial(reqParams) {
+    <span class="hljs-keyword">try</span> {
+      <span class="hljs-keyword">let</span> respon = {};
+      <span class="hljs-keyword">let</span> result = <span class="hljs-keyword">await</span> material.findOne(reqParams);
+      respon = response({data: result});
+      <span class="hljs-keyword">return</span> respon;
+    } <span class="hljs-keyword">catch</span> (err) {
+      <span class="hljs-built_in">console</span>.log(err)
+      <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(err);
+      <span class="hljs-keyword">return</span> err;
+    }
+
+  }
+}
+
+<span class="hljs-keyword">const</span> materialController = <span class="hljs-keyword">new</span> MaterialController();
+
+<span class="hljs-built_in">module</span>.exports = materialController;
+</code></pre>
+<p>&#x5F53;&#x7136;&#x4E5F;&#x4E0D;&#x8981;&#x5FD8;&#x8BB0;&#x5F15;&#x5165;&#x65B0;&#x589E;&#x7684;controller&#xFF0C;&#x5728; controllers/index.js &#x4E2D;&#x5F15;&#x5165;&#xFF1A;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> user = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./user&apos;</span>);
+<span class="hljs-keyword">const</span> material = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./material&apos;</span>);
+
+<span class="hljs-built_in">module</span>.exports = {
+  user, material
+};
+</code></pre>
+<p>&#x6700;&#x540E;&#x5C31;&#x662F;&#x8981;&#x5728;&#x8DEF;&#x7531;&#x914D;&#x7F6E;&#x8BF7;&#x6C42;&#x4E86;&#xFF0C;&#x5728; routes/material.js &#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5C06;&#x5BF9;&#x6DFB;&#x52A0;&#x6750;&#x6599;&#x548C;&#x67E5;&#x8BE2;&#x6750;&#x6599;&#x7684;&#x63A5;&#x53E3;&#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#xFF0C;&#x6211;&#x4EEC;&#x7528;GET&#x8BF7;&#x6C42;&#x6765;&#x67E5;&#x8BE2;&#x6750;&#x6599;&#x4FE1;&#x606F;&#xFF0C;&#x5E76;&#x4E14;&#x5BF9;&#x8BF7;&#x6C42;&#x7684;&#x53C2;&#x6570; params &#x8FDB;&#x884C;&#x4E86;&#x6821;&#x9A8C;&#xFF1A;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> validate = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;koa2-validation&apos;</span>);
+<span class="hljs-keyword">const</span> Joi = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;joi&apos;</span>);
+<span class="hljs-keyword">const</span> {material} = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;../controllers&apos;</span>);
+<span class="hljs-keyword">const</span> router = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;koa-router&apos;</span>)();
+
+<span class="hljs-keyword">const</span> addMaterial = {
+  body: {
+    code: Joi.string().required(), <span class="hljs-comment">// &#x98DF;&#x6750;&#x7F16;&#x53F7;</span>
+    name: Joi.string().required(), <span class="hljs-comment">// &#x540D;&#x79F0;</span>
+    unit: Joi.string(), <span class="hljs-comment">// &#x5355;&#x4F4D;</span>
+    price: Joi.number(), <span class="hljs-comment">// &#x5355;&#x4EF7;</span>
+    type: Joi.number(), <span class="hljs-comment">// &#x7C7B;&#x578B;</span>
+    createDate: Joi.date() <span class="hljs-comment">// &#x521B;&#x5EFA;&#x65F6;&#x95F4;</span>
+  }
+}
+
+<span class="hljs-keyword">const</span> getMaterial = {
+  params: { <span class="hljs-comment">// &#x9700;&#x8981;&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x7684;&#x6821;&#x9A8C;&#x6539;&#x4E3A;&#x4E86; params</span>
+    code: Joi.string().required(),
+  }
+}
+
+router.post(<span class="hljs-string">&apos;/add&apos;</span>, validate(addMaterial), <span class="hljs-keyword">async</span> (ctx, next) =&gt; {
+  <span class="hljs-keyword">let</span> reqBody = ctx.request.body;
+  ctx.body = <span class="hljs-keyword">await</span> material.addMaterial(reqBody);
+});
+
+router.get(<span class="hljs-string">&apos;/:code&apos;</span>, validate(getMaterial), <span class="hljs-keyword">async</span> (ctx, next) =&gt; {
+  <span class="hljs-keyword">let</span> reqParams = ctx.params;
+  ctx.body = <span class="hljs-keyword">await</span> material.getMaterial(reqParams);
+});
+
+<span class="hljs-built_in">module</span>.exports = router;
+</code></pre>
+<p>&#x91CD;&#x65B0;&#x542F;&#x52A8;&#x670D;&#x52A1;&#xFF0C;&#x5728;postman&#x91CC;&#x9762;&#x8FDB;&#x884C;&#x9A8C;&#x8BC1;&#xFF0C;&#x8FD9;&#x91CC;&#x63D0;&#x4E00;&#x4E0B;&#xFF0C;&#x7531;&#x4E8E;&#x6211;&#x4EEC;&#x7684;&#x63A5;&#x53E3;&#x90FD;&#x9700;&#x8981;token&#x9A8C;&#x8BC1;&#xFF0C;&#x56E0;&#x6B64;&#x9700;&#x8981;&#x5148;&#x8C03;&#x7528;&#x767B;&#x5F55;&#x63A5;&#x53E3;&#x83B7;&#x5F97;token&#xFF0C;&#x5728;postman&#x4E2D;&#x6DFB;&#x52A0;headers  <code>Authorization : Bearer token&#x4FE1;&#x606F;</code>  &#xFF0C;&#x5148;&#x6765;&#x65B0;&#x589E;&#x4E00;&#x4E2A;&#x6750;&#x6599;&#x8BD5;&#x8BD5;&#xFF1A;</p>
+<p>&#x9996;&#x5148;&#x662F;&#x8BBE;&#x7F6E;headers&#x9A8C;&#x8BC1;</p>
+<p><img src="01.jpg" alt="01"></p>
+<p>&#x7136;&#x540E;&#x4F20;&#x5165;&#x53C2;&#x6570;&#x70B9;&#x51FB;&#x53D1;&#x9001;&#xFF1A;</p>
+<p><img src="02.jpg" alt="02"></p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C1D;&#x8BD5;&#x91CD;&#x590D;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#xFF0C;&#x770B;&#x662F;&#x5426;&#x4F1A;&#x63D0;&#x793A;&#x6DFB;&#x52A0;&#x7684;&#x6750;&#x6599;&#x91CD;&#x590D;&#xFF0C;&#x540C;&#x6837;&#x7684;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x770B;&#x67E5;&#x8BE2;&#x662F;&#x5426;&#x6709;&#x7ED3;&#x679C;&#xFF1A;</p>
+<p><img src="03.jpg" alt="03"></p>
+<p>&#x81F3;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x80FD;&#x591F;&#x901A;&#x8FC7;&#x8BF7;&#x6C42;&#x6765;&#x505A;&#x65B0;&#x589E;&#x548C;&#x67E5;&#x8BE2;&#x4E86;&#x3002;</p>
+<h3 id="&#x4F7F;&#x7528;&#x7EE7;&#x627F;">&#x4F7F;&#x7528;&#x7EE7;&#x627F;</h3>
+<p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x5B9E;&#x6218;&#xFF0C;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#xFF0C;&#x5728;&#x65B0;&#x589E;&#x7528;&#x6237;&#x67E5;&#x8BE2;&#x7528;&#x6237;&#xFF0C;&#x65B0;&#x589E;&#x6750;&#x6599;&#x67E5;&#x8BE2;&#x6750;&#x6599;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x6211;&#x4EEC;&#x90FD;&#x4F1A;&#x53BB;&#x65B0;&#x589E;model&#x6765;&#x505A;&#x67E5;&#x8BE2;&#x548C;&#x521B;&#x5EFA;&#x6570;&#x636E;&#xFF0C;&#x7EC6;&#x5FC3;&#x89C2;&#x5BDF;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x8FD9;&#x4E9B;model&#x505A;&#x7684;&#x5DE5;&#x4F5C;&#x5B9E;&#x9645;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x65E0;&#x975E;&#x5C31;&#x662F;&#x589E;&#x5220;&#x67E5;&#x6539;&#xFF0C;&#x4E3A;&#x4E86;&#x51CF;&#x5C11;&#x91CD;&#x590D;&#xFF0C;&#x6211;&#x4EEC;&#x51B3;&#x5B9A;&#x628A;model&#x5355;&#x72EC;&#x62BD;&#x53D6;&#x51FA;&#x6765;&#x4F5C;&#x4E3A;&#x4E00;&#x4E2A;&#x7C7B;&#xFF0C;&#x7136;&#x540E;&#x901A;&#x8FC7;&#x7EE7;&#x627F;&#x8FD9;&#x4E2A;&#x7C7B;&#x6765;&#x5B9E;&#x73B0;&#x589E;&#x5220;&#x67E5;&#x6539;&#x3002;</p>
+<p>&#x4E8C;&#x8BDD;&#x4E0D;&#x8BF4;&#xFF0C;&#x5148;&#x5728;models&#x76EE;&#x5F55;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;model.js&#xFF0C;&#x628A;&#x5BF9;&#x6570;&#x636E;&#x505A;&#x7684;&#x64CD;&#x4F5C;&#x5199;&#x8FDB;&#x6765;&#xFF0C;&#x6839;&#x636E;&#x524D;&#x9762;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x505A;&#x4E86;&#x67E5;&#x8BE2;&#x548C;&#x65B0;&#x589E;&#xFF0C;&#x4E0B;&#x9762;&#x5148;&#x5199;&#x5230; model.js &#xFF0C;&#x5728;&#x63A5;&#x4E0B;&#x6765;&#x7684;&#x5B9E;&#x6218;&#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x8FD8;&#x4F1A;&#x589E;&#x52A0;&#x66F4;&#x591A;&#x7684;&#x5904;&#x7406;&#xFF1A;</p>
+<p>models/model.js</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;mongoose&apos;</span>);
+<span class="hljs-comment">// &#x65B0;&#x589E;&#x4E00;&#x4E2A;Model class</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Model</span> </span>{
+  <span class="hljs-keyword">constructor</span>(name, schema) {
+    <span class="hljs-comment">// &#x4FDD;&#x5B58;&#x4E4B;&#x524D;&#x66F4;&#x65B0;&#x65F6;&#x95F4;&#x6233;</span>
+    schema.pre(<span class="hljs-string">&apos;save&apos;</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">next</span>) </span>{
+      <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>.isNew) {
+        <span class="hljs-keyword">this</span>.createDate = <span class="hljs-keyword">this</span>.updateDate = <span class="hljs-built_in">Date</span>.now()
+      }
+      <span class="hljs-keyword">else</span> {
+        <span class="hljs-keyword">this</span>.updateDate = <span class="hljs-built_in">Date</span>.now()
+      }
+      next()
+    })
+    <span class="hljs-comment">// &#x521B;&#x5EFA;model</span>
+    <span class="hljs-keyword">this</span>.model = mongoose.model(name, schema);
+    <span class="hljs-keyword">this</span>.find = <span class="hljs-keyword">this</span>.find.bind(<span class="hljs-keyword">this</span>); <span class="hljs-comment">// &#x7ED1;&#x5B9A;&#x4E0A;&#x4E0B;&#x6587;</span>
+    <span class="hljs-keyword">this</span>.create = <span class="hljs-keyword">this</span>.create.bind(<span class="hljs-keyword">this</span>);
+    <span class="hljs-keyword">this</span>.findOne = <span class="hljs-keyword">this</span>.findOne.bind(<span class="hljs-keyword">this</span>);
+  }
+
+  <span class="hljs-comment">// &#x67E5;&#x8BE2;</span>
+  find(dataArr = {}) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+      <span class="hljs-comment">// &#x4E0A;&#x9762;&#x7ED1;&#x5B9A;&#x4E86;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;this.model</span>
+      <span class="hljs-keyword">this</span>.model.find(dataArr, (err, docs) =&gt; {
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-built_in">console</span>.log(err);
+          reject(err);
+        } <span class="hljs-keyword">else</span> {
+          resolve(docs);
+        }
+      })
+    })
+  }
+
+  <span class="hljs-comment">// &#x67E5;&#x8BE2;&#x5355;&#x4E2A;</span>
+  findOne(dataArr) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+      <span class="hljs-keyword">this</span>.model.findOne(dataArr, (err, docs) =&gt; {
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-built_in">console</span>.log(err);
+          reject(err);
+        } <span class="hljs-keyword">else</span> {
+          resolve(docs);
+        }
+      })
+    })
+  }
+
+  <span class="hljs-comment">// &#x521B;&#x5EFA;</span>
+  create(dataArr) {
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+      <span class="hljs-keyword">let</span> model = <span class="hljs-keyword">new</span> <span class="hljs-keyword">this</span>.model(dataArr);
+      model.save((err, data) =&gt; {
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-built_in">console</span>.log(err)
+          reject(err);
+          <span class="hljs-keyword">return</span>
+        }
+        <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&apos;&#x521B;&#x5EFA;&#x6210;&#x529F;&apos;</span>);
+        resolve(data)
+      });
+    })
+  }
+}
+
+<span class="hljs-built_in">module</span>.exports = Model;
+</code></pre>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x7684;&#x4E8B;&#x60C5;&#x5C31;&#x53D8;&#x5F97;&#x66F4;&#x7B80;&#x5355;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x6765;&#x6539;&#x9020;&#x539F;&#x6765;&#x7684;models/material.js &#x548C; models/user.js &#xFF1A;</p>
+<p>models/material.js</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;mongoose&apos;</span>);
+<span class="hljs-keyword">const</span> Schema = mongoose.Schema;
+<span class="hljs-keyword">const</span> Model = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./model&apos;</span>);
+
+<span class="hljs-keyword">const</span> materialSchema = <span class="hljs-keyword">new</span> Schema({
+  code: <span class="hljs-built_in">Number</span>, <span class="hljs-comment">// &#x98DF;&#x6750;&#x7F16;&#x53F7;</span>
+  name: <span class="hljs-built_in">String</span>, <span class="hljs-comment">// &#x540D;&#x79F0;</span>
+  unit: <span class="hljs-built_in">String</span>, <span class="hljs-comment">// &#x5355;&#x4F4D;</span>
+  price: <span class="hljs-built_in">Number</span>, <span class="hljs-comment">// &#x5355;&#x4EF7;</span>
+  type: <span class="hljs-built_in">Number</span>, <span class="hljs-comment">// &#x7C7B;&#x578B;</span>
+  createDate: <span class="hljs-built_in">Date</span>, <span class="hljs-comment">// &#x521B;&#x5EFA;&#x65F6;&#x95F4;</span>
+  updateDate: <span class="hljs-built_in">Date</span> <span class="hljs-comment">// &#x4FEE;&#x6539;&#x65F6;&#x95F4;</span>
+});
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Material</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {
+    <span class="hljs-keyword">super</span>(<span class="hljs-string">&apos;Material&apos;</span>, materialSchema); <span class="hljs-comment">// &#x8C03;&#x7528;&#x7236;&#x7EA7;class&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF0C;&#x5E76;&#x4E14;&#x628A;&#x81EA;&#x5DF1;&#x7684;schema&#x4F20;&#x9012;&#x8FC7;&#x53BB;</span>
+  }
+}
+
+<span class="hljs-keyword">const</span> material = <span class="hljs-keyword">new</span> Material();
+
+<span class="hljs-built_in">module</span>.exports = material;
+</code></pre>
+<p>models/user.js</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;mongoose&apos;</span>);
+<span class="hljs-keyword">const</span> Schema = mongoose.Schema;
+<span class="hljs-keyword">const</span> Model = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./model&apos;</span>);
+
+<span class="hljs-comment">// &#x521B;&#x5EFA;&#x4E00;&#x4E2A;User schema&#xFF0C;&#x5305;&#x542B;&#x7528;&#x6237;&#x65B0;&#x589E;&#x7684;&#x5B57;&#x6BB5;&#x5B9A;&#x4E49;</span>
+<span class="hljs-keyword">let</span> userSchema = <span class="hljs-keyword">new</span> Schema({
+  userNo: <span class="hljs-built_in">String</span>,
+  email: <span class="hljs-built_in">String</span>,
+  password: <span class="hljs-built_in">String</span>,
+  name: <span class="hljs-built_in">String</span>,
+  sex: <span class="hljs-built_in">Number</span>,
+  userType: <span class="hljs-built_in">String</span>,
+  avatar: <span class="hljs-built_in">String</span>,
+  createDate: <span class="hljs-built_in">Date</span>,
+  updateDate: <span class="hljs-built_in">Date</span>
+});
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">User</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {
+    <span class="hljs-keyword">super</span>(<span class="hljs-string">&apos;User&apos;</span>, userSchema);
+  }
+}
+<span class="hljs-keyword">const</span> user = <span class="hljs-keyword">new</span> User();
+
+<span class="hljs-built_in">module</span>.exports = user;
+</code></pre>
+<p>&#x91CD;&#x65B0;&#x542F;&#x52A8;&#x670D;&#x52A1;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x518D;&#x6B21;&#x8C03;&#x7528;&#x63A5;&#x53E3;&#x9A8C;&#x8BC1;&#x4E86;&#x3002;</p>
+<h3 id="&#x81EA;&#x589E;&#x4EE3;&#x7801;">&#x81EA;&#x589E;&#x4EE3;&#x7801;</h3>
+<p>&#x5173;&#x4E8E;&#x524D;&#x9762;&#x5199;&#x597D;&#x7684;&#x6750;&#x6599;&#x65B0;&#x589E;&#x63A5;&#x53E3;&#xFF0C;&#x7531;&#x4E8E;&#x524D;&#x7AEF;&#x8C03;&#x7528;&#x65F6;&#x9700;&#x8981;&#x4F20;&#x9012;code&#xFF0C;code&#x8868;&#x793A;&#x6750;&#x6599;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x5E76;&#x4E14;&#x63A5;&#x53E3;&#x53EA;&#x5224;&#x65AD;&#x4E86;&#x6750;&#x6599;&#x540D;&#x662F;&#x5426;&#x91CD;&#x590D;&#xFF0C;&#x5E76;&#x6CA1;&#x6709;&#x5224;&#x65AD;code&#xFF0C;&#x56E0;&#x6B64;&#xFF0C;&#x6211;&#x4EEC;&#x6253;&#x7B97;&#x505A;&#x4E00;&#x4E2A;&#x81EA;&#x589E;&#x7684;code&#xFF0C;&#x7531;&#x540E;&#x53F0;&#x7BA1;&#x7406;&#xFF0C;&#x5E76;&#x4E14;&#x524D;&#x7AEF;&#x5E76;&#x4E0D;&#x9700;&#x8981;&#x4F20;&#x9012;code&#x3002;</p>
+<p>MongoDB&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;12-byte ObjectId  &#x7684; _id &#x5B57;&#x6BB5;&#x6765;&#x4F5C;&#x4E3A;&#x6587;&#x6863;&#x7684;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#xFF0C;&#x7136;&#x800C;&#x6709;&#x65F6;&#x5019;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x4FEE;&#x6539;&#x8FD9;&#x4E2A;&#x5B57;&#x6BB5;&#xFF0C;&#x6216;&#x8005;&#x4FEE;&#x6539;&#x522B;&#x7684;&#x5B57;&#x6BB5;&#xFF0C;&#x4F7F;&#x5B83;&#x7684;&#x503C;&#x80FD;&#x591F;&#x81EA;&#x589E;&#xFF0C;&#x56E0;&#x6B64;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x65B0;&#x589E;&#x4E00;&#x4E2A;MongoDB&#x6587;&#x6863;&#x63A8;&#x8350;&#x7684; counters &#x96C6;&#x5408;&#xFF0C;&#x4EE5;&#x672C;&#x5B9E;&#x6218;&#x4E3A;&#x4F8B;&#xFF0C;&#x6211;&#x4EEC;&#x63A5;&#x4E0B;&#x6765;&#x4E3A; material &#x65B0;&#x589E;&#x7684;&#x6587;&#x6863;&#x7684;code&#x5B57;&#x6BB5;&#x505A;&#x81EA;&#x589E;&#x3002;</p>
+<p>&#x9996;&#x5148;&#xFF0C;&#x8FD9;&#x4E2A;&#x96C6;&#x5408;&#x5305;&#x542B;&#x4E24;&#x4E2A;&#x5B57;&#x6BB5; <code>_id</code> &#x548C; <code>sequenceValue</code> , sequenceValue &#x5C31;&#x662F;&#x7528;&#x6765;&#x8BB0;&#x5F55;&#x6700;&#x65B0;&#x7684;&#x6570;&#x503C;&#xFF0C;&#x800C; _id &#x5C06;&#x7528;&#x6765;&#x6807;&#x8BC6;&#x5F53;&#x524D;&#x7684;&#x503C;&#x662F;&#x5C5E;&#x4E8E;&#x54EA;&#x4E00;&#x79CD;&#x7C7B;&#x578B;&#x7684;&#x81EA;&#x589E;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x5728; models &#x76EE;&#x5F55;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A; counters.js&#xFF0C;&#x7136;&#x540E;&#x521B;&#x5EFA;&#x9700;&#x8981;&#x7684; model &#xFF0C;&#x5728;&#x8FD9;&#x4E2A; model &#x4E2D;&#xFF0C;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x4E86;&#x80FD;&#x591F;&#x7528;&#x6765;&#x81EA;&#x589E;&#x7684;&#x65B9;&#x6CD5; <code>findByIdAndUpdate</code> &#x5E76;&#x4E14;&#x5BF9; sequenceValue &#x7684;&#x503C;&#x8FDB;&#x884C;&#x4E86;&#x52A0;1&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#xFF0C;&#x5982;&#x679C;&#x4E00;&#x5F00;&#x59CB;&#x6CA1;&#x6709;&#x8FD9;&#x4E2A;&#x6587;&#x6863;&#xFF0C;&#x6211;&#x4EEC;&#x9700;&#x8981; <code>{ new: true,  upsert: true}</code> &#x9009;&#x9879;&#x6765;&#x521B;&#x5EFA;&#x9ED8;&#x8BA4;&#x7684;&#x6587;&#x6863;&#x3002;</p>
+<p>models/counters.js</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;mongoose&apos;</span>);
+<span class="hljs-keyword">const</span> Schema = mongoose.Schema;
+<span class="hljs-keyword">const</span> Model = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./model&apos;</span>);
+
+<span class="hljs-keyword">let</span> countersSchema = <span class="hljs-keyword">new</span> Schema({
+  <span class="hljs-string">&quot;_id&quot;</span>: {
+    type: <span class="hljs-built_in">String</span>,
+    required: <span class="hljs-literal">true</span>
+  },
+  <span class="hljs-string">&quot;sequenceValue&quot;</span>: {
+    type: <span class="hljs-built_in">Number</span>,
+    <span class="hljs-keyword">default</span>: <span class="hljs-number">1</span>
+  }
+});
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Counters</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {
+    <span class="hljs-keyword">super</span>(<span class="hljs-string">&apos;Counters&apos;</span>, countersSchema);
+    <span class="hljs-keyword">this</span>.findByIdAndUpdate = <span class="hljs-keyword">this</span>.findByIdAndUpdate.bind(<span class="hljs-keyword">this</span>);
+  }
+
+  findByIdAndUpdate(id) {
+
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+      <span class="hljs-comment">// &#x5982;&#x679C;&#x6709;&#x8BA1;&#x6570;&#xFF0C;&#x5219;&#x5BF9;&#x5E8F;&#x5217;&#x503C;&#x8FDB;&#x884C;&#x81EA;&#x589E;,&#x5982;&#x679C;&#x6CA1;&#x6709;&#x5219;&#x521B;&#x5EFA;</span>
+      <span class="hljs-keyword">this</span>.model.findByIdAndUpdate({
+        _id: id
+      }, {
+        $inc: {
+          sequenceValue: <span class="hljs-number">1</span>
+        }
+      }, {
+        <span class="hljs-keyword">new</span>: <span class="hljs-literal">true</span>,
+        upsert: <span class="hljs-literal">true</span>
+      }, (err, docs) =&gt; {
+        <span class="hljs-keyword">if</span> (err) {
+          reject(err);
+        } <span class="hljs-keyword">else</span> {
+          resolve(docs);
+        }
+      })
+    })
+  }
+}
+
+<span class="hljs-keyword">const</span> counters = <span class="hljs-keyword">new</span> Counters();
+
+<span class="hljs-built_in">module</span>.exports = counters;
+</code></pre>
+<p>&#x51C6;&#x5907;&#x597D; counters &#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x9700;&#x8981;&#x5BF9;&#x4E4B;&#x524D;&#x7684; models/material.js &#x8FDB;&#x884C;&#x4FEE;&#x6539;&#xFF0C;&#x9996;&#x5148;&#x6211;&#x4EEC;&#x628A;&#x6750;&#x6599;&#x7684;code&#x8BBE;&#x7F6E;&#x4E3A; Number &#x7C7B;&#x578B;&#x5E76;&#x4E14;&#x9ED8;&#x8BA4;&#x503C;&#x4E3A;1&#xFF0C;&#x7136;&#x540E;&#x4F7F;&#x7528;mongoose&#x7684;pre&#x94A9;&#x5B50;&#x5728;&#x50A8;&#x5B58;&#x4E4B;&#x524D;&#x5BF9;model&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x770B;&#x5230;&#xFF0C;&#x5728;&#x66F4;&#x65B0;counters&#x6210;&#x529F;&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x4F1A;&#x8BBE;&#x7F6E; material &#x7684; code &#xFF0C;&#x5E76;&#x4E14;&#x8C03;&#x7528;&#x4E86;&#x94A9;&#x5B50;&#x7684; next &#x8FDB;&#x5165;&#x4E0B;&#x4E00;&#x4E2A;&#x5904;&#x7406;&#x3002;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> mongoose = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;mongoose&apos;</span>);
+<span class="hljs-keyword">const</span> Schema = mongoose.Schema;
+<span class="hljs-keyword">const</span> Model = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./model&apos;</span>);
+<span class="hljs-keyword">const</span> Counters = <span class="hljs-built_in">require</span>(<span class="hljs-string">&apos;./Counters&apos;</span>);
+
+<span class="hljs-keyword">const</span> materialSchema = <span class="hljs-keyword">new</span> Schema({
+  code: {
+    type: <span class="hljs-built_in">Number</span>,
+    <span class="hljs-keyword">default</span>: <span class="hljs-number">1</span>
+  }, <span class="hljs-comment">// &#x98DF;&#x6750;&#x7F16;&#x53F7;</span>
+
+    <span class="hljs-comment">// &#x7701;&#x7565;</span>
+})
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Material</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Model</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {
+    materialSchema.pre(<span class="hljs-string">&apos;save&apos;</span>, <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">next</span>) </span>{
+      <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">if</span>(<span class="hljs-keyword">this</span>.code == <span class="hljs-number">1</span>) { <span class="hljs-comment">// &#x5BF9;&#x4E8E;&#x5DF2;&#x6709;ID&#x7684;&#x6570;&#x636E;&#x4E0D;&#x505A;&#x81EA;&#x589E;</span>
+          <span class="hljs-keyword">let</span> counter = <span class="hljs-keyword">await</span> Counters.findByIdAndUpdate(<span class="hljs-string">&apos;materialId&apos;</span>);
+          <span class="hljs-keyword">this</span>.code = counter.sequenceValue;
+          next()
+        }
+      } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-built_in">console</span>.log(err);
+        <span class="hljs-keyword">return</span> next(err);
+      }
+    });
+    <span class="hljs-keyword">super</span>(<span class="hljs-string">&apos;Material&apos;</span>, materialSchema); <span class="hljs-comment">// &#x8C03;&#x7528;&#x7236;&#x7EA7;class&#x7684;&#x6784;&#x9020;&#xFF0C;&#x5E76;&#x4E14;&#x628A;&#x81EA;&#x5DF1;&#x7684;model&#x4F20;&#x9012;&#x8FC7;&#x53BB;</span>
+  }
+}
+
+
+<span class="hljs-comment">// &#x7701;&#x7565;</span>
+</code></pre>
+<p>&#x7136;&#x540E;&#x5269;&#x7684;&#x5C31;&#x662F;&#x5904;&#x7406;controllers&#x548C; router&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x5728; controllers/material.js &#x91CC;&#x628A;&#x6DFB;&#x52A0;&#x6750;&#x6599;&#x63A5;&#x6536;&#x53C2;&#x6570;&#x53BB;&#x6389;&#x65E5;&#x671F;&#x7684;&#x521B;&#x5EFA;&#xFF0C;&#x5E76;&#x4E14;&#x5728; routes/material.js &#x91CC;&#x9762;&#x53BB;&#x6389;code&#x5FC5;&#x586B;&#x7684;&#x6821;&#x9A8C;&#x3002;</p>
+<p> controllers/material.js</p>
+<pre><code class="lang-js">
+<span class="hljs-comment">// &#x7701;&#x7565;</span>
+
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MaterialController</span> </span>{
+  <span class="hljs-keyword">constructor</span>() {}
+  <span class="hljs-comment">// &#x63A5;&#x6536;&#x8BF7;&#x6C42;&#x4F20;&#x8FC7;&#x6765;&#x7684;body</span>
+  <span class="hljs-keyword">async</span> addMaterial(reqBody) {
+    <span class="hljs-keyword">let</span> dataArr = {
+      ...reqBody
+    }
+<span class="hljs-comment">// &#x7701;&#x7565;</span>
+</code></pre>
+<p> routes/material.js</p>
+<pre><code class="lang-js"><span class="hljs-comment">// &#x7701;&#x7565;</span>
+<span class="hljs-keyword">const</span> addMaterial = {
+  body: {
+    <span class="hljs-comment">// code: Joi.string().required(), // &#x628A;&#x8FD9;&#x91CC;&#x7684;&#x6821;&#x9A8C;&#x53BB;&#x6389;</span>
+    name: Joi.string().required(),
+    unit: Joi.string(),
+    price: Joi.number(),
+    type: Joi.number(),
+    <span class="hljs-comment">// createDate: Joi.date() // &#x7531;&#x4E8E;&#x521B;&#x5EFA;&#x65F6;&#x95F4;&#x548C;&#x66F4;&#x65B0;&#x65F6;&#x95F4;&#x5DF2;&#x7ECF;&#x653E;&#x5230;pre&#x94A9;&#x5B50;&#x91CC;&#x9762;&#x5904;&#x7406;&#xFF0C;&#x8FD9;&#x91CC;&#x53D6;&#x6D88;&#x8C03;&#x7528;&#x65F6;&#x7684;&#x4F20;&#x9012;&#xFF0C;&#x6211;&#x4EEC;&#x540C;&#x65F6;&#x4E5F;&#x53EF;&#x4EE5;&#x79FB;&#x9664;&#x5176;&#x5B83;model&#x4EE5;&#x53CA;controller&#x91CC;&#x9762;&#x5BF9;&#x521B;&#x5EFA;&#x65F6;&#x95F4;&#x7684;&#x5B9A;&#x4E49;&#x548C;&#x8BBE;&#x7F6E;&#x3002;</span>
+  }
+}
+<span class="hljs-comment">// &#x7701;&#x7565;</span>
+</code></pre>
+<p>&#x7136;&#x540E;&#x6211;&#x4EEC;&#x542F;&#x52A8;&#x670D;&#x52A1;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x8C03;&#x7528;&#x63A5;&#x53E3;&#x8FDB;&#x884C;&#x6D4B;&#x8BD5;&#x4E86;&#xFF0C;&#x65B0;&#x589E;&#x6750;&#x6599;&#x53EF;&#x4EE5;&#x4E0D;&#x4F20;&#x9012;code&#xFF0C;&#x5B8C;&#x5168;&#x6709;&#x540E;&#x53F0;&#x81EA;&#x52A8;&#x589E;&#x52A0;code&#x7684;&#x503C;&#x3002;</p>
+<p><img src="04.jpg" alt="04"></p>
+<h3 id="&#x5206;&#x9875;&#x67E5;&#x8BE2;">&#x5206;&#x9875;&#x67E5;&#x8BE2;</h3>
+<p>&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x4E86;&#x6750;&#x6599;&#x6DFB;&#x52A0;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x5C06;&#x4E3A;&#x6750;&#x6599;&#x5217;&#x8868;&#x7684;&#x67E5;&#x8BE2;&#x589E;&#x52A0;&#x5206;&#x9875;&#x3002;&#x9996;&#x5148;&#x8FD8;&#x662F;&#x4E3A;model&#x589E;&#x52A0;&#x67E5;&#x8BE2;&#x5217;&#x8868;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<p>models/model.js</p>
+<pre><code class="lang-js">  <span class="hljs-keyword">constructor</span>(name, schema) {
+    <span class="hljs-comment">// &#x7701;&#x7565;</span>
+    <span class="hljs-keyword">this</span>.pageSize = <span class="hljs-number">10</span>; <span class="hljs-comment">// &#x5728;&#x8FD9;&#x91CC;&#x589E;&#x52A0;&#x4E86;&#x9ED8;&#x8BA4;&#x4E00;&#x9875;&#x67E5;&#x8BE2;10&#x6761;</span>
+
+    <span class="hljs-comment">// &#x7701;&#x7565;</span>
+  }
+
+  <span class="hljs-comment">// &#x67E5;&#x8BE2;</span>
+  find(dataArr = {}) {
+    <span class="hljs-keyword">let</span> pageSize,
+      page;
+    <span class="hljs-keyword">if</span> (dataArr.pageSize || dataArr.page) { <span class="hljs-comment">// &#x5982;&#x679C;&#x5728;&#x67E5;&#x8BE2;&#x8FC7;&#x7A0B;&#x4E2D;&#x4F20;&#x9012;&#x4E86;&#x5206;&#x9875;pageSize&#x6216;&#x8005;&#x524D;&#x9875;page</span>
+      pageSize = dataArr.pageSize || <span class="hljs-keyword">this</span>.pageSize; <span class="hljs-comment">// &#x4F7F;&#x7528;&#x5206;&#x9875;</span>
+      page = dataArr.page || <span class="hljs-number">1</span>;
+      dataArr.pageSize = <span class="hljs-literal">undefined</span>;
+      dataArr.page = <span class="hljs-literal">undefined</span>;
+      <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+        <span class="hljs-keyword">this</span>.model.find(dataArr).limit(pageSize).skip(pageSize * (page - <span class="hljs-number">1</span>)).sort({createDate: <span class="hljs-number">-1</span>}).lean().exec((err, docs) =&gt; {
+          <span class="hljs-keyword">if</span> (err) {
+            <span class="hljs-built_in">console</span>.log(err);
+            reject(err);
+          } <span class="hljs-keyword">else</span> {
+            resolve(docs);
+          }
+        });
+      })
+    }
+    <span class="hljs-comment">// &#x5982;&#x679C;&#x6CA1;&#x6709;&#x4F20;&#x9012;&#x5206;&#x9875;&#xFF0C;&#x4FDD;&#x7559;&#x65E7;&#x7684;&#x67E5;&#x8BE2;</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Promise</span>((resolve, reject) =&gt; {
+      <span class="hljs-comment">// &#x4E0A;&#x9762;&#x7ED1;&#x5B9A;&#x4E86;&#x4E0A;&#x4E0B;&#x6587;&#xFF0C;&#x8FD9;&#x91CC;&#x4F7F;&#x7528;this.model</span>
+      <span class="hljs-keyword">this</span>.model.find(dataArr, (err, docs) =&gt; {
+        <span class="hljs-keyword">if</span> (err) {
+          <span class="hljs-built_in">console</span>.log(err);
+          reject(err);
+        } <span class="hljs-keyword">else</span> {
+          resolve(docs);
+        }
+      })
+    })
+  }
+  <span class="hljs-comment">// &#x7701;&#x7565;</span>
+</code></pre>
+<p>controllers/material.js&#x589E;&#x52A0;&#x4E86;&#x65B0;&#x7684;&#x67E5;&#x8BE2;&#x65B9;&#x6CD5;</p>
+<pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MaterialController</span> </span>{
+  <span class="hljs-comment">//&#x7701;&#x7565;</span>
+
+
+    <span class="hljs-comment">// &#x67E5;&#x8BE2;&#x6750;&#x6599;</span>
+    <span class="hljs-keyword">async</span> findMaterial(reqParams) {
+      <span class="hljs-keyword">try</span> {
+        <span class="hljs-keyword">let</span> respon = {};
+        <span class="hljs-keyword">let</span> result = <span class="hljs-keyword">await</span> material.find(reqParams);
+        respon = response({data: result});
+        <span class="hljs-keyword">return</span> respon;
+      } <span class="hljs-keyword">catch</span> (err) {
+        <span class="hljs-built_in">console</span>.log(err)
+        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-built_in">Error</span>(err);
+        <span class="hljs-keyword">return</span> err;
+      }
+
+    }
+}
+</code></pre>
+<p>&#x63A5;&#x4E0B;&#x6765;&#x5C31;&#x662F;&#x914D;&#x7F6E;&#x4E00;&#x4E2A;&#x67E5;&#x8BE2;&#x63A5;&#x53E3;&#x4E86;&#xFF1A;</p>
+<p>routes/material.js</p>
+<pre><code class="lang-js"><span class="hljs-comment">//&#x7701;&#x7565;</span>
+
+<span class="hljs-keyword">const</span> findMaterial = {
+  query: {
+    page: Joi.number(), <span class="hljs-comment">// &#x9875;&#x7801;</span>
+    pageSize: Joi.number(), <span class="hljs-comment">// &#x9875;&#x6570;</span>
+    name: Joi.string() <span class="hljs-comment">// &#x5173;&#x952E;&#x8BCD;</span>
+  }
+}
+
+router.get(<span class="hljs-string">&apos;/&apos;</span>, validate(findMaterial), <span class="hljs-keyword">async</span> (ctx, next) =&gt; {
+  <span class="hljs-keyword">let</span> reqParams = ctx.query;
+  ctx.body = <span class="hljs-keyword">await</span> material.findMaterial(reqParams);
+});
+
+<span class="hljs-comment">//&#x7701;&#x7565;</span>
+
+<span class="hljs-built_in">module</span>.exports = router;
+</code></pre>
+<p>&#x53EF;&#x4EE5;&#x542F;&#x52A8;&#x670D;&#x52A1;&#x8C03;&#x7528;&#x63A5;&#x53E3;&#x67E5;&#x770B;&#x7ED3;&#x679C;&#x4E86;&#x3002;</p>
+<p><img src="05.jpg" alt="05"></p>
+<h3 id="&#x4FEE;&#x6539;&#x548C;&#x5220;&#x9664;">&#x4FEE;&#x6539;&#x548C;&#x5220;&#x9664;</h3>
+<h3 id="&#x6587;&#x6863;&#x7684;&#x5173;&#x8054;">&#x6587;&#x6863;&#x7684;&#x5173;&#x8054;</h3>
+<p><a href="https://stackoverflow.com/questions/21142524/mongodb-mongoose-how-to-find-subdocument-in-found-document" target="_blank">https://stackoverflow.com/questions/21142524/mongodb-mongoose-how-to-find-subdocument-in-found-document</a></p>
+<p>MongoDB, Mongoose: How to find subdocument in found document</p>
+<p>I&apos;m stuck on trying to get subdocument by <code>_id</code> in found document.</p>
+<p>Example Schema</p>
+<pre><code>var User = mongoose.Schema({
+        name:       String,
+        photos:    [{src: String, title: String}]
+    });
+var Team = db.model(&apos;Team&apos;, Team);
+</code></pre><p>Now I&apos;m getting one user:</p>
+<pre><code>myUser = User.findOne(...)...
+</code></pre><p>How can I get now <code>src</code> of his photo by it&apos;s <code>_id</code> (or <code>title</code>)?</p>
+<p>Something like:</p>
+<pre><code>myUser.photos.findOne({&apos;_id&apos;: myId})
+</code></pre><p>You need to either create a NEW Schema for your embedded documents, or leave the type declaration as a blank array so <code>mongoose</code> interprets as a <code>Mixed</code> type.</p>
+<pre><code>var userSchema = new mongoose.Schema({
+  name: String,
+  photos: []
+});
+var User = mongoose.model(&apos;User&apos;, userSchema);
+</code></pre><h3 id="--or---">-- OR --</h3>
+<pre><code>var userSchema = new mongoose.Schema({
+  name: String,
+  photos: [photoSchema]
+});
+
+var photoSchema = new mongoose.Schema({
+  src: String,
+  title: String
+});
+
+var User = mongoose.model(&apos;User&apos;, userSchema);
+</code></pre><p>And then you can save thusly:</p>
+<pre><code>var user = new User({
+  name: &apos;Bob&apos;,
+  photos: [ { src: &apos;/path/to/photo.png&apos; }, { src: &apos;/path/to/other/photo.png&apos; } ]
+});
+
+user.save();
+</code></pre><p>From here, you can simply use array primitives to find your embedded docs:</p>
+<pre><code>User.findOne({name: &apos;Bob&apos;}, function (err, user) {
+
+  var photo = user.photos.filter(function (photo) {
+    return photo.title === &apos;My awesome photo&apos;;
+  }).pop();
+
+  console.log(photo); //logs { src: &apos;/path/to/photo.png&apos;, title: &apos;My awesome photo&apos; }
+});
+</code></pre><h3 id="--or---">-- OR --</h3>
+<p>You can use the special <code>id()</code> method in embedded docs to look up by id:</p>
+<pre><code>User.findOne({name: &apos;Bob&apos;}, function (err, user) {
+    user.photos.id(photo._id);
+});
+</code></pre><p>You can read more here: <a href="http://mongoosejs.com/docs/subdocs.html" target="_blank">http://mongoosejs.com/docs/subdocs.html</a></p>
+<p>Make sure you <strong>DON&apos;T</strong> register the schema with mongoose, otherwise it will create a new collection. Also keep in mind that if the child documents are searched for often, it would be a good idea to use refs and population like below. Even though it hits the DB twice, its much faster because of indexing. Also, <code>mongoose</code> will bonk on double nesting docs (i.e. The children have children docs as well)</p>
+<pre><code>var user = mongoose.Schema({
+  name: String,
+  photos: [{ type: Schema.Types.ObjectId, ref: &apos;Photo&apos; }]
+});
+
+var photo = mongoose.Schema({
+  src: String,
+  title: String
+});
+
+User
+  .findOne({ name: &apos;foo&apos; })
+  .populate(&apos;photos&apos;)
+  .exec(function (err, user) {
+    console.log(user.photos[0].src);
+  });
+</code></pre><p>Relevant docs can be found here <a href="http://mongoosejs.com/docs/populate.html" target="_blank">http://mongoosejs.com/docs/populate.html</a></p>
+<h3 id="httpmongoosejscomdocspopulatehtml"><a href="http://mongoosejs.com/docs/populate.html" target="_blank">http://mongoosejs.com/docs/populate.html</a></h3>
+<h2 id="populate">Populate</h2>
+<p>MongoDB has the join-like <a href="https://docs.mongodb.com/manual/reference/operator/aggregation/lookup/" target="_blank">$lookup</a> aggregation operator in versions &gt;= 3.2. Mongoose has a more powerful alternative called <code>populate()</code>, which lets you reference documents in other collections.</p>
+<p>Population is the process of automatically replacing the specified paths in the document with document(s) from other collection(s). We may populate a single document, multiple documents, plain object, multiple plain objects, or all objects returned from a query. Let&apos;s look at some examples.</p>
+<pre><code>var mongoose = require(&apos;mongoose&apos;);
+var Schema = mongoose.Schema;
+
+var personSchema = Schema({
+  _id: Schema.Types.ObjectId,
+  name: String,
+  age: Number,
+  stories: [{ type: Schema.Types.ObjectId, ref: &apos;Story&apos; }]
+});
+
+var storySchema = Schema({
+  author: { type: Schema.Types.ObjectId, ref: &apos;Person&apos; },
+  title: String,
+  fans: [{ type: Schema.Types.ObjectId, ref: &apos;Person&apos; }]
+});
+
+var Story = mongoose.model(&apos;Story&apos;, storySchema);
+var Person = mongoose.model(&apos;Person&apos;, personSchema);
+</code></pre><p>So far we&apos;ve created two <a href="http://mongoosejs.com/docs/models.html" target="_blank">Models</a>. Our <code>Person</code> model has its <code>stories</code> field set to an array of <code>ObjectId</code>s. The <code>ref</code>option is what tells Mongoose which model to use during population, in our case the <code>Story</code> model. All <code>_id</code>s we store here must be document <code>_id</code>s from the <code>Story</code> model.</p>
+<p><strong>Note</strong>: <code>ObjectId</code>, <code>Number</code>, <code>String</code>, and <code>Buffer</code> are valid for use as refs. However, you should use <code>ObjectId</code> unless you are an advanced user and have a good reason for doing so.</p>
+<h3 id="saving-refs"><a href="http://mongoosejs.com/docs/populate.html#saving-refs" target="_blank">Saving refs</a></h3>
+<p>Saving refs to other documents works the same way you normally save properties, just assign the <code>_id</code> value:</p>
+<pre><code>var author = new Person({
+  _id: new mongoose.Types.ObjectId(),
+  name: &apos;Ian Fleming&apos;,
+  age: 50
+});
+
+author.save(function (err) {
+  if (err) return handleError(err);
+
+  var story1 = new Story({
+    title: &apos;Casino Royale&apos;,
+    author: author._id    // assign the _id from the person
+  });
+
+  story1.save(function (err) {
+    if (err) return handleError(err);
+    // thats it!
+  });
+});
+</code></pre><h3 id="population"><a href="http://mongoosejs.com/docs/populate.html#population" target="_blank">Population</a></h3>
+<p>So far we haven&apos;t done anything much different. We&apos;ve merely created a <code>Person</code> and a <code>Story</code>. Now let&apos;s take a look at populating our story&apos;s <code>author</code> using the query builder:</p>
+<pre><code>Story.
+  findOne({ title: &apos;Casino Royale&apos; }).
+  populate(&apos;author&apos;).
+  exec(function (err, story) {
+    if (err) return handleError(err);
+    console.log(&apos;The author is %s&apos;, story.author.name);
+    // prints &quot;The author is Ian Fleming&quot;
+  });
+</code></pre><p>Populated paths are no longer set to their original <code>_id</code> , their value is replaced with the mongoose document returned from the database by performing a separate query before returning the results.</p>
+<p>Arrays of refs work the same way. Just call the <a href="http://mongoosejs.com/docs/api.html#query_Query-populate" target="_blank">populate</a> method on the query and an array of documents will be returned <em>in place</em> of the original <code>_id</code>s.</p>
+<h3 id="setting-populated-fields"><a href="http://mongoosejs.com/docs/populate.html#setting-populated-fields" target="_blank">Setting Populated Fields</a></h3>
+<p>In Mongoose &gt;= 4.0, you can manually populate a field as well.</p>
+<pre><code>Story.findOne({ title: &apos;Casino Royale&apos; }, function(error, story) {
+  if (error) {
+    return handleError(error);
+  }
+  story.author = author;
+  console.log(story.author.name); // prints &quot;Ian Fleming&quot;
+});
+</code></pre><h3 id="field-selection"><a href="http://mongoosejs.com/docs/populate.html#field-selection" target="_blank">Field Selection</a></h3>
+<p>What if we only want a few specific fields returned for the populated documents? This can be accomplished by passing the usual <a href="http://mongoosejs.com/docs/api.html#query_Query-select" target="_blank">field name syntax</a> as the second argument to the populate method:</p>
+<pre><code>Story.
+  findOne({ title: /casino royale/i }).
+  populate(&apos;author&apos;, &apos;name&apos;). // only return the Persons name
+  exec(function (err, story) {
+    if (err) return handleError(err);
+
+    console.log(&apos;The author is %s&apos;, story.author.name);
+    // prints &quot;The author is Ian Fleming&quot;
+
+    console.log(&apos;The authors age is %s&apos;, story.author.age);
+    // prints &quot;The authors age is null&apos;
+  });
+</code></pre><h3 id="populating-multiple-paths"><a href="http://mongoosejs.com/docs/populate.html#populating-multiple-paths" target="_blank">Populating Multiple Paths</a></h3>
+<p>What if we wanted to populate multiple paths at the same time?</p>
+<pre><code>Story.
+  find(...).
+  populate(&apos;fans&apos;).
+  populate(&apos;author&apos;).
+  exec();
+</code></pre><p>If you call <code>populate()</code> multiple times with the same path, only the last one will take effect.</p>
+<pre><code>// The 2nd `populate()` call below overwrites the first because they
+// both populate &apos;fans&apos;.
+Story.
+  find().
+  populate({ path: &apos;fans&apos;, select: &apos;name&apos; }).
+  populate({ path: &apos;fans&apos;, select: &apos;email&apos; });
+// The above is equivalent to:
+Story.find().populate({ path: &apos;fans&apos;, select: &apos;email&apos; });
+</code></pre><h3 id="query-conditions-and-other-options"><a href="http://mongoosejs.com/docs/populate.html#query-conditions" target="_blank">Query conditions and other options</a></h3>
+<p>What if we wanted to populate our fans array based on their age, select just their names, and return at most, any 5 of them?</p>
+<pre><code>Story.
+  find(...).
+  populate({
+    path: &apos;fans&apos;,
+    match: { age: { $gte: 21 }},
+    // Explicitly exclude `_id`, see http://bit.ly/2aEfTdB
+    select: &apos;name -_id&apos;,
+    options: { limit: 5 }
+  }).
+  exec();
+</code></pre><h3 id="refs-to-children"><a href="http://mongoosejs.com/docs/populate.html#refs-to-children" target="_blank">Refs to children</a></h3>
+<p>We may find however, if we use the <code>author</code> object, we are unable to get a list of the stories. This is because no <code>story</code> objects were ever &apos;pushed&apos; onto <code>author.stories</code>.</p>
+<p>There are two perspectives here. First, you may want the <code>author</code> know which stories are theirs. Usually, your schema should resolve one-to-many relationships by having a parent pointer in the &apos;many&apos; side. But, if you have a good reason to want an array of child pointers, you can <code>push()</code> documents onto the array as shown below.</p>
+<pre><code>author.stories.push(story1);
+author.save(callback);
+</code></pre><p>This allows us to perform a <code>find</code> and <code>populate</code> combo:</p>
+<pre><code>Person.
+  findOne({ name: &apos;Ian Fleming&apos; }).
+  populate(&apos;stories&apos;). // only works if we pushed refs to children
+  exec(function (err, person) {
+    if (err) return handleError(err);
+    console.log(person);
+  });
+</code></pre><p>It is debatable that we really want two sets of pointers as they may get out of sync. Instead we could skip populating and directly <code>find()</code> the stories we are interested in.</p>
+<pre><code>Story.
+  find({ author: author._id }).
+  exec(function (err, stories) {
+    if (err) return handleError(err);
+    console.log(&apos;The stories are an array: &apos;, stories);
+  });
+</code></pre><p>The documents returned from <a href="http://mongoosejs.com/docs/api.html#query_Query-populate" target="_blank">query population</a> become fully functional, <code>remove</code>able, <code>save</code>able documents unless the <a href="http://mongoosejs.com/docs/api.html#query_Query-lean" target="_blank">lean</a> option is specified. Do not confuse them with <a href="http://mongoosejs.com/docs/subdocs.html" target="_blank">sub docs</a>. Take caution when calling its remove method because you&apos;ll be removing it from the database, not just the array.</p>
+<h3 id="populating-an-existing-document"><a href="http://mongoosejs.com/docs/populate.html#populate_an_existing_mongoose_document" target="_blank">Populating an existing document</a></h3>
+<p>If we have an existing mongoose document and want to populate some of its paths, <strong>mongoose &gt;= 3.6</strong> supports the <a href="http://mongoosejs.com/docs/api.html#document_Document-populate" target="_blank">document#populate()</a> method.</p>
+<h3 id="populating-multiple-existing-documents"><a href="http://mongoosejs.com/docs/populate.html#populate_multiple_documents" target="_blank">Populating multiple existing documents</a></h3>
+<p>If we have one or many mongoose documents or even plain objects (<em>like <a href="http://mongoosejs.com/docs/api.html#model_Model.mapReduce" target="_blank">mapReduce</a> output</em>), we may populate them using the <a href="http://mongoosejs.com/docs/api.html#model_Model.populate" target="_blank">Model.populate()</a> method available in <strong>mongoose &gt;= 3.6</strong>. This is what <code>document#populate()</code> and <code>query#populate()</code> use to populate documents.</p>
+<h3 id="populating-across-multiple-levels"><a href="http://mongoosejs.com/docs/populate.html#deep-populate" target="_blank">Populating across multiple levels</a></h3>
+<p>Say you have a user schema which keeps track of the user&apos;s friends.</p>
+<pre><code>var userSchema = new Schema({
+  name: String,
+  friends: [{ type: ObjectId, ref: &apos;User&apos; }]
+});
+</code></pre><p>Populate lets you get a list of a user&apos;s friends, but what if you also wanted a user&apos;s friends of friends? Specify the <code>populate</code> option to tell mongoose to populate the <code>friends</code> array of all the user&apos;s friends:</p>
+<pre><code>User.
+  findOne({ name: &apos;Val&apos; }).
+  populate({
+    path: &apos;friends&apos;,
+    // Get friends of friends - populate the &apos;friends&apos; array for every friend
+    populate: { path: &apos;friends&apos; }
+  });
+</code></pre><h3 id="populating-across-databases"><a href="http://mongoosejs.com/docs/populate.html#cross-db-populate" target="_blank">Populating across Databases</a></h3>
+<p>Let&apos;s say you have a schema representing events, and a schema representing conversations. Each event has a corresponding conversation thread.</p>
+<pre><code>var eventSchema = new Schema({
+  name: String,
+  // The id of the corresponding conversation
+  // Notice there&apos;s no ref here!
+  conversation: ObjectId
+});
+var conversationSchema = new Schema({
+  numMessages: Number
+});
+</code></pre><p>Also, suppose that events and conversations are stored in separate MongoDB instances.</p>
+<pre><code>var db1 = mongoose.createConnection(&apos;localhost:27000/db1&apos;);
+var db2 = mongoose.createConnection(&apos;localhost:27001/db2&apos;);
+
+var Event = db1.model(&apos;Event&apos;, eventSchema);
+var Conversation = db2.model(&apos;Conversation&apos;, conversationSchema);
+</code></pre><p>In this situation, you will <strong>not</strong> be able to <code>populate()</code> normally. The <code>conversation</code> field will always be null, because <code>populate()</code> doesn&apos;t know which model to use. However, <a href="http://mongoosejs.com/docs/api.html#model_Model.populate" target="_blank">you can specify the model explicitly</a>.</p>
+<pre><code>Event.
+  find().
+  populate({ path: &apos;conversation&apos;, model: Conversation }).
+  exec(function(error, docs) { /* ... */ });
+</code></pre><p>This is known as a &quot;cross-database populate,&quot; because it enables you to populate across MongoDB databases and even across MongoDB instances.</p>
+<h3 id="dynamic-references"><a href="http://mongoosejs.com/docs/populate.html#dynamic-ref" target="_blank">Dynamic References</a></h3>
+<p>Mongoose can also populate from multiple collections at the same time. Let&apos;s say you have a user schema that has an array of &quot;connections&quot; - a user can be connected to either other users or an organization.</p>
+<pre><code>var userSchema = new Schema({
+  name: String,
+  connections: [{
+    kind: String,
+    item: { type: ObjectId, refPath: &apos;connections.kind&apos; }
+  }]
+});
+
+var organizationSchema = new Schema({ name: String, kind: String });
+
+var User = mongoose.model(&apos;User&apos;, userSchema);
+var Organization = mongoose.model(&apos;Organization&apos;, organizationSchema);
+</code></pre><p>The <code>refPath</code> property above means that mongoose will look at the <code>connections.kind</code> path to determine which model to use for <code>populate()</code>. In other words, the <code>refPath</code> property enables you to make the <code>ref</code> property dynamic.</p>
+<pre><code>// Say we have one organization:
+// `{ _id: ObjectId(&apos;000000000000000000000001&apos;), name: &quot;Guns N&apos; Roses&quot;, kind: &apos;Band&apos; }`
+// And two users:
+// {
+//   _id: ObjectId(&apos;000000000000000000000002&apos;)
+//   name: &apos;Axl Rose&apos;,
+//   connections: [
+//     { kind: &apos;User&apos;, item: ObjectId(&apos;000000000000000000000003&apos;) },
+//     { kind: &apos;Organization&apos;, item: ObjectId(&apos;000000000000000000000001&apos;) }
+//   ]
+// },
+// {
+//   _id: ObjectId(&apos;000000000000000000000003&apos;)
+//   name: &apos;Slash&apos;,
+//   connections: []
+// }
+User.
+  findOne({ name: &apos;Axl Rose&apos; }).
+  populate(&apos;connections.item&apos;).
+  exec(function(error, doc) {
+    // doc.connections[0].item is a User doc
+    // doc.connections[1].item is an Organization doc
+  });
+</code></pre><h3 id="populate-virtuals"><a href="http://mongoosejs.com/docs/populate.html#populate-virtuals" target="_blank">Populate Virtuals</a></h3>
+<p><em>New in 4.5.0</em></p>
+<p>So far you&apos;ve only populated based on the <code>_id</code> field. However, that&apos;s sometimes not the right choice. In particular, <a href="https://docs.mongodb.com/manual/tutorial/model-referenced-one-to-many-relationships-between-documents/" target="_blank">arrays that grow without bound are a MongoDB anti-pattern</a>. Using mongoose virtuals, you can define more sophisticated relationships between documents.</p>
+<pre><code>var PersonSchema = new Schema({
+  name: String,
+  band: String
+});
+
+var BandSchema = new Schema({
+  name: String
+});
+BandSchema.virtual(&apos;members&apos;, {
+  ref: &apos;Person&apos;, // The model to use
+  localField: &apos;name&apos;, // Find people where `localField`
+  foreignField: &apos;band&apos;, // is equal to `foreignField`
+  // If `justOne` is true, &apos;members&apos; will be a single doc as opposed to
+  // an array. `justOne` is false by default.
+  justOne: false
+});
+
+var Person = mongoose.model(&apos;Person&apos;, PersonSchema);
+var Band = mongoose.model(&apos;Band&apos;, BandSchema);
+
+/**
+ * Suppose you have 2 bands: &quot;Guns N&apos; Roses&quot; and &quot;Motley Crue&quot;
+ * And 4 people: &quot;Axl Rose&quot; and &quot;Slash&quot; with &quot;Guns N&apos; Roses&quot;, and
+ * &quot;Vince Neil&quot; and &quot;Nikki Sixx&quot; with &quot;Motley Crue&quot;
+ */
+Band.find({}).populate(&apos;members&apos;).exec(function(error, bands) {
+  /* `bands.members` is now an array of instances of `Person` */
+});
+</code></pre><p>Keep in mind that virtuals are <em>not</em> included in <code>toJSON()</code> output by default. If you want populate virtuals to show up when using functions that rely on <code>JSON.stringify()</code>, like Express&apos; <a href="http://expressjs.com/en/4x/api.html#res.json" target="_blank"><code>res.json()</code> function</a>, set the <code>virtuals: true</code> option on your schema&apos;s <code>toJSON</code> options.</p>
+<pre><code>// Set `virtuals: true` so `res.json()` works
+var BandSchema = new Schema({
+  name: String
+}, { toJSON: { virtuals: true } });
+</code></pre><p>If you&apos;re using populate projections, make sure <code>foreignField</code> is included in the projection.</p>
+<pre><code>Band.
+  find({}).
+  populate({ path: &apos;members&apos;, select: &apos;name&apos; }).
+  exec(function(error, bands) {
+    // Won&apos;t work, foreign field `band` is not selected in the projection
+  });
+
+Band.
+  find({}).
+  populate({ path: &apos;members&apos;, select: &apos;name band&apos; }).
+  exec(function(error, bands) {
+    // Works, foreign field `band` is selected
+  });
+</code></pre><h3 id="populate-in-middleware"><a href="http://mongoosejs.com/docs/populate.html#populate-middleware" target="_blank">Populate in Middleware</a></h3>
+<p>You can populate in either pre or post <a href="http://mongoosejs.com/docs/middleware.html" target="_blank">hooks</a>. If you want to always populate a certain field, check out the <a href="http://npmjs.com/package/mongoose-autopopulate" target="_blank">mongoose-autopopulate plugin</a>.</p>
+<pre><code>// Always attach `populate()` to `find()` calls
+MySchema.pre(&apos;find&apos;, function() {
+  this.populate(&apos;user&apos;);
+});
+</code></pre><pre><code>// Always `populate()` after `find()` calls. Useful if you want to selectively populate
+// based on the docs found.
+MySchema.post(&apos;find&apos;, async function(docs) {
+  for (let doc of docs) {
+    if (doc.isPublic) {
+      await doc.populate(&apos;user&apos;).execPopulate();
+    }
+  }
+});
+</code></pre><pre><code>// `populate()` after saving. Useful for sending populated data back to the client in an
+// update API endpoint
+MySchema.post(&apos;save&apos;, function(doc, next) {
+  doc.populate(&apos;user&apos;).execPopulate(function() {
+    next();
+  });
+});
+</code></pre><h3 id="next-up">Next Up</h3>
+<p>Now that we&apos;ve covered <code>populate()</code>, let&apos;s take a look at <a href="http://mongoosejs.com/docs/discriminators.html" target="_blank">discriminators</a>.</p>
+<h1 id="why-cant-you-modify-the-data-returned-by-a-mongoose-query-ex-findbyid"><a href="https://stackoverflow.com/questions/14504385/why-cant-you-modify-the-data-returned-by-a-mongoose-query-ex-findbyid" target="_blank">Why can&apos;t you modify the data returned by a Mongoose Query (ex: findById)</a></h1>
+<p>When I try to change any part of the data returned by a Mongoose Query it has no effect.</p>
+<p>I was trying to figure this out for about 2 hours yesterday, with all kinds of <code>_.clone()</code>s, using temporary storage variables, etc. Finally, just when I though I was going crazy, I found a solution. So I figured somebody in the future (fyuuuture!) might have the save issue.</p>
+<pre><code>Survey.findById(req.params.id, function(err, data){
+    var len = data.survey_questions.length;
+    var counter = 0;
+
+    _.each(data.survey_questions, function(sq){
+        Question.findById(sq.question, function(err, q){
+            sq.question = q; //has no effect
+
+            if(++counter == len) {
+                res.send(data);
+            }
+        });
+    });
+});
+</code></pre><p>For cases like this where you want a plain JS object instead of a full model instance, you can call <a href="http://mongoosejs.com/docs/api.html#query_Query-lean" target="_blank"><code>lean()</code></a> on the query chain like so:</p>
+<pre><code>Survey.findById(req.params.id).lean().exec(function(err, data){
+    var len = data.survey_questions.length;
+    var counter = 0;
+
+    _.each(data.survey_questions, function(sq){
+        Question.findById(sq.question, function(err, q){
+            sq.question = q;
+
+            if(++counter == len) {
+                res.send(data);
+            }
+        });
+    });
+});
+</code></pre><p>This way <code>data</code> is already a plain JS object you can manipulate as you need to.</p>
+<h3 id="es6&#x4E2D;&#x7684;class&#x7EE7;&#x627F;">ES6&#x4E2D;&#x7684;CLASS&#x7EE7;&#x627F;</h3>
+<blockquote>
+<p>&#x5F85;&#x8865;&#x5145;</p>
+</blockquote>
+<p>constructor</p>
+<p>super</p>
+<p>extends</p>
+<h2 id="session&#x548C;cookie">session&#x548C;cookie</h2>
+<h3 id="http-&#x7684;&#x51E0;&#x4E2A;&#x7279;&#x6027;">HTTP &#x7684;&#x51E0;&#x4E2A;&#x7279;&#x6027;</h3>
+<p>HTTP (HyperText   Teansfer Protocol &#x8D85;&#x6587;&#x672C;&#x4F20;&#x8F93;&#x534F;&#x8BAE;)  </p>
+<ul>
+<li>HTTP&#x9075;&#x5FAA; client/server &#x6A21;&#x578B;&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x548C;&#x670D;&#x52A1;&#x5668;&#x7AEF;&#x8BF7;&#x6C42;&#x548C;&#x5E94;&#x7B54;&#x7684;&#x6807;&#x51C6;</li>
+<li>HTTP&#x662F;&#x65E0;&#x72B6;&#x6001;&#x7684;(stateless) &#x534F;&#x8BAE;&#xFF0C;&#x6BCF;&#x4E00;&#x6B21;&#x4F20;&#x8F93;&#x90FD;&#x662F;&#x72EC;&#x7ACB;&#x7684;&#xFF0C;&#x4E92;&#x4E0D;&#x5F71;&#x54CD;&#x3002;</li>
+<li>HTTP&#x662F;&#x4E00;&#x4E2A;&#x5E94;&#x7528;&#x5C42; (application layer) &#x534F;&#x8BAE;&#xFF0C;&#x4ED6;&#x5728;&#x4F20;&#x8F93;&#x5C42;(transfer layer)&#x534F;&#x8BAE;&#x4E4B;&#x4E0A;&#xFF0C;99%&#x4EE5;&#x4E0A;&#x7684;HTTP&#x534F;&#x8BAE;&#x4F7F;&#x7528; (TCP) &#x4F5C;&#x4E3A;&#x5B83;&#x7684;&#x4F20;&#x8F93;&#x5C42;&#x534F;&#x8BAE;&#x3002;</li>
+<li>&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x670D;&#x52A1;&#x7AEF;&#x4F7F;&#x7528;client action&#x5373;&#x662F;method&#xFF0C;&#x5305;&#x62EC;get&#x3001;post&#x3001;delete&#x7B49;&#x3002;</li>
+<li>HTTP&#x5B9A;&#x4E49;&#x4E86;&#x670D;&#x52A1;&#x7AEF;&#x72B6;&#x6001;&#x7801;&#x8FD4;&#x56DE;&#x7ED9;&#x5BA2;&#x6237;&#x7AEF;&#xFF0C;200&#x3001;404&#x3001;500&#x7B49;&#x3002;</li>
+<li>HTTP&#x652F;&#x6301; headers&#xFF0C;Cache-Control&#x3001;Content-type &#x7B49;&#x3002;</li>
+</ul>
+<h3 id="session-cookie&#x7B80;&#x4ECB;">Session&amp; Cookie&#x7B80;&#x4ECB;</h3>
+<p>&#x7531;&#x4E8E;HTTP&#x662F;&#x65E0;&#x72B6;&#x6001;&#x7684;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x8BF7;&#x6C42;&#x670D;&#x52A1;&#x4E4B;&#x540E;&#xFF0C;&#x670D;&#x52A1;&#x7AEF;&#x662F;&#x4E0D;&#x80FD;&#x5224;&#x65AD;HTTP&#x8BF7;&#x6C42;&#x662F;&#x7531;&#x90A3;&#x4E2A;&#x7528;&#x6237;&#x53D1;&#x8D77;&#x7684;&#x3001;&#x7528;&#x6237;&#x5728;&#x7F51;&#x7AD9;&#x7684;&#x72B6;&#x6001;&#x7B49;&#x3002;cookie&#x548C;session&#x4F7F;HTTP&#x80FD;&#x591F;&#x7EF4;&#x6301;&#x72B6;&#x6001;&#x3002;</p>
+<p>cookie&#x662F;&#x7531;&#x6D4F;&#x89C8;&#x5668;&#x4FDD;&#x5B58;&#x7684;&#x4E00;&#x6BB5;&#x6587;&#x672C;&#xFF0C;&#x5305;&#x542B;&#x7528;&#x6237;&#x5728;&#x7F51;&#x7AD9;&#x4E0A;&#x7684;&#x5FC5;&#x8981;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5728;&#x53D1;&#x9001;HTTP&#x8BF7;&#x6C42;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x628A;&#x8FD9;&#x4E9B;&#x4FE1;&#x606F;&#x52A0;&#x8F7D;&#x8BF7;&#x6C42;&#x5934;&#x4E2D;&#x53D1;&#x9001;&#x7ED9;&#x670D;&#x52A1;&#x7AEF;&#x3002;</p>
+<p>session&#x662F;&#x670D;&#x52A1;&#x7AEF;&#x5B58;&#x50A8;&#x7684;&#x7528;&#x6765;&#x6807;&#x8BC6;&#x7528;&#x6237;&#x4FE1;&#x606F;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x5F53;&#x7528;&#x6237;&#x8BBF;&#x95EE;&#x7F51;&#x7AD9;&#x65F6;&#xFF0C;&#x670D;&#x52A1;&#x7AEF;&#x4F1A;&#x4E3A;&#x8FD9;&#x4E2A;&#x7528;&#x6237;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x552F;&#x4E00;&#x7684;session id&#xFF0C;&#x670D;&#x52A1;&#x5668;&#x4F1A;&#x628A;&#x8FD9;&#x4E2A;id&#x901A;&#x8FC7;cookie&#x7684;&#x5F62;&#x5F0F;&#x4F20;&#x7ED9;&#x6D4F;&#x89C8;&#x5668;&#xFF0C;&#x6D4F;&#x89C8;&#x5668;&#x63A5;&#x6536;cookie&#x4E4B;&#x540E;&#xFF0C;&#x4EE5;&#x540E;&#x7684;&#x8BF7;&#x6C42;&#x5C31;&#x80FD;&#x643A;&#x5E26;&#x8FD9;&#x4E2A;cookie&#x53D1;&#x9001;&#xFF0C;&#x901A;&#x8FC7;&#x8FD9;&#x4E2A;session id &#x670D;&#x52A1;&#x7AEF;&#x5C31;&#x80FD;&#x591F;&#x5BF9;&#x8BBF;&#x95EE;&#x7684;&#x7528;&#x6237;&#x8FDB;&#x884C;&#x8FA8;&#x522B;&#x3002;&#x7C7B;&#x4F3C;&#x4E8E;&#x5546;&#x5E97;&#x53D1;&#x7684;&#x4F1A;&#x5458;&#x5361;(cookie)&#xFF0C;&#x5B83;&#x8BB0;&#x5F55;&#x4E86;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F; identification&#xFF0C;&#x5E76;&#x4E14;&#x662F;&#x7531;&#x5546;&#x5E97;(&#x670D;&#x52A1;&#x7AEF;)&#x53D1;&#x7ED9;&#x7528;&#x6237;(&#x5BA2;&#x6237;&#x7AEF;)&#xFF0C;&#x6BCF;&#x5F53;&#x7528;&#x6237;&#x53BB;&#x5546;&#x5E97;&#x6D88;&#x8D39;&#xFF0C;&#x7528;&#x6237;&#x643A;&#x5E26;&#x7740;&#x4F1A;&#x5458;&#x5361;&#xFF0C;&#x5546;&#x5E97;&#x7BA1;&#x7406;&#x4E86;&#x81EA;&#x5DF1;&#x53D1;&#x5E03;&#x7684;&#x5361;&#xFF0C;&#x901A;&#x8FC7;&#x5361;&#x7684;ID(session id)&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x8BE5;&#x7528;&#x6237;&#x7684;&#x4FE1;&#x606F;&#x3002;</p>
+<p>cookie&#x5206;&#x7C7B;&#xFF1A;</p>
+<p>&#x4F1A;&#x8BDD; cookie (Session cookie) &#x5728;&#x4F1A;&#x8BDD;&#x7ED3;&#x675F;&#x65F6;&#xFF08;&#x6D4F;&#x89C8;&#x5668;&#x5173;&#x95ED;&#xFF09;&#x4F1A;&#x88AB;&#x5220;&#x9664;&#x3002;</p>
+<p>&#x6301;&#x4E45;&#x5316; cookie&#xFF08;Persistent cookie&#xFF09;&#x5728;&#x5230;&#x8FBE;&#x5931;&#x6548;&#x65E5;&#x671F;&#x65F6;&#x4F1A;&#x88AB;&#x5220;&#x9664;&#x3002;</p>
+<h3 id="cookie&#x4F7F;&#x7528;">cookie&#x4F7F;&#x7528;</h3>
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x4F7F;&#x7528;</p>
+<p>&#x670D;&#x52A1;&#x7AEF;&#x4F7F;&#x7528;</p>
+<h3 id="session&#x4F7F;&#x7528;">session&#x4F7F;&#x7528;</h3>
+<h2 id="excel&#x5BFC;&#x51FA;">excel&#x5BFC;&#x51FA;</h2>
+<blockquote>
+<p> &#x5F85;&#x8865;&#x5145;</p>
+</blockquote>
+<h3 id="&#x6D4F;&#x89C8;&#x5668;&#x4E0D;&#x80FD;&#x4E0B;&#x8F7D;response&#x8F93;&#x51FA;&#x7684;excel">&#x6D4F;&#x89C8;&#x5668;&#x4E0D;&#x80FD;&#x4E0B;&#x8F7D;response&#x8F93;&#x51FA;&#x7684;excel</h3>
+<p>&#x7528;ajax&#x63D0;&#x4EA4;&#x662F;&#x4E0D;&#x884C;&#x7684;&#xFF0C;&#x56E0;&#x4E3A;ajax&#x57FA;&#x4E8E;XMLHttpRequest &#xFF0C;XMLHttpRequest &#x7684;&#x5B9A;&#x4E49;&#x5C31;&#x662F;&#xFF1A;&#x53EF;&#x4EE5;&#x540C;&#x6B65;&#x6216;&#x5F02;&#x6B65;&#x8FD4;&#x56DE; Web &#x670D;&#x52A1;&#x5668;&#x7684;&#x54CD;&#x5E94;&#xFF0C;&#x5E76;&#x4E14;&#x80FD;<strong>&#x4EE5;&#x6587;&#x672C;&#x6216;&#x8005;&#x4E00;&#x4E2A; DOM &#x6587;&#x6863;</strong>&#x5F62;&#x5F0F;&#x8FD4;&#x56DE;&#x5185;&#x5BB9;&#x3002;&#x800C;&#x6211;&#x4EEC;&#x7684;Excel&#x662F;&#x4E8C;&#x8FDB;&#x5236;&#x6D41;&#x3002;&#x6240;&#x4EE5;Excel&#x4F1A;&#x88AB;&#x5F3A;&#x8F6C;&#x6210;&#x6587;&#x672C;&#xFF0C;&#x5C31;&#x50CF;&#x4E71;&#x7801;&#x4E00;&#x6837;&#x3002;&#xFF08;<strong>&#x6548;&#x679C;&#x7C7B;&#x540C;&#x4F60;&#x7528;&#x8BB0;&#x4E8B;&#x672C;&#x6253;&#x5F00;Excel&#x6587;&#x4EF6;</strong>&#xFF09;</p>
+<p>&#x5728;&#x6D4F;&#x89C8;&#x5668;&#x76F4;&#x63A5;&#x8BBF;&#x95EE;&#x4E0B;&#x8F7D;&#x7684;URL&#xFF0C;&#x5982;&#x679C;&#x80FD;&#x81EA;&#x52A8;&#x4E0B;&#x8F7D;&#x3002;ok&#xFF0C;&#x4EE3;&#x7801;&#x6CA1;&#x95EE;&#x9898;&#x3002;</p>
+<h3 id="&#x524D;&#x7AEF;&#x8BF7;&#x6C42;&#x65B9;&#x5F0F;">&#x524D;&#x7AEF;&#x8BF7;&#x6C42;&#x65B9;&#x5F0F;</h3>
+<p>form&#x63D0;&#x4EA4;</p>
+<p>window.open/location.href&#x7B49;</p>
+<p>a&#x6807;&#x7B7E;</p>
+<p>iframe</p>
+<h2 id="&#x6587;&#x4EF6;&#x4E0A;&#x4F20;">&#x6587;&#x4EF6;&#x4E0A;&#x4F20;</h2>
+<blockquote>
+<p>&#x5F85;&#x6574;&#x7406;</p>
+</blockquote>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="../chapter-9/chapter-9.html" class="navigation navigation-prev " aria-label="Previous page: 第九章 数据验证">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../note-1/note-1.html" class="navigation navigation-next " aria-label="Next page: 笔记一 application.js">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"第十章 数据操作","level":"2.10","depth":1,"next":{"title":"笔记一 application.js","level":"2.11","depth":1,"path":"note-1/note-1.md","ref":"note-1/note-1.md","articles":[]},"previous":{"title":"第九章 数据验证","level":"2.9","depth":1,"path":"chapter-9/chapter-9.md","ref":"chapter-9/chapter-9.md","articles":[]},"dir":"ltr"},"config":{"gitbook":"*","theme":"default","variables":{},"plugins":["livereload"],"pluginsConfig":{"livereload":{},"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"}},"file":{"path":"chapter-10/chapter-10.md","mtime":"2018-08-29T00:26:19.224Z","type":"markdown"},"gitbook":{"version":"3.2.2","time":"2018-08-29T00:33:50.048Z"},"basePath":"..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <script src="../gitbook/gitbook.js"></script>
+    <script src="../gitbook/theme.js"></script>
+    
+        
+        <script src="../gitbook/gitbook-plugin-livereload/plugin.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-sharing/buttons.js"></script>
+        
+    
+        
+        <script src="../gitbook/gitbook-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
