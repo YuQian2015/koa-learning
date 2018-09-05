@@ -58,7 +58,7 @@ class Purchase extends Model {
             console.log(path);
             console.log(dataArr.fileName);
             let result = fs.createReadStream(path);
-            qiniuUpload(`${dataArr.fileName + new Date().getTime()}.xlsx`, path);
+            qiniuUpload(`${dataArr.fileName} - ${moment().format("YYYY年MM月DD日 HH:mm:ss")}.xlsx`, path);
             //将数据转为二进制输出
             // let result = fs.readFileSync(path, {encoding:'binary'});
             // let dataBuffer = new Buffer.from(result,'binary');

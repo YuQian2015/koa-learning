@@ -10,12 +10,16 @@ import LocalDB from 'local-db';
 const selectedDietTableCollection = new LocalDB('selectedDietTable');
 const selectedDietCollection = new LocalDB('selectedDiet');
 
+import Swipeout from 'rc-swipeout';
+import 'rc-swipeout/assets/index.css';
+
 export default class DietTablePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       dietTable: {},
-      detailList: []
+      detailList: [],
+      pageSize: 10
     }
     this.addDiet = this.addDiet.bind(this);
   }
@@ -28,7 +32,7 @@ export default class DietTablePage extends React.Component {
       console.log(urlData);
       this.setState({dietTable: urlData})
     }
-    this.fetchData({dietTableId: urlData.id});
+    this.fetchData({dietTableId: urlData.id, pageSize: this.state.pageSize});
   }
   fetchData(params) {
     console.log(params);
@@ -55,7 +59,7 @@ export default class DietTablePage extends React.Component {
     }
     DietTableService.exportExcel({
       id: id,
-      fileName: "12313"
+      fileName: this.state.dietTable.name
     }, (res) => {
       console.log(res);
     }, (error) => {
@@ -65,16 +69,26 @@ export default class DietTablePage extends React.Component {
   render() {
     let {dietTable, detailList} = this.state;
     let body = <div className="DietTableDetailPage">
+
+      <div className="hint">每日公示，点击查看详情，左滑可以导出</div>
+
       <div className="list-box">
         {
-          detailList.map(detail => <div className="list-item" key={detail._id} onClick={() => {
-              this.addDiet(false, detail._id)
-            }}>
-            <div className="list-item-header">
-              <Moment format="YYYY-MM-DD  HH:mm">{detail.date}</Moment>
+          detailList.map(detail => <Swipeout key={detail._id} right={[{
+                text: '导出excel',
+                onPress: () => this.addDiet(false, detail._id),
+                className: 'custom-class-1'
+              }
+            ]} onOpen={() => console.log('open')} onClose={() => console.log('close')}>
+            <div className="list-item" onClick={() => {
+                this.addDiet(true, detail._id)
+              }}>
+              <div className="list-item-header">
+                <Moment format="YYYY-MM-DD  HH:mm">{detail.date}</Moment>
+              </div>
+              <div className="list-item-body"></div>
             </div>
-            <div className="list-item-body"></div>
-          </div>)
+          </Swipeout>)
         }
       </div>
     </div>

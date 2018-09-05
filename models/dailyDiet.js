@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const exportExcel = require('../files/exportExcel');
 const qiniuUpload = require('../utils/qiniuUploader');
 const Schema = mongoose.Schema;
+const fs = require('fs');
 const moment = require('moment');
 const Model = require('./model');
 
@@ -62,12 +63,13 @@ class DailyDiet extends Model {
           reject(err);
         } else {
           console.log(dataArr.fileName);
+          console.log(doc);
           doc.date = moment(doc.date).format("YYYY年MM月DD日");
           exportExcel.exportDailyDiet(dataArr.fileName, doc).then(path => {
             console.log(path);
             console.log(dataArr.fileName);
             let result = fs.createReadStream(path);
-            qiniuUpload(`${dataArr.fileName + new Date().getTime()}.xlsx`, path);
+            qiniuUpload(`${dataArr.fileName} - ${moment().format("YYYY年MM月DD日 HH:mm:ss")}.xlsx`, path);
             resolve(result);
           });
         }

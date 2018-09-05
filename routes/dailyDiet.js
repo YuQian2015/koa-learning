@@ -25,10 +25,13 @@ const validation = {
         quantity: Joi.number().required(), // 数量
         unit: Joi.string().required(), // 单位
         price: Joi.number().required(), // 单价
+        totalPrice: Joi.number() // 总价
       })),
       cookbook: Joi.array().items(Joi.string()), // 食谱
       totalCount: Joi.number(), // 总就餐人数
-      actualCount: Joi.number() // 实际就餐人数
+      actualCount: Joi.number(), // 实际就餐人数
+      totalPrice:  Joi.number(), // 总计
+      averagePrice:  Joi.number(), // 人均
     })
   },
   findDailyDiet: {
@@ -84,7 +87,10 @@ class DailyDiet extends Route {
     router.post('/export', validate(validation.exportDailyDiet), async (ctx, next) => {
       let reqParams = ctx.request.body;
       ctx.body = await dailyDiet.exportDailyDiet(reqParams);
-      ctx.set({'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'Content-Disposition': `attachment; filename=${reqParams.fileName}.xlsx`});
+      ctx.set({
+        'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'Content-Disposition': `attachment; filename=${reqParams.fileName}.xlsx`
+      });
     });
   }
 }

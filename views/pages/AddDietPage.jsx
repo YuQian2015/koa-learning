@@ -45,6 +45,7 @@ export default class AddDietPage extends React.Component {
     this.changeCount = this.changeCount.bind(this);
     this.open = this.open.bind(this);
     this.changePrice = this.changePrice.bind(this);
+    this.changeTotal = this.changeTotal.bind(this);
   }
 
   componentWillMount() {
@@ -75,7 +76,9 @@ export default class AddDietPage extends React.Component {
       date,
       cookbook,
       totalCount,
-      actualCount
+      actualCount,
+      totalPrice,
+      averagePrice
     } = this.state;
     let params = {
       ...selectedDietTable,
@@ -83,7 +86,9 @@ export default class AddDietPage extends React.Component {
       date,
       cookbook,
       totalCount,
-      actualCount
+      actualCount,
+      totalPrice,
+      averagePrice
     }
     console.log(params);
     DietTableService.addDailyDiet(params, (res) => {
@@ -147,7 +152,12 @@ export default class AddDietPage extends React.Component {
   changePrice(material, number) {
     let {materials} = this.state;
     material.price = number;
-    this.setState({materials})
+    if(material.quantity) {
+      material.totalPrice = number * material.quantity;
+    }
+    this.setState({materials}, () => {
+      this.doCount();
+    })
   }
   changeAmount(material, number) {
     let {materials} = this.state;
@@ -158,6 +168,15 @@ export default class AddDietPage extends React.Component {
     }, () => {
       this.doCount();
     });
+  }
+  changeTotal(material, number) {
+      let {materials} = this.state;
+      material.totalPrice = number;
+      this.setState({
+        materials
+      }, () => {
+        this.doCount();
+      });
   }
 
   deleteDiet(item) {
@@ -297,7 +316,11 @@ export default class AddDietPage extends React.Component {
                   width: 60
                 }} min={0} onChange={number => {
                   this.changeAmount(material, number)
-                }} value={material.quantity} placeholder="数量"/>{material.unit}&nbsp;&nbsp;</div>
+                }} value={material.quantity} placeholder="数量"/>{material.unit}&nbsp;&nbsp;<InputNumber style={{
+                    width: 60
+                  }} min={0} onChange={number => {
+                    this.changeTotal(material, number)
+                  }} value={material.totalPrice} placeholder="总价"/></div>
             <div className="list-item-footer">
               <i onClick={() => this.deleteMaterial(material)} className="delete-material hd-close"></i>
             </div>
