@@ -20,11 +20,10 @@ export default class MaterialPage extends React.Component {
       pageSize: 10,
       page: 1,
       tags: [
-        '肉禽蛋',
-        '果蔬菌',
-        '五谷粮油',
-        '调料',
-        '饮料',
+        '粮食类',
+        '油肉类',
+        '蔬菜类',
+        '调料类',
         '其它'
       ]
     }

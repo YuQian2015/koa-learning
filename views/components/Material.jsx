@@ -8,11 +8,10 @@ class Material extends React.Component {
   render() {
     let {name, price, unit, code, type} = this.props;
     const tags = [
-      '肉禽蛋',
-      '果蔬菌',
-      '五谷粮油',
-      '调料',
-      '饮料',
+      '粮食类',
+      '油肉类',
+      '蔬菜类',
+      '调料类',
       '其它'
     ]
     return (<div className="Material">

@@ -46,6 +46,10 @@ dailyDietSchema.pre('findOne', function() {
   this.populate('cookbook', 'name');
   this.populate('creator', 'name');
 });
+dailyDietSchema.pre('find', function() {
+  this.populate('cookbook', 'name');
+  this.populate('creator', 'name');
+});
 
 class DailyDiet extends Model {
   constructor() {

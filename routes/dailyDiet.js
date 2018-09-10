@@ -46,7 +46,12 @@ const validation = {
       id: Joi.string().required(), // id
       fileName: Joi.string().required(), // 文件名
     })
-  }
+  },
+  getDailyDiet: {
+    params: Joi.object({
+      _id: Joi.string().required(), // id
+    })
+  },
 }
 
 class DailyDiet extends Route {
@@ -93,6 +98,18 @@ class DailyDiet extends Route {
       });
     });
   }
+
+
+    @request('get', '/daily-diet/{_id}')
+    @summary('查找每日单笔饮食')
+    @tags(['每日饮食'])
+    @path(convert2json(validation.getDailyDiet))
+    getDailyDiet() {
+      router.get('/:_id', validate(validation.getDailyDiet), async (ctx, next) => {
+        let reqParams = ctx.params;
+        ctx.body = await dailyDiet.getDailyDiet(reqParams);
+      });
+    }
 }
 
 new DailyDiet().route();

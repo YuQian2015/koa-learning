@@ -45,6 +45,21 @@ class DailyDietController {
     }
 
   }
+
+  // 获取单个
+  async getDailyDiet(reqParams) {
+    try {
+      let respon = {};
+      let result = await dailyDiet.findOne(reqParams);
+      respon = response({data: result});
+      return respon;
+    } catch (err) {
+      console.log(err)
+      throw new Error(err);
+      return err;
+    }
+
+  }
 }
 
 const dailyDietController = new DailyDietController();

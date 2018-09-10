@@ -54,7 +54,26 @@ export default class DietTablePage extends React.Component {
       selectedDietTableCollection.drop();
       selectedDietCollection.drop();
       selectedDietTableCollection.insert({dietTableId: dietTable.id, name: dietTable.name});
-      this.props.history.push("/add-diet");
+
+      if (id) {
+        DietTableService.getDailyDiet(id).then(res => {
+          if (!res.error && res.data) {
+            console.log(res);
+            this.props.history.push({
+              pathname: '/add-diet',
+              search: JSON.stringify({dietId: id}),
+              state: res.data
+            });
+          }
+        }).catch(err => {
+          console.log(err);
+          this.props.history.push({
+            pathname: '/add-diet',
+            // search: JSON.stringify({dietId: id}),
+            // state: item
+          });
+        })
+      }
       return
     }
     DietTableService.exportExcel({

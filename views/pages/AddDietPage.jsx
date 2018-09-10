@@ -22,17 +22,18 @@ export default class AddDietPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedDiet: [],
-      selectedDietTable: {},
-      materials: [],
-      cookbook: [],
-      user: {},
+      selectedDiet: [], // 选中的菜单
+      selectedDietTable: {}, // 选中的公示表
+      materials: [], // 计算出来的材料
+      cookbook: [], // 计算出来的菜单ID
+      user: {}, // 统计员
       date: new Date(),
       totalPrice: 0,
       totalCount: 0, // 总就餐人数
       actualCount: 0, // 实际就餐人数
       averagePrice: 0,
-      isOpen: false
+      isOpen: false,
+      isView: false
     }
     this.saveDiet = this.saveDiet.bind(this);
     this.addDiet = this.addDiet.bind(this);
@@ -49,17 +50,37 @@ export default class AddDietPage extends React.Component {
   }
 
   componentWillMount() {
+    if (selectedDietTableCollection.read().length) {
+      this.setState({
+        selectedDietTable: selectedDietTableCollection.read()[0]
+      })
+    }
+    let state = this.props.location.state;
+    if (state) {
+      console.log(state);
+      this.setState({isView: true})
+      for (let cookbook of state.cookbook) {
+        selectedDietCollection.insert({materials: cookbook.materials, name: cookbook.name, _id: cookbook._id, selected: true});
+      }
+      this.setState({
+        materials: state.materials,
+        user: state.creator,
+        date: new Date(state.date),
+        totalPrice: state.totalPrice,
+        totalCount: state.totalCount, // 总就餐人数
+        actualCount: state.actualCount, // 实际就餐人数
+        averagePrice: state.averagePrice
+      }, () => {
+        this.getCookbookId();
+      });
+      return
+    }
     if (selectedDietCollection.read().length) {
       this.setState({
         selectedDiet: selectedDietCollection.read()
       }, () => {
         this.getMaterials();
         this.getCookbookId();
-      })
-    }
-    if (selectedDietTableCollection.read().length) {
-      this.setState({
-        selectedDietTable: selectedDietTableCollection.read()[0]
       })
     }
     if (userCollection.read().length) {
@@ -109,6 +130,10 @@ export default class AddDietPage extends React.Component {
   }
 
   addDiet() {
+    if (this.state.isView) {
+      toast('开发中');
+      return
+    }
     this.props.history.push({
       pathname: '/cookbook',
       state: {
@@ -152,10 +177,12 @@ export default class AddDietPage extends React.Component {
   changePrice(material, number) {
     let {materials} = this.state;
     material.price = number;
-    if(material.quantity) {
+    if (material.quantity) {
       material.totalPrice = number * material.quantity;
     }
-    this.setState({materials}, () => {
+    this.setState({
+      materials
+    }, () => {
       this.doCount();
     })
   }
@@ -170,13 +197,13 @@ export default class AddDietPage extends React.Component {
     });
   }
   changeTotal(material, number) {
-      let {materials} = this.state;
-      material.totalPrice = number;
-      this.setState({
-        materials
-      }, () => {
-        this.doCount();
-      });
+    let {materials} = this.state;
+    material.totalPrice = number;
+    this.setState({
+      materials
+    }, () => {
+      this.doCount();
+    });
   }
 
   deleteDiet(item) {
@@ -234,6 +261,9 @@ export default class AddDietPage extends React.Component {
     this.setState({isOpen: false});
   }
   open() {
+    if (this.state.isView) {
+      return
+    }
     this.setState({isOpen: true});
   }
   render() {
@@ -246,7 +276,8 @@ export default class AddDietPage extends React.Component {
       totalPrice,
       totalCount,
       actualCount,
-      averagePrice
+      averagePrice,
+      isView
     } = this.state;
 
     let body = <div className="AddDietPage">
@@ -255,14 +286,18 @@ export default class AddDietPage extends React.Component {
       <div className="list-box">
         <div className="list-item">
           <div className="list-item-header">
-            <input type="text" readOnly onChange={this.handleNameChange} ref="name" value={user.name}/>
+            <input type="text" readOnly="readOnly" disabled={isView} onChange={this.handleNameChange} ref="name" value={user.name}/>
           </div>
           <div className="list-item-body">
             <Moment onClick={this.open} format="YYYY-MM-DD">{date}</Moment>
           </div>
-          <div className="list-item-footer">
-            <i className="hd-enter"></i>
-          </div>
+          {
+            isView
+              ? null
+              : <div className="list-item-footer">
+                  <i className="hd-enter"></i>
+                </div>
+          }
         </div>
       </div>
       <div className="hint">选择所属的公示表</div>
@@ -276,9 +311,13 @@ export default class AddDietPage extends React.Component {
                 ? selectedDietTable.name
                 : '请选择'
             }</div>
-          <div className="list-item-footer">
-            <i className="hd-enter"></i>
-          </div>
+          {
+            isView
+              ? null
+              : <div className="list-item-footer">
+                  <i className="hd-enter"></i>
+                </div>
+          }
         </div>
       </div>
       {
@@ -291,7 +330,12 @@ export default class AddDietPage extends React.Component {
       <div className="food">
         {
           selectedDiet.map(item => <div className="item" key={item._id}>{item.name}
-            <i onClick={() => this.deleteDiet(item)} className="delete-diet hd-close"></i>
+            {
+              !isView
+                ? null
+                : <i onClick={() => this.deleteDiet(item)} className="delete-diet hd-close"></i>
+            }
+
           </div>)
         }
       </div>
@@ -307,46 +351,78 @@ export default class AddDietPage extends React.Component {
         {
           materials.map(material => <div className="list-item" key={material._id}>
             <div className="list-item-heade">{material.name}</div>
-            <div className="list-item-body">单价<InputNumber style={{
-              width: 60
-            }} min={0} onChange={number => {
-              this.changePrice(material, number)
-            }} value={material.price} placeholder="单价"/>元&nbsp;&nbsp;&nbsp;&nbsp;
-              <InputNumber style={{
-                  width: 60
-                }} min={0} onChange={number => {
-                  this.changeAmount(material, number)
-                }} value={material.quantity} placeholder="数量"/>{material.unit}&nbsp;&nbsp;<InputNumber style={{
-                    width: 60
-                  }} min={0} onChange={number => {
-                    this.changeTotal(material, number)
-                  }} value={material.totalPrice} placeholder="总价"/></div>
+            <div className="list-item-body">单价{
+                isView
+                  ? material.price
+                  : <InputNumber style={{
+                        width: 60
+                      }} min={0} onChange={number => {
+                        this.changePrice(material, number)
+                      }} value={material.price} placeholder="单价"/>
+              }元&nbsp;&nbsp;&nbsp;&nbsp;{
+                isView
+                  ? material.quantity
+                  : <InputNumber style={{
+                        width: 60
+                      }} min={0} onChange={number => {
+                        this.changeAmount(material, number)
+                      }} value={material.quantity} placeholder="数量"/>
+              }{material.unit}&nbsp;&nbsp;共{
+                isView
+                  ? material.totalPrice
+                  : <InputNumber style={{
+                        width: 60
+                      }} min={0} onChange={number => {
+                        this.changeTotal(material, number)
+                      }} value={material.totalPrice} placeholder="总价"/>
+              }</div>
             <div className="list-item-footer">
-              <i onClick={() => this.deleteMaterial(material)} className="delete-material hd-close"></i>
+              {
+                isView
+                  ? null
+                  : <i onClick={() => this.deleteMaterial(material)} className="delete-material hd-close"></i>
+              }
+
             </div>
           </div>)
         }
       </div>
       <div className="hint">就餐人数</div>
       <div className="count">
-        实际就餐人数&nbsp;&nbsp;<InputNumber style={{
-        width: 60
-      }} min={0} onChange={number => {
-        this.changeCount(number, 'actualCount')
-      }} value={actualCount} placeholder="实际就餐人数"/>&nbsp;&nbsp;&nbsp;&nbsp; 应就餐人数&nbsp;&nbsp;<InputNumber style={{
-        width: 60
-      }} min={0} onChange={number => {
-        this.changeCount(number, 'totalCount')
-      }} value={totalCount} placeholder="应就餐人数"/>&nbsp;&nbsp;&nbsp;&nbsp; 人均 {averagePrice}
+        实际就餐人数&nbsp;&nbsp;{
+          isView
+            ? actualCount
+            : <InputNumber style={{
+                  width: 60
+                }} min={0} onChange={number => {
+                  this.changeCount(number, 'actualCount')
+                }} value={actualCount} placeholder="实际就餐人数"/>
+        }&nbsp;&nbsp;&nbsp;&nbsp; 应就餐人数&nbsp;&nbsp;{
+          isView
+            ? totalCount
+            : <InputNumber style={{
+                  width: 60
+                }} min={0} onChange={number => {
+                  this.changeCount(number, 'totalCount')
+                }} value={totalCount} placeholder="应就餐人数"/>
+        }&nbsp;&nbsp;&nbsp;&nbsp; 人均 {averagePrice}
         元
       </div>
-      <div className="submit-btn">
-        <button className="block" onClick={this.saveDiet}>
-          保存
-        </button>
-      </div>
+      {
+        isView
+          ? null
+          : <div className="submit-btn">
+              <button className="block" onClick={this.saveDiet}>
+                保存
+              </button>
+            </div>
+      }
     </div>;
-    let tools = <div onClick={this.addDiet}>选菜</div>;
+    let tools = <div onClick={this.addDiet}>{
+        isView
+          ? '编辑'
+          : '选菜'
+      }</div>
     let header = <Header back="" title="今日配菜" tools={tools}/>
     return <PageContainer body={body} header={header}/>
   }
