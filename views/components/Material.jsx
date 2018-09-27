@@ -4,6 +4,21 @@ import {withRouter} from "react-router-dom";
 class Material extends React.Component {
   constructor(props) {
     super(props);
+    this.showMaterialDetail = this.showMaterialDetail.bind(this);
+  }
+  showMaterialDetail() {
+    console.log(this.props);
+      let {name, price, unit, _id, type} = this.props;
+      this.props.history.push({
+          pathname: "/add-material",
+          state: {
+            name,
+            price,
+            unit,
+            type,
+            _id
+          }
+      });
   }
   render() {
     let {name, price, unit, code, type} = this.props;
@@ -14,7 +29,7 @@ class Material extends React.Component {
       '调料类',
       '其它'
     ]
-    return (<div className="Material">
+    return (<div className="Material" onClick={this.showMaterialDetail}>
       <div className="name">{name}</div>
       <div className="info">
         <div className="code">编号：{code}</div>

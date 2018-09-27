@@ -22,7 +22,7 @@ export default class Alert extends React.Component {
   }
   show() {
     this.setState({show: true});
-    this.state.music.play();
+    // this.state.music.play();
   }
 
   render() {

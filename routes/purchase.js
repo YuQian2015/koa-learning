@@ -20,9 +20,9 @@ const validation = {
       price: Joi.number().required(), // 单价
       totalPrice: Joi.number().required(), // 金额
       purchaserName: Joi.string().required(), // 采购人
-      inspectorName: Joi.string().required(), // 收验货人
+      inspectorName: Joi.string(), // 收验货人
       supplierName: Joi.string().required(), // 供货人
-      sign: Joi.string().required(), // 签字
+      sign: Joi.string(), // 签字
       purchaseOrderId: Joi.string().required() // 所属采购单
     })
   },
@@ -39,9 +39,9 @@ const validation = {
       price: Joi.number().required(), // 单价
       totalPrice: Joi.number().required(), // 金额
       purchaserName: Joi.string().required(), // 采购人
-      inspectorName: Joi.string().required(), // 收验货人
+      inspectorName: Joi.string(), // 收验货人
       supplierName: Joi.string().required(), // 供货人
-      sign: Joi.string().required(), // 签字
+      sign: Joi.string(), // 签字
       purchaseOrderId: Joi.string().required() // 所属采购单
     })
   },

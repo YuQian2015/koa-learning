@@ -35,21 +35,25 @@ class UserController {
     try {
       let result = await user.findOne(dataArr); // 查询该用户
       let respon = {};
-
-      let userToken = {
-        // email: result.email,
-        // name: result.name,
-        group: 'member',
-        id: result._id
+      console.log(result);
+      if(result) {
+        let userToken = {
+          // email: result.email,
+          // name: result.name,
+          group: 'member',
+          id: result._id
+        }
+        const token = jwt.sign(userToken, jwtSecret, {expiresIn: '3h'}) //token签名 有效期为3小时
+        const res = {
+          result: '登录成功！',
+          token: token,
+          name: result.name,
+          id: result._id
+        }
+        respon = response({data: res});
+      } else {
+        respon = response({errorCode: '006'});
       }
-      const token = jwt.sign(userToken, jwtSecret, {expiresIn: '3h'}) //token签名 有效期为3小时
-      const res = {
-        result: '登录成功！',
-        token: token,
-        name: result.name,
-        id: result._id
-      }
-      respon = response({data: res});
 
       return respon;
     } catch (err) {

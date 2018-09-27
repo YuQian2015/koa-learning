@@ -77,7 +77,7 @@ export default class AddPurchasePage extends React.Component {
         "unit": item.unit,
         "price": item.price,
         "totalPrice": item.price,
-        "purchaserName": "",
+        "purchaserName": user?user.name:'',
         "inspectorName": "",
         "supplierName": "",
         "sign": "",
@@ -166,18 +166,6 @@ export default class AddPurchasePage extends React.Component {
   savePurchase() {
 
     let {purchaseDetail} = this.state;
-    if (!purchaseDetail.sign) {
-      toast("先签字才能保存，签字可以在保存之后修改。");
-      return
-    }
-    if (!purchaseDetail.purchaserName) {
-      toast("输入采购人。");
-      return
-    }
-    if (!purchaseDetail.inspectorName) {
-      toast("输入收验货人。");
-      return
-    }
     if (!purchaseDetail.supplierName) {
       toast("输入供货人。");
       return
@@ -207,7 +195,7 @@ export default class AddPurchasePage extends React.Component {
             this.setState({
               purchaseDetail: null
             }, () => {
-              toast.info("保存采购信息成功！");
+              toast.info("保存采购信息成功,你也可以对采购信息进行修改！");
               this.refs.modal.hide();
             });
           }, (error) => {
@@ -254,6 +242,10 @@ export default class AddPurchasePage extends React.Component {
   // 取消选择时间
   handleCancel() {
     this.setState({isOpen: false});
+  }
+
+  handleCancelModal() {
+    materialSelectCollection.drop();
   }
 
   openTimeSelect(type) {
@@ -303,7 +295,7 @@ export default class AddPurchasePage extends React.Component {
                 </div>
             : null
         }
-        <Modal ref="modal" content={content} title={title} button={button}/> {
+        <Modal ref="modal" content={content} title={title} onHide={this.handleCancelModal} button={button}/> {
           purchaseList.map((item, i) => (<div className="purchase" key={i} onClick={() => this.showPurchaseDetail(item)}>
             <div className="date">
               <Moment format="YYYY-MM-DD  HH:mm">{item.purchasingDate}</Moment>

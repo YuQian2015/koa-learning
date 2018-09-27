@@ -19,16 +19,20 @@ export default class AddMaterialPage extends React.Component {
         price: "5",
         type: 1
       },
-      tags: [
-        '粮食类',
-        '油肉类',
-        '蔬菜类',
-        '调料类',
-        '其它'
-      ]
+      tags: ['粮食类', '油肉类', '蔬菜类', '调料类', '其它']
     }
     this.saveMaterial = this.saveMaterial.bind(this);
   }
+
+  componentWillMount() {
+
+    let state = this.props.location.state;
+    if (state) {
+      console.log(state);
+      this.setState({material: state})
+    }
+  }
+
   saveMaterial() {
     let material = this.state.material;
     MaterialService.add(material, (data) => {
@@ -97,6 +101,11 @@ export default class AddMaterialPage extends React.Component {
           </div>
         </div>
       </div>
+      {
+        material._id
+          ? <div className="button">删除食材</div>
+          : null
+      }
 
     </div>;
     let tools = <div onClick={this.saveMaterial}>保存</div>;

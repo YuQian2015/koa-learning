@@ -18,19 +18,17 @@ export default class SelectMaterialPage extends React.Component {
     this.state = {
       materialList: [],
       icons: [
+        "hd-grains",
         "hd-meat",
         "hd-vegetables",
-        "hd-grains",
         "hd-dressing",
-        "hd-drinks",
         "hd-snacks"
       ],
       tags: [
-        '肉禽蛋',
-        '果蔬菌',
-        '五谷粮油',
-        '调料',
-        '饮料',
+        '粮食类',
+        '油肉类',
+        '蔬菜类',
+        '调料类',
         '其它'
       ]
     };

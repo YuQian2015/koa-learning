@@ -50,9 +50,9 @@ class Purchase extends Model {
           reject(err);
         } else {
           _.forEach(docs, doc => {
-            doc.purchasingDate = moment(doc.purchasingDate).format("YYYY年MM月DD日");
-            doc.qualityPeriod = moment(doc.qualityPeriod).format("YYYY年MM月DD日");
-            doc.manufactureDate = moment(doc.manufactureDate).format("YYYY年MM月DD日");
+            doc.purchasingDate = doc.purchasingDate?moment(doc.purchasingDate).format("YYYY年MM月DD日"):"";
+            doc.qualityPeriod = doc.qualityPeriod?moment(doc.qualityPeriod).format("YYYY年MM月DD日"):"";
+            doc.manufactureDate = doc.manufactureDate?moment(doc.manufactureDate).format("YYYY年MM月DD日"):"";
           });
           exportExcel.exportPurchase(dataArr.fileName, docs).then(path => {
             console.log(path);
