@@ -32,7 +32,7 @@ class Purchase extends Model {
   }
 
   exportExcel(dataArr = {}) {
-    const form = dataArr.fromDate
+    const from = dataArr.fromDate
       ? dataArr.fromDate
       : new Date(0);
     const to = dataArr.toDate
@@ -44,7 +44,7 @@ class Purchase extends Model {
         fileName: undefined,
         fromDate: undefined,
         toDate: undefined
-      }).where('createDate').gte(form).lte(to).lean().exec((err, docs) => {
+      }).where('createDate').gte(from).lte(to).lean().exec((err, docs) => {
         if (err) {
           console.log(err);
           reject(err);

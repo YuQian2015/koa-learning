@@ -6,6 +6,7 @@ import Modal from '../components/Modal.jsx';
 import Refresher from '../components/Refresher.jsx';
 import PurchaseCard from '../components/PurchaseCard.jsx';
 import Moment from 'react-moment';
+import momentJs from 'moment';
 
 import {toast} from 'react-toastify';
 
@@ -35,7 +36,7 @@ export default class AddPurchasePage extends React.Component {
       purchaseOrderId: "",
       isOpen: false,
       time: new Date(),
-      fromDate: new Date(),
+      fromDate: new Date(momentJs().format('L')),
       toDate: new Date(),
       dateType: ""
     };
@@ -78,9 +79,9 @@ export default class AddPurchasePage extends React.Component {
         "price": item.price,
         "totalPrice": item.price,
         "purchaserName": user?user.name:'',
-        "inspectorName": "",
-        "supplierName": "",
-        "sign": "",
+        // "inspectorName": "",
+        // "supplierName": "",
+        // "sign": "",
         "purchaseOrderId": urlData.id
       }
 
@@ -108,7 +109,7 @@ export default class AddPurchasePage extends React.Component {
 
   exportExcel() {
     let {purchaseOrder, fromDate, toDate} = this.state;
-    PurchaseService.exportExcel({purchaseOrderId: purchaseOrder.id, fileName: purchaseOrder.name, fromDate, toDate});
+    PurchaseService.exportExcel({purchaseOrderId: purchaseOrder.id, fileName: purchaseOrder.name, fromDate, toDate: new Date(toDate.getTime()+ 24*60*60*1000)});
   }
   showExportFunc() {
     this.setState({
@@ -163,69 +164,75 @@ export default class AddPurchasePage extends React.Component {
       console.log(error);
     })
   }
+
   savePurchase() {
 
     let {purchaseDetail} = this.state;
+
+    let doSavePurchase = () => {
+      if (purchaseDetail._id) {
+        purchaseDetail.id = purchaseDetail._id;
+        PurchaseService.edit(purchaseDetail, (res) => {
+          if (res.error) {
+            alert(res.msg)
+            return
+          }
+          materialSelectCollection.drop();
+          this.setState({
+            purchaseDetail: null
+          }, () => {
+            toast.info("修改采购信息成功。");
+            this.refs.modal.hide();
+          });
+        }, (error) => {
+          console.log(error);
+        })
+      } else {
+
+        PurchaseService.add(purchaseDetail, (res) => {
+          if (res.error) {
+            alert(res.msg)
+            return
+          }
+          materialSelectCollection.drop();
+          this.setState({
+            purchaseDetail: null
+          }, () => {
+            toast.info("保存采购信息成功, 你也可以对采购信息进行修改！");
+            this.refs.modal.hide();
+          });
+        }, (error) => {
+          console.log(error);
+        })
+      }
+    }
     if (!purchaseDetail.supplierName) {
       toast("输入供货人。");
       return
     }
 
-    let blob = file.dataURLtoBlob(purchaseDetail.sign)
-    console.log(blob);
-    imageCompressor.compress(blob, {
-      quality: 0,
-      maxWidth: 180
-    }).then(result => {
-      file.blobToDataURL(result).then(image => {
-        console.log(image);
-        purchaseDetail.sign = image;
-
-        console.log(purchaseDetail);
-
-        if (purchaseDetail._id) {
-
-          purchaseDetail.id = purchaseDetail._id;
-          PurchaseService.edit(purchaseDetail, (res) => {
-            if (res.error) {
-              alert(res.msg)
-              return
-            }
-            materialSelectCollection.drop();
-            this.setState({
-              purchaseDetail: null
-            }, () => {
-              toast.info("保存采购信息成功,你也可以对采购信息进行修改！");
-              this.refs.modal.hide();
-            });
-          }, (error) => {
-            console.log(error);
-          })
-        } else {
-
-          PurchaseService.add(purchaseDetail, (res) => {
-            if (res.error) {
-              alert(res.msg)
-              return
-            }
-            materialSelectCollection.drop();
-            this.setState({
-              purchaseDetail: null
-            }, () => {
-              toast.info("保存采购信息成功！");
-              this.refs.modal.hide();
-            });
-          }, (error) => {
-            console.log(error);
-          })
-        }
+    if(purchaseDetail.sign) {
+      let blob = file.dataURLtoBlob(purchaseDetail.sign);
+      console.log(blob);
+      imageCompressor.compress(blob, {
+        quality: 0,
+        maxWidth: 180
+      }).then(result => {
+        file.blobToDataURL(result).then(image => {
+          purchaseDetail.sign = image;
+            console.log(image);
+          console.log(purchaseDetail);
+          doSavePurchase();
+        }).catch(e => {
+          console.log(e);
+        });
+        console.log(result);
       }).catch(e => {
-        console.log(e);
+        alert(e.message)
       });
-      console.log(result);
-    }).catch(e => {
-      alert(e.message)
-    });
+    } else {
+      doSavePurchase();
+    }
   }
 
   // 选择时间

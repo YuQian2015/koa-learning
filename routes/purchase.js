@@ -19,7 +19,7 @@ const validation = {
       unit: Joi.string(), // 单位
       price: Joi.number().required(), // 单价
       totalPrice: Joi.number().required(), // 金额
-      purchaserName: Joi.string().required(), // 采购人
+      purchaserName: Joi.string(), // 采购人
       inspectorName: Joi.string(), // 收验货人
       supplierName: Joi.string().required(), // 供货人
       sign: Joi.string(), // 签字
@@ -38,7 +38,7 @@ const validation = {
       unit: Joi.string(), // 单位
       price: Joi.number().required(), // 单价
       totalPrice: Joi.number().required(), // 金额
-      purchaserName: Joi.string().required(), // 采购人
+      purchaserName: Joi.string(), // 采购人
       inspectorName: Joi.string(), // 收验货人
       supplierName: Joi.string().required(), // 供货人
       sign: Joi.string(), // 签字

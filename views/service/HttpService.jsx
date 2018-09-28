@@ -176,8 +176,8 @@ class HttpService {
 
     const randomString = cryptoRandomString(20);
     const encrypted = pubkeyR.encrypt(randomString, 'base64'); // 公钥加密(返回密文):
-    console.log(randomString);
-    console.log("密文：" + encrypted);
+    // console.log(randomString);
+    // console.log("密文：" + encrypted);
 
     let Authorization = "";
     const user = userCollection.query({});
@@ -223,7 +223,7 @@ class HttpService {
     const bytes = AES.decrypt(ciphertext, randomString);
     const plaintext = bytes.toString(UTF8);
 
-    console.log(plaintext);
+    console.log(JSON.parse(plaintext));
     request.send(JSON.stringify({data: ciphertext}));
   }
 
