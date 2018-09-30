@@ -1,8 +1,9 @@
 ## Logs 日志
 
-> 待补充
+前面我们已经添加了路由，对不同的请求进行不同的处理，为了知道请求和响应的的相关信息，我们使用 [log4js-node](https://github.com/log4js-node/log4js-node) 来记录日志。
 
-我们使用 [log4js-node](https://github.com/log4js-node/log4js-node) 。
+*注：如果使用了pm2，需要了解 [Clustering / Multi-process Logging](https://log4js-node.github.io/log4js-node/clustering.html) 。*
+
 
 ### 安装
 
@@ -12,7 +13,7 @@ npm install log4js
 
 ### 日志设置和格式化
 
-新增一个 logs 目录用来存放日志，然后在 config 目录新增一个 logConfig.js
+新增一个“logs”目录用来存放日志，然后在“config”目录新增一个“logConfig.js”。
 
 config/logConfig.js
 
@@ -54,14 +55,14 @@ module.exports = CONFIG;
 
 ```
 
-新建一个 utils 目录并添加一个 log.js
+上面的示例我们对log进行了配置，下面将使用这个配置来生成log，新建一个“utils”目录并添加一个“log.js”，接下来对log的格式进行设置：
 
 utils/log.js
 
 ```js
 let log4js = require('log4js');
 
-let logConfig = require('../config/logConfig');
+let logConfig = require('../config/logConfig'); // 引入了设置文件
 
 //加载配置文件
 log4js.configure(logConfig);
@@ -125,9 +126,11 @@ let formatReqLog = (req, resTime) => {
 module.exports = log;
 ```
 
+上面的代码中，我们 `log` 这个对象增加了处理错误日志的 `error` 方法和处理响应的 `response` 方法，它们都会将请求创建的 `ctx` 传给格式化日志的函数，经过处理，最终把格式化完成的log信息交给log4js处理，从而生成日志。
+
 ### 添加log中间件
 
-新建一个目录 middleware ，并且新建一个文件 logger.js
+经过上面的实战，我们完成了生成日志的功能，接下来需要将这个功能添加到中间件，从而对请求生效。新建一个目录“middleware”，并且新建一个文件“logger.js”。
 
 middleware/logger.js
 
@@ -152,24 +155,21 @@ const logger = () => {
 module.exports = logger;
 
 ```
-
-
-
-在 app.js 引入刚刚添加的 log 处理逻辑。
+首先取得了开始时间，在后面的中间件执行完毕之后调用了log工具生成日志，并且记录了整个处理过程所用的时间。在“app.js”引入上面的logger中间件：
 
 app.js
 
 ```js
 const Koa = require('koa');
 const app = new Koa();
-……
+// 省略
 const logger = require('./middleware/logger'); // 引入logger
 
-……
+// 省略
 app.use(logger()); // 处理log的中间件
 app.use(routes.routes()).use(routes.allowedMethods());
 ```
 
-都设置好了之后，执行 `npm start` ，当启动成功之后，我们看到 log 目录里面多了两个文件，分别是报错日志和响应日志。在浏览器中访问 http://localhost:3000/v1 。可以看到响应日志里面添加了刚刚的访问记录。
+执行 `npm start` ，当启动成功之后，我们看到“log”目录里面多了两个文件，分别是报错日志和响应日志。在浏览器中访问 http://localhost:3000/v1 。可以看到响应日志里面添加了刚刚的访问记录，如图：
 
 ![log](log.jpg)
