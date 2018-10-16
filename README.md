@@ -18,7 +18,13 @@
 
 [第九章 数据验证](./document/chapter-9/chapter-9.md)
 
-[第十章 数据操作](./document/chapter-10/chapter-10.md)
+[第十章 数据操作-新增和查询](./document/chapter-10/chapter-10.md)
+
+[第十一章 数据操作-修改和删除](./document/chapter-11/chapter-11.md)
+
+[第十二章 数据操作-文档的关联](./document/chapter-12/chapter-12.md)
+
+[第十三章 session和cookie](./document/chapter-13/chapter-13.md)
 
 更多的内容会陆续补充
 
