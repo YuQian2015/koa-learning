@@ -14,7 +14,7 @@ const app = new Koa();
 // response
 app.use( ( ctx ) => {
   let url = ctx.request.url
-  ctx.body = url
+  ctx.response.body = url
 })
 
 app.listen(3000);
@@ -91,7 +91,7 @@ function readPage( page ) {
 app.use( async (ctx, next) => {
   let url = ctx.request.url
   ctx.response.type = 'html'; // 这里设置返回的类型
-  ctx.body = await readPage(url);
+  ctx.response.body = await readPage(url);
 });
 
 
