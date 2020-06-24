@@ -23,7 +23,7 @@ config/default.json
 {
   "App": {
     "apiVersion": "/v1",
-    "server": "0.0.0.0", // 所有ip可以访问
+    "ip": "0.0.0.0", // 所有ip可以访问
     "port": 3000 // 端口
   },
   "Database": {
@@ -43,6 +43,7 @@ app.js
 ```js
 const Koa = require('koa');
 const app = new Koa();
+const config = require('config'); // 引入config
 const appConfig = config.get('App');
 console.log(appConfig);
 
@@ -77,7 +78,7 @@ config/production.json
 }
 ```
 
-我们并没有配置所有的变量，我们希望一些变量保持和默认配置一样，如服务启动的地址、服务器名称等等，
+我们并没有配置所有的变量，我们希望一些变量保持和默认配置一样，如服务启动的地址、数据库名称等等，
 
 为了验证配置是否生效，我们来切换到production环境：
 
@@ -99,7 +100,7 @@ Administrator@DESKTOP-0E9E0N3 G:\koa-learning
 > koa-learning@1.0.0 start G:\koa-learning
 > node app.js
 
-{ apiVersion: '/v1', server: '0.0.0.0', port: 8000 }
+{ apiVersion: '/v1', ip: '0.0.0.0', port: 8000 }
 Server running
 ```
 
@@ -172,7 +173,7 @@ Server running
 }
 ```
 
-这个json文件里面我们队数据库的密码进行了定义，当我们执行调用 `config.get('Database.password')`, `config` 将去查询一个叫“DB_PASSWORD”的环境变量。如果查询不到就会使用匹配当前环境的json文件的只来带起，如果当前环境的值任然没有，就会去查询“default.json” 。
+这个json文件里面我们对数据库的密码进行了定义，当我们执行调用 `config.get('Database.password')`, `config` 将去查询一个叫“DB_PASSWORD”的环境变量。如果查询不到就会使用匹配当前环境的json文件的值，如果当前环境的值任然没有，就会去查询“default.json” 。
 
 我们再看修改app.js 验证是否有效：
 

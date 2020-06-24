@@ -22,7 +22,7 @@ const dbConfig = config.get('Database');
 exports.connect = (request, response) => {
   mongoose.connect(`mongodb://${dbConfig.user}:${dbConfig.password}@${dbConfig.host}:${dbConfig.port}/${dbConfig.dbName}?authSource=${dbConfig.dbName}`);
   let db = mongoose.connection;
-  db.on('error', () => {
+  db.on('error', (err) => {
     console.log('Mongoose连接错误: ' + err);
   });
   db.once('open', callback => {
@@ -31,7 +31,7 @@ exports.connect = (request, response) => {
 }
 ```
 
-然后在 /index.js 引入 config/dbConfig.js：
+然后在 app.js 引入 config/dbConfig.js：
 
 ```js
 const db = require('./config/dbConfig');
@@ -44,7 +44,7 @@ db.connect();
 
 在 mongoose 中，所有的东西都从 [Schema](http://www.nodeclass.com/api/mongoose.html#guide) 中衍生出来，先新建一个文件夹叫  models ，并在这个文件夹下新建一个 index.js ，再在该目录下新建 material.js
 
-> 目的 描述
+定义模型（model）类后，可以使用它们来创建、更新或删除记录，以及通过查询来获取所有记录或特定子集。
 
 models/material.js
 
@@ -108,7 +108,7 @@ module.exports = {
 };
 ```
 
-> 描述
+我们可以通过 `model` 实例调用 `save()` 来创建记录。这些方法都是 mongoose 提供给我们的，为了方便以后抽出通用的方法操作（CRUD），这里对 `models/material.js` 进行微调，增加一个 `class` 进行导出。
 
 新增数据：
 
