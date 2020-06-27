@@ -23,7 +23,7 @@ app.listen(3000); // 监听3000端口
 
 ### callback
 
-从上面的代码中，我们看到在创建服务是，koa使用了`this.callback()` ，这个 callback 具体做了什么呢？我们先来看源码：
+从上面的代码中，我们看到在创建服务时，koa使用了`this.callback()` ，这个 callback 具体做了什么呢？我们先来看源码：
 
 ```js
 
