@@ -2,7 +2,27 @@
 
 ### 响应
 
-> 目的 描述
+这里推荐使用 JSON 作为响应数据，主要结构如下：
+
+```json
+{
+    "error": false,
+    "message": "",
+    "data": {},
+    "errorCode": 200
+}
+```
+
+当请求处理成功时，`success` 为 `true` ，如果状态码是 `4xx`，应向用户返回出错信息，为了前端可以统一处理响应，这里可以返回如下：
+
+```json
+{
+    "error": true,
+    "message": "错误信息",
+    "data": {},
+    "errorCode": "状态码"
+}
+```
 
 在 utils 目录新建 response.js ，在 config 目录新建 errorCode.json。
 
