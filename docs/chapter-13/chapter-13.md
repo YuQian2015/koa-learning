@@ -4,11 +4,11 @@
 
 首先来了解 HTTP （HyperText Transfer Protocol 超文本传输协议） 的几个特性：
 
-- HTTP 遵循 client/server 模型，是一个客户端和服务器端请求和应答的标准
+- HTTP 建立于客户端-服务端（client/server）模型之上，浏览器发送请求，Web服务器接收请求后向客户端发送响应信息
 - HTTP 是无状态的（stateless）协议，每一次传输都是独立的，互不影响。
-- HTTP 是一个应用层 (application layer) 协议，他在传输层(transfer layer)协议之上，基本上 HTTP 协议使用 (TCP) 作为它的传输层协议。
-- 客户端请求服务端使用不同的请求方式（包括：get、post、delete、put等）。
-- HTTP 定义了服务端状态码返回给客户端（包括：200、404、500等）。
+- HTTP 是一个应用层 (application layer) 协议，在传输层（transfer layer）协议之上，使用（TCP）作为传输层协议。
+- 客户端请求服务端使用不同的请求方式（包括：GET、POST、DELETE、PUT 等）。
+- HTTP 定义了服务端状态码返回给客户端（如：200、404、500）。
 - HTTP 支持设置头部 headers，（包括：Cache-Control、Content-type 等）。
 
 HTTP 是无状态的，意味着每次页面加载、每次请求都是独立的事件，和前后的事件没有关联。客户端请求服务之后，服务端不能区分发起 HTTP 请求的用户以及用户在网站的状态等，Cookie 和 Session 使 HTTP 能够维持状态，让网站能够记住用户的一些信息。
@@ -50,7 +50,7 @@ C:\Users\<your_username>\AppData\Local\Google\Chrome\User Data\Default\
 ```
 并且 Cookie 的值被加密了，因此无法直接打开。
 
-### 如何使用 Cookie？
+### 如何使用 cookie？
 
 #### 服务端
 
@@ -122,61 +122,108 @@ ctx.cookies.set(
 
 上面的代码没有设置 httpOnly，通过 `document.cookie` 可以获取到 `"name=moyufed"`，在访问 `'/'` 路径时，可以看到请求头里面携带了设置的 cookie。事实上 koa2 使用了 npm 的 [cookies](https://github.com/pillarjs/cookies) 模块来读写 cookie，上面的配置都可以从  cookies 源码查看。
 
-### Cookie 相关
+### 如何使用 session？
 
-- 不设置 cookie 过期时间，cookie 会在会话结束后销毁
-- 持久 cookie 无法改成会话 cookie，除非删除这个 cookie，然后重新建立这个 cookie
-- 将 cookie 的 `domain` 选项设置为主域名，子域名可以携带该 cookie 的发送到服务器
+Session 存储在服务端，不会在网络中进行传输，但服务器产生的 session id 会以 cookie 存在客户端。
 
+用户通过浏览器访问 web 站点，服务器会产生一个唯一的 session id，通过 `Set-Cookie` 响应头将其发送到浏览器，之后浏览器发送的请求都会自动携带这个 cookie，服务器根据 cookie 获取到的 session id 来获得存储在服务端的用户的信息。
 
-### session使用
+用户信息储存的方式可以是内存（Redis）或数据库。
 
-session
+### 在 koa 中使用 session
 
-session的作用和cookie差不多，也是用来解决Http协议不能维持状态的问题。但是session只存储在服务器端的，不会在网络中进行传输，所以较cookie来说，session相对安全一些。但是session是依赖cookie的，当用户访问某一站点时，服务器会为这个用户产生唯一的session_id,并把这个session_id以cookie的形式发送到客户端，以后的客户端的所有请求都会自动携带这个cookie（前提是浏览器支持并且没有禁用cookie）。
+Koa2 没有提供直接设置 session 的操作，但也有很多用于操作 session 的中间件，这里将使用 [koa-session-minimal](https://www.npmjs.com/package/koa-session-minimal) 中间件来处理 session，并且还将使用 [redis](https://redis.io/) 作为处理介质。同样，也有 [koa-redis](https://www.npmjs.com/package/koa-redis) 来为 koa 的 session 中间件提供 redis 储存。
 
-用下面这个图来了解下session的工作原理:
+关于 redis 的安装可以查看[【前端开发日常 - 4】Windows安装Redis及简单使用](https://moyufed.com/2020/10/01/%E3%80%90%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E6%97%A5%E5%B8%B8-4%E3%80%91Windows%E5%AE%89%E8%A3%85Redis%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/) 。
 
-禁用cookie时如何使用session
+安装中间件：
 
-有些时候,为了安全浏览器会禁用cookie,这时可以用传参的方式将session_id发送到服务器,session可以照常工作.
+```shell
+$ npm install koa-session-minimal koa-redis
+```
 
-删除session
+示例代码：
 
-会话关闭后，session会自动失效，如果想手动删除session，可以在服务器端编程实现。如PHP是这样做的
+```javascript
+// app.js
 
-$_SESSION = array();
+const Koa = require('koa'); // 引入koa
+const koaNunjucks = require('koa-nunjucks-2'); // 引入 koa-nunjucks-2
+const path = require('path');
+const Router = require('koa-router');
 
-session_destory();
+const session = require('koa-session-minimal')
+const redisStore = require('koa-redis')
 
+const app = new Koa(); // 创建koa应用
+const router = new Router();
 
+// 使用 koa-nunjucks-2 实例获得中间件
+app.use(koaNunjucks({
+    ext: 'html', // 使用HTML后缀的模板
+    path: path.join(__dirname, 'view'), // 模板所在路径
+    nunjucksConfig: { // nunjucks的配置
+        trimBlocks: true
+    }
+}));
+// 存放sessionId的cookie配置，根据情况自己设定
+let cookie = {
+    maxAge: 20 * 60 * 1000, // cookie有效时长(ms)
+    expires: '',  // cookie失效时间
+    path: '', // 写cookie所在的路径
+    domain: '', // 写cookie所在的域名
+    httpOnly: false, // 是否只用于http请求中获取
+    overwrite: true,  // 是否允许重写
+    secure: '',
+    sameSite: '',
+    signed: true,
+}
+app.use(session({
+    key: 'SESSION_ID',
+    store: redisStore(),
+    cookie: cookie
+}))
 
-## 前言
+router.get('/', async ctx => {
+    ctx.session.count = ctx.session.count || 0
+    ctx.session.count++
+    console.log(ctx.session.count);
+    ctx.cookies.set(
+        'name',
+        'moyufed',
+        {
+            domain: 'localhost', // 设置 cookie 的域
+            path: '/', // 设置 cookie 的路径
+            maxAge: 300 * 24 * 60 * 60 * 1000, // cookie 的有效时间 ms
+            expires: new Date('2020-10-10'), // cookie 的失效日期，如果设置了 maxAge，expires 将没有作用
+            httpOnly: false, // 是否要设置 httpOnly
+            overwrite: false // 是否要覆盖已有的 cookie 设置
+        }
+    )
+    ctx.cookies.set(
+        'name2',
+        'moyufed2',
+        {
+            domain: 'localhost', // 设置 cookie 的域
+            path: '/', // 设置 cookie 的路径
+            maxAge: 300 * 24 * 60 * 60 * 1000, // cookie 的有效时间 ms
+            expires: new Date('2020-10-10'), // cookie 的失效日期，如果设置了 maxAge，expires 将没有作用
+            httpOnly: true, // 是否要设置 httpOnly
+            overwrite: false // 是否要覆盖已有的 cookie 设置
+        }
+    )
+    await ctx.render('index', { text: '职行力CDN包管理' }); // 使用 ctx.render 可以通过 nunjucks 渲染页面
+})
 
-koa2原生功能只提供了cookie的操作，但是没有提供session操作。session就只用自己实现或者通过第三方中间件实现。在koa2中实现session的方案有一下几种
+app.use(router.routes()).use(router.allowedMethods());
 
-- 如果session数据量很小，可以直接存在内存中
-- 如果session数据量很大，则需要存储介质存放session数据
+// 启动服务监听本地3000端口
+app.listen(3000, () => {
+    console.log('应用已经启动，http://localhost:3000');
+})
+```
 
-## 数据库存储方案
-
-- 将session存放在MySQL数据库中
-- 需要用到中间件
-  - koa-session-minimal 适用于koa2 的session中间件，提供存储介质的读写接口 。
-  - koa-mysql-session 为koa-session-minimal中间件提供MySQL数据库的session数据读写操作。
-  - 将sessionId和对于的数据存到数据库
-- 将数据库的存储的sessionId存到页面的cookie中
-- 根据cookie的sessionId去获取对于的session信息
-
-## 快速使用
-
-demo源码
-
-https://github.com/ChenShenhai/koa2-note/blob/master/demo/session/index.js
-
-### 例子代码
-
-```js
+```javascript
 const Koa = require('koa')
 const session = require('koa-session-minimal')
 const MysqlSession = require('koa-mysql-session')
@@ -234,43 +281,15 @@ app.listen(3000)
 console.log('[demo] session is starting at port 3000')
 ```
 
+### Cookie 相关
 
+- 不设置 cookie 过期时间，cookie 会在会话结束后销毁
+- 持久 cookie 无法改成会话 cookie，除非删除这个 cookie，然后重新建立这个 cookie
+- 将 cookie 的 `domain` 选项设置为主域名，子域名可以携带该 cookie 的发送到服务器
 
+### 参考资料
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-参考资料：https://www.allaboutcookies.org/cookies/
+https://www.allaboutcookies.org/cookies/
 https://www.privacypolicies.com/blog/browser-cookies-guide/
 https://stackoverflow.com/questions/31021764/where-does-chrome-store-cookies
 https://blog.csdn.net/u011816231/article/details/69372208
