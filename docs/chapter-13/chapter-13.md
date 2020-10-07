@@ -1,4 +1,4 @@
-## 前端需了解的关于 cookie 和 session 的知识
+## 了解 cookie 和 session
 
 ### 为何需要 cookie 和 session？
 

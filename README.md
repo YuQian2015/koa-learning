@@ -24,7 +24,7 @@
 
 [第十二章 数据操作-文档的关联](./docs/chapter-12/chapter-12.md)
 
-[第十三章 session和cookie](./docs/chapter-13/chapter-13.md)
+[第十三章 了解 cookie 和 session](./docs/chapter-13/chapter-13.md)
 
 更多的内容会陆续补充
 
