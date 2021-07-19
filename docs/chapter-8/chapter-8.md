@@ -6,14 +6,14 @@ JWT（JSON Web Tokens） 是一个方便的一种实现服务器与客服端安�
 
 #### JWT 原理
 
-在使用JWT做用户验证之前，先来看看如何使用session和cookie做用户验证，流程一般如下：
+在介绍 JWT 之前，先来看看如何使用 session 和 cookie 做用户验证，流程一般如下：
 
 1. 服务器验证客户端发送的用户名和密码后，在当前对话（session）保存用户信息相关数据并返回一个 session_id给用户，写入用户 Cookie。
-2. 之后用户的每次请求都会通过 Cookie 将 session_id 传回服务器，服务器收到 session_id，找到之前保存的数据并获得用户信息
+2. 之后用户的每次请求都会通过 cookie 将 session_id 传回服务器，服务器收到 session_id，找到之前保存的数据并获得用户信息
 
-如果像上面这种方式，session 数据共享不方便，不好实现跨域服务，如果是服务器集群，需要实现session共享才能让每台服务器都能够进行用户验证。
+如果像上面这种方式，session 数据共享不方便，不好实现跨域服务，如果是服务器集群，需要实现 session 共享才能让每台服务器都能够进行用户验证。
 
-使用JWT，服务器认证用户之后，会生成一个JSON对象发回给用户，如：
+使用 JWT，服务器认证用户之后，会生成一个 JSON 对象发回给用户，如：
 
 ```json
 {
@@ -22,17 +22,17 @@ JWT（JSON Web Tokens） 是一个方便的一种实现服务器与客服端安�
 }
 ```
 
-然后客户端请求服务的时候，都要发回上面的JSON对象以提供给服务端做验证。服务器还会为这个JSON添加签名以防止用户篡改数据。通过使用JWT，服务端不再保存session数据，更加容易实现扩展。
+然后客户端请求服务的时候，都要发回上面的 JSON 对象以提供给服务端做验证。服务器还会为这个 JSON 添加签名以防止用户篡改数据。通过使用 JWT，服务端不再保存 session 数据，更加容易实现扩展。
 
 #### JWT 结构
 
-JWT是一行使用 “.” 分割成三个部分的字符串，这被分隔的三个部分分别是：Header（头部）、Payload（负载）、Signature（签名），访问 https://jwt.io/  ，可以通过修改算法查看签名的计算公式以及结算结果，我们可以看到JWT的主要结构：
+JWT 是一行使用 “.” 分割成三个部分的字符串，这被分隔的三个部分分别是：Header（头部）、Payload（负载）、Signature（签名），访问 https://jwt.io/  ，可以通过修改算法查看签名的计算公式以及结算结果，可以看到 JWT 的主要结构如下：
 
 ![jwt](jwt.jpg)
 
-在上图可以看到JWT的三个部分分别显示为不同的颜色，我们分别对这三个部分进行分析：
+在上图可以看到 JWT 的三个部分显示为不同的颜色，分别对这三个部分进行分析可知：
 
-第一部分（header）实际上是一个JSON对象，是描述JWT的元数据，其中 `alg` 表示的是签名的算法，默认HS256，`typ` 表示token的类型是JWT，如下：
+第一部分（Header）实际上是一个 JSON 对象，是描述 JWT 的元数据，其中 `alg` 表示的是签名的算法，默认 HS256，`typ` 表示 token 的类型是 JWT，如下：
 
 ```json
 {
@@ -41,7 +41,7 @@ JWT是一行使用 “.” 分割成三个部分的字符串，这被分隔的�
 }
 ```
 
-第二部分（Payload）就是上面简介中提到的JSON数据，是我们希望通过服务器发送给客户端的用户信息，我们可以在这个JSON里面定义需要发送的字段：
+第二部分（Payload）就是前面提到的 JSON 数据，是希望通过服务器发送给客户端的用户信息，可在这个 JSON 里面定义需要发送的字段：
 
 ```json
 {
@@ -51,7 +51,7 @@ JWT是一行使用 “.” 分割成三个部分的字符串，这被分隔的�
 }
 ```
 
-当然，JWT官方提供了7个字段以供选用：
+当然，JWT 官方提供了7个字段以供选用：
 
 - iss (issuer)：签发人
 - exp (expiration time)：过期时间
@@ -61,7 +61,7 @@ JWT是一行使用 “.” 分割成三个部分的字符串，这被分隔的�
 - iat (Issued At)：签发时间
 - jti (JWT ID)：编号
 
-第三部分（Signature）用来对上面两部分的数据进行签名，从而防止数据篡改，这个Signature需要制定一个密钥（secret），然后通过header里面制定的算法来产生签名。产生签名的算法也可以在上图看到，算法如下：
+第三部分（Signature）用来对 header 和 payload 两部分的数据进行签名，从而防止数据篡改，这个 signature 需要制定一个密钥（Secret），然后通过 header 里面制定的算法来产生签名。产生签名的算法也可以在上图看到，算法如下：
 
 ```js
 HMACSHA256(
@@ -75,11 +75,11 @@ HMACSHA256(
 
 #### JWT 使用
 
-客户端收到服务器返回的JWT，可以储存在Cookie或者localStorage里，在之后的请求需要上这个JWT，通过以下方式携带JWT：
+客户端收到服务器返回的 JWT，可以储存在 cookie 或者 localStorage 里，在之后的请求需要上这个 JWT，通过以下方式携带 JWT：
 
-- 通过Cookie自动发送，但是这样不能跨域。
-- 放在HTTP请求的头信息Authorization字段里面：`Authorization: Bearer <token>`。
-- 将JWT就放在POST请求的数据体里面。
+- 通过 cookie 自动发送，但是这样不能跨域。
+- 放在 HTTP 请求的头信息 Authorization 字段里面：`Authorization: Bearer <token>`。
+- 将 JWT 放在 POST 请求的数据体里面。
 
 *关于JWT的的介绍可以参考阮一峰的 [JSON Web Token 入门教程](http://www.ruanyifeng.com/blog/2018/07/json_web_token-tutorial.html)。*
 
